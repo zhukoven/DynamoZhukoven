@@ -1,0 +1,62 @@
+<Workspace Version="1.3.3.4111" X="384" Y="155" zoom="1" ScaleFactor="1" Name="Element.FlipWorkplane" Description="Flip workplane for single or multiple elements. Input element(s) and boolean (true / false)." ID="16893140-3b6a-4269-8c85-4248ee65071b" Category="Zhukoven.Revit.Elements">
+  <NamespaceResolutionMap />
+  <Elements>
+    <Dynamo.Graph.Nodes.ZeroTouch.DSFunction guid="269a83c6-b93e-44ab-a4d5-cfd6727c94d6" type="Dynamo.Graph.Nodes.ZeroTouch.DSFunction" nickname="List.OfRepeatedItem" x="434" y="62" isVisible="true" isUpstreamVisible="true" lacing="Shortest" isSelectedInput="False" IsFrozen="false" isPinned="false" assembly="DSCoreNodes.dll" function="DSCore.List.OfRepeatedItem@var[]..[],int">
+      <PortInfo index="0" default="False" />
+      <PortInfo index="1" default="False" />
+    </Dynamo.Graph.Nodes.ZeroTouch.DSFunction>
+    <PythonNodeModels.PythonNode guid="82b6d01c-03c1-408b-8ad5-afe8e4101d9d" type="PythonNodeModels.PythonNode" nickname="Python Script" x="643" y="0" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false" inputcount="2">
+      <PortInfo index="0" default="False" />
+      <PortInfo index="1" default="False" />
+      <Script>#Many thanks to Daniel_Woodcock1 for posting the code on foum.dynamobim.com
+import clr
+
+clr.AddReference("RevitServices")
+import RevitServices
+from RevitServices.Persistence import DocumentManager
+from RevitServices.Transactions import TransactionManager
+doc =  DocumentManager.Instance.CurrentDBDocument
+
+clr.AddReference("RevitNodes")
+import Revit
+clr.ImportExtensions(Revit.Elements)
+clr.ImportExtensions(Revit.GeometryConversion)
+
+clr.AddReference("RevitAPI")
+from Autodesk.Revit.DB import *
+
+def tolist(obj1):
+	if hasattr(obj1,"__iter__"): return obj1
+	else: return [obj1]
+
+elems = tolist(UnwrapElement(IN[0]))
+bools = tolist(IN[1])
+TransactionManager.Instance.EnsureInTransaction(doc)
+for elem,b in zip(elems, bools):
+	elem.IsWorkPlaneFlipped = b
+TransactionManager.Instance.TransactionTaskDone()</Script>
+    </PythonNodeModels.PythonNode>
+    <Dynamo.Graph.Nodes.ZeroTouch.DSFunction guid="cfc3e204-ef43-4955-8fdf-34fa04f50a5b" type="Dynamo.Graph.Nodes.ZeroTouch.DSFunction" nickname="Count" x="250" y="127" isVisible="true" isUpstreamVisible="true" lacing="Shortest" isSelectedInput="False" IsFrozen="false" isPinned="false" assembly="BuiltIn" function="Count@var[]..[]">
+      <PortInfo index="0" default="False" />
+    </Dynamo.Graph.Nodes.ZeroTouch.DSFunction>
+    <Dynamo.Graph.Nodes.CustomNodes.Symbol guid="0aca96cd-ec2e-4086-bcfd-ae9fec697949" type="Dynamo.Graph.Nodes.CustomNodes.Symbol" nickname="Input" x="42" y="2" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" IsFrozen="false" isPinned="false">
+      <Symbol value="Element[]" />
+    </Dynamo.Graph.Nodes.CustomNodes.Symbol>
+    <Dynamo.Graph.Nodes.CustomNodes.Symbol guid="6c81aee1-2749-4e7d-9efa-160f4316fb5c" type="Dynamo.Graph.Nodes.CustomNodes.Symbol" nickname="Input" x="-72" y="83" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" IsFrozen="false" isPinned="false">
+      <Symbol value="boolean : var[]..[]" />
+    </Dynamo.Graph.Nodes.CustomNodes.Symbol>
+  </Elements>
+  <Connectors>
+    <Dynamo.Graph.Connectors.ConnectorModel start="269a83c6-b93e-44ab-a4d5-cfd6727c94d6" start_index="0" end="82b6d01c-03c1-408b-8ad5-afe8e4101d9d" end_index="1" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="cfc3e204-ef43-4955-8fdf-34fa04f50a5b" start_index="0" end="269a83c6-b93e-44ab-a4d5-cfd6727c94d6" end_index="1" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="0aca96cd-ec2e-4086-bcfd-ae9fec697949" start_index="0" end="82b6d01c-03c1-408b-8ad5-afe8e4101d9d" end_index="0" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="0aca96cd-ec2e-4086-bcfd-ae9fec697949" start_index="0" end="cfc3e204-ef43-4955-8fdf-34fa04f50a5b" end_index="0" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="6c81aee1-2749-4e7d-9efa-160f4316fb5c" start_index="0" end="269a83c6-b93e-44ab-a4d5-cfd6727c94d6" end_index="0" portType="0" />
+  </Connectors>
+  <Notes />
+  <Annotations />
+  <Presets />
+  <Cameras>
+    <Camera Name="Фоновый просмотр" eyeX="-17" eyeY="24" eyeZ="50" lookX="12" lookY="-13" lookZ="-58" upX="0" upY="1" upZ="0" />
+  </Cameras>
+</Workspace>

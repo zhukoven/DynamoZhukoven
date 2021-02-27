@@ -1,0 +1,71 @@
+<Workspace Version="1.3.0.875" X="194.802518589091" Y="327.667460529603" zoom="1.40210270027359" ScaleFactor="1" Name="Railing.TypeInfo" Description="Input railing instance element to get its type info: railing type, primary handrail type, secondary handrail type, top rail type." ID="aa675b04-7dd9-4bad-b703-7a70b2d752e1" Category="Zhukoven.Revit.Railings">
+  <NamespaceResolutionMap>
+    <ClassMap partialName="Math.PI" resolvedName="DSCore.Math" assemblyName="DSCoreNodes.dll" />
+  </NamespaceResolutionMap>
+  <Elements>
+    <PythonNodeModels.PythonNode guid="2370c14c-84d8-4fcf-8d05-59a7fc5ab3cf" type="PythonNodeModels.PythonNode" nickname="Python Script" x="250" y="0" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false" inputcount="1">
+      <PortInfo index="0" default="False" />
+      <Script>#Tested in Revit 2016+ and Dynamo 1.3.0 
+#Author © Konstantin Zhukoven @ https:\\zhukoven.com
+import clr
+clr.AddReference('RevitAPI')
+from Autodesk.Revit.DB import *
+
+clr.AddReference("RevitNodes")
+import Revit
+clr.ImportExtensions(Revit.Elements)
+
+clr.AddReference("RevitServices")
+import RevitServices
+from RevitServices.Persistence import DocumentManager
+doc = DocumentManager.Instance.CurrentDBDocument
+
+railing = UnwrapElement(IN[0])
+#rid = railing.TopRail
+rtype = railing.Document.GetElement(railing.GetTypeId())
+#fname = rtype.FamilyName
+lst = []
+lst.append(rtype)
+lst.append(doc.GetElement(rtype.PrimaryHandrailType))
+lst.append(doc.GetElement(rtype.SecondaryHandrailType))
+lst.append(doc.GetElement(rtype.TopRailType))
+OUT = lst</Script>
+    </PythonNodeModels.PythonNode>
+    <Dynamo.Graph.Nodes.CustomNodes.Symbol guid="003060ac-40cb-4405-a3f5-242a32dc911f" type="Dynamo.Graph.Nodes.CustomNodes.Symbol" nickname="Input" x="-50.80680394246" y="0" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" IsFrozen="false" isPinned="false">
+      <Symbol value="//Input single railing element&#xD;&#xA;railing" />
+    </Dynamo.Graph.Nodes.CustomNodes.Symbol>
+    <Dynamo.Graph.Nodes.CodeBlockNodeModel guid="e3bf133f-aa00-4390-85b8-df4c5a9c54d1" type="Dynamo.Graph.Nodes.CodeBlockNodeModel" nickname="Code Block" x="396.935601314153" y="0.967727842301599" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false" CodeText="seq [0];&#xA;seq [1];&#xA;seq [2];&#xA;seq [3];" ShouldFocus="false">
+      <PortInfo index="0" default="False" />
+    </Dynamo.Graph.Nodes.CodeBlockNodeModel>
+    <Dynamo.Graph.Nodes.CustomNodes.Output guid="eb8e4bbe-9514-43be-bb9f-c3b06ad5244e" type="Dynamo.Graph.Nodes.CustomNodes.Output" nickname="Output" x="662.189681574259" y="-8.19258364352109" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false">
+      <PortInfo index="0" default="False" />
+      <Symbol value="RailingType" />
+    </Dynamo.Graph.Nodes.CustomNodes.Output>
+    <Dynamo.Graph.Nodes.CustomNodes.Output guid="69cf73bd-8928-45c1-8fcc-05704f1ffc7d" type="Dynamo.Graph.Nodes.CustomNodes.Output" nickname="Output" x="662.148750762251" y="52.0996149086605" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false">
+      <PortInfo index="0" default="False" />
+      <Symbol value="PrimaryHandrailType" />
+    </Dynamo.Graph.Nodes.CustomNodes.Output>
+    <Dynamo.Graph.Nodes.CustomNodes.Output guid="a087acc0-8f11-4389-ae6e-b7aa336d0d7d" type="Dynamo.Graph.Nodes.CustomNodes.Output" nickname="Output" x="661.754637641543" y="113.093184181874" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false">
+      <PortInfo index="0" default="False" />
+      <Symbol value="SecondaryHandrailType" />
+    </Dynamo.Graph.Nodes.CustomNodes.Output>
+    <Dynamo.Graph.Nodes.CustomNodes.Output guid="25040a17-8865-472d-acad-8fc4f3be76dd" type="Dynamo.Graph.Nodes.CustomNodes.Output" nickname="Output" x="661.872173742169" y="174.021719677087" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false">
+      <PortInfo index="0" default="False" />
+      <Symbol value="TopRailType" />
+    </Dynamo.Graph.Nodes.CustomNodes.Output>
+  </Elements>
+  <Connectors>
+    <Dynamo.Graph.Connectors.ConnectorModel start="2370c14c-84d8-4fcf-8d05-59a7fc5ab3cf" start_index="0" end="e3bf133f-aa00-4390-85b8-df4c5a9c54d1" end_index="0" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="003060ac-40cb-4405-a3f5-242a32dc911f" start_index="0" end="2370c14c-84d8-4fcf-8d05-59a7fc5ab3cf" end_index="0" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="e3bf133f-aa00-4390-85b8-df4c5a9c54d1" start_index="0" end="eb8e4bbe-9514-43be-bb9f-c3b06ad5244e" end_index="0" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="e3bf133f-aa00-4390-85b8-df4c5a9c54d1" start_index="1" end="69cf73bd-8928-45c1-8fcc-05704f1ffc7d" end_index="0" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="e3bf133f-aa00-4390-85b8-df4c5a9c54d1" start_index="2" end="a087acc0-8f11-4389-ae6e-b7aa336d0d7d" end_index="0" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="e3bf133f-aa00-4390-85b8-df4c5a9c54d1" start_index="3" end="25040a17-8865-472d-acad-8fc4f3be76dd" end_index="0" portType="0" />
+  </Connectors>
+  <Notes />
+  <Annotations />
+  <Presets />
+  <Cameras>
+    <Camera Name="Фоновый просмотр" eyeX="-17" eyeY="24" eyeZ="50" lookX="12" lookY="-13" lookZ="-58" upX="0" upY="1" upZ="0" />
+  </Cameras>
+</Workspace>

@@ -1,0 +1,61 @@
+<Workspace Version="1.3.2.2480" X="-108.444662865359" Y="316.261958600405" zoom="1.37758335255867" ScaleFactor="1" Name="OS.CurrentUserInfo" Description="Get current user logged in info: username, appdata path and desktop path. Desktop path works also for the Microsoft Windows roaming profiles and localized OS versions." ID="b39eaed7-64b3-42e2-b008-ce734eed9074" Category="Zhukoven.System">
+  <NamespaceResolutionMap>
+    <ClassMap partialName="System.DateTime" resolvedName="System.DateTime" assemblyName="" />
+    <ClassMap partialName="System.DateTime.Now" resolvedName="System.DateTime" assemblyName="" />
+    <ClassMap partialName="DSCore.DateTime.Now" resolvedName="DSCore.DateTime" assemblyName="DSCoreNodes.dll" />
+    <ClassMap partialName="DSCore.DateTime" resolvedName="DSCore.DateTime" assemblyName="DSCoreNodes.dll" />
+    <ClassMap partialName="DSCore.DateTime.DSCore" resolvedName="DSCore.DateTime" assemblyName="DSCoreNodes.dll" />
+    <ClassMap partialName="DSCore.DateTime.x" resolvedName="DSCore.DateTime" assemblyName="DSCoreNodes.dll" />
+    <ClassMap partialName="DSCore.TimeSpan" resolvedName="DSCore.TimeSpan" assemblyName="DSCoreNodes.dll" />
+  </NamespaceResolutionMap>
+  <Elements>
+    <Dynamo.Graph.Nodes.CodeBlockNodeModel guid="db4f8ea4-641c-4158-bc4c-67f11324e5c9" type="Dynamo.Graph.Nodes.CodeBlockNodeModel" nickname="Code Block" x="489.906948048517" y="3.66034695568135" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false" CodeText="seq[0];&#xA;seq[1];&#xA;seq[2];" ShouldFocus="false">
+      <PortInfo index="0" default="False" />
+    </Dynamo.Graph.Nodes.CodeBlockNodeModel>
+    <PythonNodeModels.PythonNode guid="250233a5-3c1a-49a0-8667-c9a73800f3d2" type="PythonNodeModels.PythonNode" nickname="Python Script" x="349.959337139249" y="0.721804466252649" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false" inputcount="1">
+      <PortInfo index="0" default="False" />
+      <Script>#Author Konstantin Zhukoven @ https://zhukoven.com
+#Tested to work with Dynamo 1.3.0+
+import clr
+import sys
+pyt_path = r'C:\Program Files (x86)\IronPython 2.7\Lib'
+sys.path.append(pyt_path)
+
+import os
+from os.path import expanduser
+username = os.getenv('username')
+appdata = os.path.expandvars('%appdata%')
+#Workaround for Microsoft Windows roaming profiles to get current user's desktop path:
+userpath = appdata.split("\AppData")
+first = userpath[0]
+desktop = os.path.join(first, 'Desktop')
+
+OUT = username, appdata, desktop
+</Script>
+    </PythonNodeModels.PythonNode>
+    <Dynamo.Graph.Nodes.CustomNodes.Output guid="8f9ac008-39f8-4350-b06c-ef3d2a2b9288" type="Dynamo.Graph.Nodes.CustomNodes.Output" nickname="Output" x="685.906948048517" y="0" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false">
+      <PortInfo index="0" default="False" />
+      <Symbol value="//Current user logged in (string)&#xD;&#xA;Username" />
+    </Dynamo.Graph.Nodes.CustomNodes.Output>
+    <Dynamo.Graph.Nodes.CustomNodes.Output guid="6a7137a4-3785-4fba-bc5d-ffcef788c993" type="Dynamo.Graph.Nodes.CustomNodes.Output" nickname="Output" x="686.467612074918" y="67.8403471945343" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false">
+      <PortInfo index="0" default="False" />
+      <Symbol value="//DirectoryPath (string)&#xD;&#xA;Appdata" />
+    </Dynamo.Graph.Nodes.CustomNodes.Output>
+    <Dynamo.Graph.Nodes.CustomNodes.Output guid="61b38cdb-b00e-417c-9c83-b7914e3ededc" type="Dynamo.Graph.Nodes.CustomNodes.Output" nickname="Output" x="686.101260929072" y="137.190648202981" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false">
+      <PortInfo index="0" default="False" />
+      <Symbol value="//DirectoryPath (string)&#xD;&#xA;Desktop" />
+    </Dynamo.Graph.Nodes.CustomNodes.Output>
+  </Elements>
+  <Connectors>
+    <Dynamo.Graph.Connectors.ConnectorModel start="db4f8ea4-641c-4158-bc4c-67f11324e5c9" start_index="0" end="8f9ac008-39f8-4350-b06c-ef3d2a2b9288" end_index="0" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="db4f8ea4-641c-4158-bc4c-67f11324e5c9" start_index="1" end="6a7137a4-3785-4fba-bc5d-ffcef788c993" end_index="0" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="db4f8ea4-641c-4158-bc4c-67f11324e5c9" start_index="2" end="61b38cdb-b00e-417c-9c83-b7914e3ededc" end_index="0" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="250233a5-3c1a-49a0-8667-c9a73800f3d2" start_index="0" end="db4f8ea4-641c-4158-bc4c-67f11324e5c9" end_index="0" portType="0" />
+  </Connectors>
+  <Notes />
+  <Annotations />
+  <Presets />
+  <Cameras>
+    <Camera Name="Фоновый просмотр" eyeX="-17" eyeY="24" eyeZ="50" lookX="12" lookY="-13" lookZ="-58" upX="0" upY="1" upZ="0" />
+  </Cameras>
+</Workspace>

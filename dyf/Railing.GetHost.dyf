@@ -1,0 +1,57 @@
+<Workspace Version="1.3.0.875" X="127.965344890625" Y="276.586688246592" zoom="1.545620359375" ScaleFactor="1" Name="Railing.GetHost" Description="Get host element for selected railing" ID="69c3bd6e-8b73-4719-bac1-ba9affaa5ff1" Category="Zhukoven.Revit.Railings">
+  <NamespaceResolutionMap>
+    <ClassMap partialName="Math.PI" resolvedName="DSCore.Math" assemblyName="DSCoreNodes.dll" />
+  </NamespaceResolutionMap>
+  <Elements>
+    <PythonNodeModels.PythonNode guid="4a2f9d44-b9d8-41e8-8eac-d2382d35c622" type="PythonNodeModels.PythonNode" nickname="Python Script" x="249.353010592844" y="57.5820572368681" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false" inputcount="1">
+      <PortInfo index="0" default="False" />
+      <Script>#Tested in Revit 2016+ and Dynamo 1.3.0 
+#Author © Konstantin Zhukoven @ https:\\zhukoven.com
+import clr
+clr.AddReference('RevitAPI')
+from Autodesk.Revit.DB import *
+
+clr.AddReference("RevitNodes")
+import Revit
+clr.ImportExtensions(Revit.Elements)
+
+clr.AddReference("RevitServices")
+import RevitServices
+from RevitServices.Persistence import DocumentManager
+doc = DocumentManager.Instance.CurrentDBDocument
+
+railing = UnwrapElement(IN[0])
+hid = railing.HostId
+hashost = railing.HasHost
+host = doc.GetElement(hid)
+#Output
+OUT = (hashost, host)</Script>
+    </PythonNodeModels.PythonNode>
+    <Dynamo.Graph.Nodes.CustomNodes.Symbol guid="1b022a3c-1bfb-45ef-9b28-727762eaad83" type="Dynamo.Graph.Nodes.CustomNodes.Symbol" nickname="Input" x="-8.41086229302567" y="57.5820572368681" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" IsFrozen="false" isPinned="false">
+      <Symbol value="//Input railing element&#xD;&#xA;railing" />
+    </Dynamo.Graph.Nodes.CustomNodes.Symbol>
+    <Dynamo.Graph.Nodes.CustomNodes.Output guid="c2a14187-11f0-4386-a781-1ea6c5b18505" type="Dynamo.Graph.Nodes.CustomNodes.Output" nickname="Output" x="558.341209809334" y="36.231406800726" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false">
+      <PortInfo index="0" default="False" />
+      <Symbol value="isHosted?" />
+    </Dynamo.Graph.Nodes.CustomNodes.Output>
+    <Dynamo.Graph.Nodes.CodeBlockNodeModel guid="40014427-2377-40e3-a1e1-22b34284d93c" type="Dynamo.Graph.Nodes.CodeBlockNodeModel" nickname="Code Block" x="387.989379294841" y="58.4203029198338" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false" CodeText="seq [0];&#xA;seq [1];" ShouldFocus="false">
+      <PortInfo index="0" default="False" />
+    </Dynamo.Graph.Nodes.CodeBlockNodeModel>
+    <Dynamo.Graph.Nodes.CustomNodes.Output guid="aa404a92-d805-4729-aef3-79a68f225155" type="Dynamo.Graph.Nodes.CustomNodes.Output" nickname="Output" x="558.293978814312" y="106.049591151724" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false">
+      <PortInfo index="0" default="False" />
+      <Symbol value="Element" />
+    </Dynamo.Graph.Nodes.CustomNodes.Output>
+  </Elements>
+  <Connectors>
+    <Dynamo.Graph.Connectors.ConnectorModel start="4a2f9d44-b9d8-41e8-8eac-d2382d35c622" start_index="0" end="40014427-2377-40e3-a1e1-22b34284d93c" end_index="0" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="1b022a3c-1bfb-45ef-9b28-727762eaad83" start_index="0" end="4a2f9d44-b9d8-41e8-8eac-d2382d35c622" end_index="0" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="40014427-2377-40e3-a1e1-22b34284d93c" start_index="0" end="c2a14187-11f0-4386-a781-1ea6c5b18505" end_index="0" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="40014427-2377-40e3-a1e1-22b34284d93c" start_index="1" end="aa404a92-d805-4729-aef3-79a68f225155" end_index="0" portType="0" />
+  </Connectors>
+  <Notes />
+  <Annotations />
+  <Presets />
+  <Cameras>
+    <Camera Name="Фоновый просмотр" eyeX="-17" eyeY="24" eyeZ="50" lookX="12" lookY="-13" lookZ="-58" upX="0" upY="1" upZ="0" />
+  </Cameras>
+</Workspace>

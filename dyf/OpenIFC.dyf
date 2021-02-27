@@ -1,0 +1,63 @@
+<Workspace Version="1.3.2.2480" X="662.549766657059" Y="234.345580132" zoom="1.51051845643135" ScaleFactor="1" Name="OpenIFC" Description="Opens an IFC document from disk using default options, and converts it to Revit document." ID="894897de-47a4-48e4-8921-20bd329a6147" Category="Zhukoven.IFC">
+  <NamespaceResolutionMap />
+  <Elements>
+    <PythonNodeModels.PythonNode guid="7e776ab0-3b2a-46c1-a902-39914c99fa21" type="PythonNodeModels.PythonNode" nickname="Python Script" x="250" y="0" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false" inputcount="2">
+      <PortInfo index="0" default="False" />
+      <PortInfo index="1" default="False" />
+      <Script>#Author Konstantin Zhukoven @ https://zhukoven.com
+#Tested to work with Dynamo 1.3.0+
+import clr
+clr.AddReference("RevitAPI")
+import Autodesk
+from Autodesk.Revit.DB import *
+
+clr.AddReference("RevitNodes")
+import Revit
+clr.ImportExtensions(Revit.GeometryConversion)
+clr.ImportExtensions(Revit.Elements)
+
+clr.AddReference("RevitServices")
+import RevitServices
+from RevitServices.Persistence import DocumentManager
+from RevitServices.Transactions import TransactionManager
+
+doc = DocumentManager.Instance.CurrentDBDocument
+uiapp = DocumentManager.Instance.CurrentUIApplication
+app = uiapp.Application
+
+#input IFC file path:
+IFCfilepath = IN[0]
+#define IFC import options:
+IFC = Autodesk.Revit.DB.IFC
+IFCopt = IFC.IFCImportOptions 
+#optAxis = IFCopt.AutocorrectOffAxisLines(IN[1])
+#optJoin = IFCopt.AutoJoin(IN[2])
+#optRewrite = IFCopt.ForceImport(IN[3])
+#open IFC document using the custom options (above)
+IFCopen = app.OpenIFCDocument(IFCfilepath)
+
+#importIFC = IFCio.ForceImport
+
+#Save resulting Revit file to the destination path:
+OUT = IFCopen.SaveAs(IN[1])</Script>
+    </PythonNodeModels.PythonNode>
+    <Dynamo.Graph.Nodes.CustomNodes.Symbol guid="599456ae-010c-485e-87d7-0c31f1a6fc0c" type="Dynamo.Graph.Nodes.CustomNodes.Symbol" nickname="Input" x="-85.4026017445684" y="0" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" IsFrozen="false" isPinned="false">
+      <Symbol value="//Input file path to IFC Document&#xD;&#xA;IFC" />
+    </Dynamo.Graph.Nodes.CustomNodes.Symbol>
+    <Dynamo.Graph.Nodes.CustomNodes.Symbol guid="b656ce34-1f55-4398-82d1-72a4203807c2" type="Dynamo.Graph.Nodes.CustomNodes.Symbol" nickname="Input" x="-233.563175983252" y="76.2432075842364" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" IsFrozen="false" isPinned="false">
+      <Symbol value="//Input file path to resulting &quot;revit filename.rvt&quot;&#xD;&#xA;SaveAs" />
+    </Dynamo.Graph.Nodes.CustomNodes.Symbol>
+    <Dynamo.Graph.Nodes.CustomNodes.Output guid="4514d83d-0e50-4fc1-8849-8cdc3f55d490" type="Dynamo.Graph.Nodes.CustomNodes.Output" nickname="Output" x="395.299879206067" y="0" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false">
+      <PortInfo index="0" default="False" />
+      <Symbol value="Result" />
+    </Dynamo.Graph.Nodes.CustomNodes.Output>
+  </Elements>
+  <Connectors>
+    <Dynamo.Graph.Connectors.ConnectorModel start="7e776ab0-3b2a-46c1-a902-39914c99fa21" start_index="0" end="4514d83d-0e50-4fc1-8849-8cdc3f55d490" end_index="0" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="599456ae-010c-485e-87d7-0c31f1a6fc0c" start_index="0" end="7e776ab0-3b2a-46c1-a902-39914c99fa21" end_index="0" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="b656ce34-1f55-4398-82d1-72a4203807c2" start_index="0" end="7e776ab0-3b2a-46c1-a902-39914c99fa21" end_index="1" portType="0" />
+  </Connectors>
+  <Notes />
+  <Annotations />
+  <Presets />
+</Workspace>

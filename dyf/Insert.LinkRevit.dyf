@@ -1,0 +1,64 @@
+<Workspace Version="1.3.0.875" X="-379.944917264443" Y="504.245181649435" zoom="1.47618023926361" ScaleFactor="1" Name="Insert.LinkRevit" Description="Link Revit model into your current document" ID="890f57b8-13ab-4b7c-afcb-1149961ebaff" Category="Zhukoven.Revit.Links">
+  <NamespaceResolutionMap />
+  <Elements>
+    <PythonNodeModels.PythonNode guid="b08dabfe-29cf-465e-ad52-446f9cd597c9" type="PythonNodeModels.PythonNode" nickname="Python Script" x="569.619415181566" y="0.318007920796731" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false" inputcount="1">
+      <PortInfo index="0" default="False" />
+      <Script>#Tested on Dynamo 1.3.0
+import clr
+clr.AddReference('ProtoGeometry')
+from Autodesk.DesignScript.Geometry import *
+# Import ToDSType(bool) extension method
+clr.AddReference("RevitNodes")
+import Revit
+clr.ImportExtensions(Revit.Elements)
+# Import geometry conversion extension methods
+clr.ImportExtensions(Revit.GeometryConversion)
+# Import DocumentManager and TransactionManager
+clr.AddReference("RevitServices")
+import RevitServices
+from RevitServices.Persistence import DocumentManager
+from RevitServices.Transactions import TransactionManager
+from System.Collections.Generic import *
+# Import RevitAPI
+clr.AddReference("RevitAPI")
+import Autodesk
+from Autodesk.Revit.DB import *
+
+doc = DocumentManager.Instance.CurrentDBDocument
+uiapp = DocumentManager.Instance.CurrentUIApplication
+app = uiapp.Application
+uidoc=DocumentManager.Instance.CurrentUIApplication.ActiveUIDocument
+
+# Start Transaction
+TransactionManager.Instance.EnsureInTransaction(doc)
+
+# Create the Revit Link Type
+# creae a for loop
+filepath = ModelPathUtils.ConvertUserVisiblePathToModelPath(UnwrapElement(IN[0]))
+linkoptions = RevitLinkOptions("")
+loadedLnkType = RevitLinkType.Create(doc, filepath, linkoptions)
+ 
+# Create the Revit Link Instance
+lnkInstance = RevitLinkInstance.Create(doc, loadedLnkType.ElementId)
+
+# End Transaction
+TransactionManager.Instance.TransactionTaskDone()
+
+OUT="Successfully loaded"</Script>
+    </PythonNodeModels.PythonNode>
+    <Dynamo.Graph.Nodes.CustomNodes.Output guid="0a341b51-3950-4c6c-9698-9c26ecf5edeb" type="Dynamo.Graph.Nodes.CustomNodes.Output" nickname="Output" x="768.619415181566" y="0" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false">
+      <PortInfo index="0" default="False" />
+      <Symbol value="Result" />
+    </Dynamo.Graph.Nodes.CustomNodes.Output>
+    <Dynamo.Graph.Nodes.CustomNodes.Symbol guid="9299eb25-5c0e-44bb-bfd7-dda7f048d1c0" type="Dynamo.Graph.Nodes.CustomNodes.Symbol" nickname="Input" x="377.525330574378" y="-0.726189038677607" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" IsFrozen="false" isPinned="false">
+      <Symbol value="FilePath" />
+    </Dynamo.Graph.Nodes.CustomNodes.Symbol>
+  </Elements>
+  <Connectors>
+    <Dynamo.Graph.Connectors.ConnectorModel start="b08dabfe-29cf-465e-ad52-446f9cd597c9" start_index="0" end="0a341b51-3950-4c6c-9698-9c26ecf5edeb" end_index="0" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="9299eb25-5c0e-44bb-bfd7-dda7f048d1c0" start_index="0" end="b08dabfe-29cf-465e-ad52-446f9cd597c9" end_index="0" portType="0" />
+  </Connectors>
+  <Notes />
+  <Annotations />
+  <Presets />
+</Workspace>

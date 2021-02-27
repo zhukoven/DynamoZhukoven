@@ -1,0 +1,53 @@
+<Workspace Version="1.3.3.4111" X="-267.477913518242" Y="232.900218567924" zoom="1.130842140625" ScaleFactor="1" Name="SharedParameters.GUID" Description="Get unique GUIDs of the shared parameters loaded in the Revit project." ID="d6c2a6f4-7b05-4adb-8ad7-983e9c88a44e" Category="Zhukoven.Revit.SharedParameters">
+  <NamespaceResolutionMap>
+    <ClassMap partialName="Parameters.GUID" resolvedName="Revit.Parameters" assemblyName="LunchBox.dll" />
+  </NamespaceResolutionMap>
+  <Elements>
+    <DSRevitNodesUI.ElementsOfType guid="24205462-365a-4734-9bef-a10b1d3df603" type="DSRevitNodesUI.ElementsOfType" nickname="All Elements of Type" x="495.413114912648" y="0.649406719076637" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false">
+      <PortInfo index="0" default="False" />
+    </DSRevitNodesUI.ElementsOfType>
+    <PythonNodeModels.PythonNode guid="a0f0564e-fd90-4636-b972-598cd5dfa245" type="PythonNodeModels.PythonNode" nickname="Python Script" x="722.374213515176" y="0" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false" inputcount="1">
+      <PortInfo index="0" default="False" />
+      <Script>#Author Konstantin Zhukoven @ https://zhukoven.com
+#Tested to work with Dynamo 1.3.0+
+import clr
+clr.AddReference("RevitAPI")
+import Autodesk
+from Autodesk.Revit.DB import *
+
+param = UnwrapElement(IN[0])
+guid, name = [],[]
+
+for i in param:
+	name.append(i.Name)
+	guid.append(i.GuidValue)
+OUT = name, guid
+</Script>
+    </PythonNodeModels.PythonNode>
+    <Dynamo.Graph.Nodes.CodeBlockNodeModel guid="ec54559c-4474-453a-8a42-5cc3ab5cf151" type="Dynamo.Graph.Nodes.CodeBlockNodeModel" nickname="Code Block" x="875.140019066131" y="4.15280110440557" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false" CodeText="seq[0];&#xA;seq[1];" ShouldFocus="false">
+      <PortInfo index="0" default="False" />
+    </Dynamo.Graph.Nodes.CodeBlockNodeModel>
+    <DSRevitNodesUI.ElementTypes guid="0db71f3d-848b-4661-9c54-a18614fc52d1" type="DSRevitNodesUI.ElementTypes" nickname="Element Types" x="250" y="0.358594871305741" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" IsFrozen="false" isPinned="false" index="271:SharedParameterElement" />
+    <Dynamo.Graph.Nodes.CustomNodes.Output guid="8edb2523-7a36-4467-abe6-6e6412230e01" type="Dynamo.Graph.Nodes.CustomNodes.Output" nickname="Output" x="1071.14001906613" y="0" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false">
+      <PortInfo index="0" default="False" />
+      <Symbol value="SharedParameterName" />
+    </Dynamo.Graph.Nodes.CustomNodes.Output>
+    <Dynamo.Graph.Nodes.CustomNodes.Output guid="82cac56d-f340-4d4d-bd00-dff2ec5be411" type="Dynamo.Graph.Nodes.CustomNodes.Output" nickname="Output" x="1071.14001906613" y="150" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false">
+      <PortInfo index="0" default="False" />
+      <Symbol value="SharedParameterGUID" />
+    </Dynamo.Graph.Nodes.CustomNodes.Output>
+  </Elements>
+  <Connectors>
+    <Dynamo.Graph.Connectors.ConnectorModel start="24205462-365a-4734-9bef-a10b1d3df603" start_index="0" end="a0f0564e-fd90-4636-b972-598cd5dfa245" end_index="0" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="a0f0564e-fd90-4636-b972-598cd5dfa245" start_index="0" end="ec54559c-4474-453a-8a42-5cc3ab5cf151" end_index="0" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="ec54559c-4474-453a-8a42-5cc3ab5cf151" start_index="0" end="8edb2523-7a36-4467-abe6-6e6412230e01" end_index="0" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="ec54559c-4474-453a-8a42-5cc3ab5cf151" start_index="1" end="82cac56d-f340-4d4d-bd00-dff2ec5be411" end_index="0" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="0db71f3d-848b-4661-9c54-a18614fc52d1" start_index="0" end="24205462-365a-4734-9bef-a10b1d3df603" end_index="0" portType="0" />
+  </Connectors>
+  <Notes />
+  <Annotations />
+  <Presets />
+  <Cameras>
+    <Camera Name="Background Preview" eyeX="-17" eyeY="24" eyeZ="50" lookX="12" lookY="-13" lookZ="-58" upX="0" upY="1" upZ="0" />
+  </Cameras>
+</Workspace>

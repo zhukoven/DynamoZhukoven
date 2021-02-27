@@ -1,0 +1,68 @@
+<Workspace Version="1.3.2.2480" X="362.71376799741" Y="390.442287019886" zoom="1.31537540500821" ScaleFactor="1" Name="View.SetPhase" Description="Input phase that you would like to set to the desired view." ID="163310c4-dd91-4d99-a019-9b5e12ebdb87" Category="Zhukoven.Revit.Views">
+  <NamespaceResolutionMap />
+  <Elements>
+    <Dynamo.Graph.Nodes.CodeBlockNodeModel guid="e4efdd94-3c87-4a23-8d99-4615a48529f1" type="Dynamo.Graph.Nodes.CodeBlockNodeModel" nickname="Code Block" x="391.480923270254" y="3.73625033775386" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false" CodeText="seq[0];&#xA;seq[1];" ShouldFocus="false">
+      <PortInfo index="0" default="False" />
+    </Dynamo.Graph.Nodes.CodeBlockNodeModel>
+    <PythonNodeModels.PythonNode guid="12add9a1-1290-4269-897f-f58eaa9f2fd1" type="PythonNodeModels.PythonNode" nickname="Python Script" x="250" y="0" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false" inputcount="2">
+      <PortInfo index="0" default="False" />
+      <PortInfo index="1" default="False" />
+      <Script>#Author Konstantin Zhukoven @ https://zhukoven.com
+#Tested to work with Dynamo 1.3.0+
+import clr
+clr.AddReference('RevitAPI')
+from Autodesk.Revit.DB import *
+
+clr.AddReference("RevitNodes")
+import Revit
+clr.ImportExtensions(Revit.Elements)
+
+clr.AddReference("RevitServices")
+import RevitServices
+from RevitServices.Persistence import DocumentManager
+from RevitServices.Transactions import TransactionManager
+
+doc = DocumentManager.Instance.CurrentDBDocument
+phase = UnwrapElement(IN[0])
+view = UnwrapElement(IN[1])
+result = []
+
+TransactionManager.Instance.EnsureInTransaction(doc)
+try:
+	view.get_Parameter(BuiltInParameter.VIEW_PHASE).Set(phase.Id)
+	result.append(True)
+except:
+	result.append(False)
+TransactionManager.Instance.TransactionTaskDone()
+
+OUT = (view,result)</Script>
+    </PythonNodeModels.PythonNode>
+    <Dynamo.Graph.Nodes.CustomNodes.Symbol guid="d215d9b1-286c-4025-bf64-bb1539d9c633" type="Dynamo.Graph.Nodes.CustomNodes.Symbol" nickname="Input" x="149.516235344084" y="-0.532553912768947" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" IsFrozen="false" isPinned="false">
+      <Symbol value="Phase" />
+    </Dynamo.Graph.Nodes.CustomNodes.Symbol>
+    <Dynamo.Graph.Nodes.CustomNodes.Symbol guid="32175ac1-d1c9-41e5-b03e-fa1d6f7d21c0" type="Dynamo.Graph.Nodes.CustomNodes.Symbol" nickname="Input" x="157.922770664635" y="70.7383812633773" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" IsFrozen="false" isPinned="false">
+      <Symbol value="View" />
+    </Dynamo.Graph.Nodes.CustomNodes.Symbol>
+    <Dynamo.Graph.Nodes.CustomNodes.Output guid="64246223-57ed-4b67-a5f8-cae919cca834" type="Dynamo.Graph.Nodes.CustomNodes.Output" nickname="Output" x="533.111515880655" y="-0.863930885529157" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false">
+      <PortInfo index="0" default="False" />
+      <Symbol value="View" />
+    </Dynamo.Graph.Nodes.CustomNodes.Output>
+    <Dynamo.Graph.Nodes.CustomNodes.Output guid="d56f9d5e-281a-40e4-99cf-40e7f00baf4a" type="Dynamo.Graph.Nodes.CustomNodes.Output" nickname="Output" x="532.267648483058" y="60.995055302565" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false">
+      <PortInfo index="0" default="False" />
+      <Symbol value="//Boolean&#xD;&#xA;Result" />
+    </Dynamo.Graph.Nodes.CustomNodes.Output>
+  </Elements>
+  <Connectors>
+    <Dynamo.Graph.Connectors.ConnectorModel start="e4efdd94-3c87-4a23-8d99-4615a48529f1" start_index="0" end="64246223-57ed-4b67-a5f8-cae919cca834" end_index="0" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="e4efdd94-3c87-4a23-8d99-4615a48529f1" start_index="1" end="d56f9d5e-281a-40e4-99cf-40e7f00baf4a" end_index="0" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="12add9a1-1290-4269-897f-f58eaa9f2fd1" start_index="0" end="e4efdd94-3c87-4a23-8d99-4615a48529f1" end_index="0" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="d215d9b1-286c-4025-bf64-bb1539d9c633" start_index="0" end="12add9a1-1290-4269-897f-f58eaa9f2fd1" end_index="0" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="32175ac1-d1c9-41e5-b03e-fa1d6f7d21c0" start_index="0" end="12add9a1-1290-4269-897f-f58eaa9f2fd1" end_index="1" portType="0" />
+  </Connectors>
+  <Notes />
+  <Annotations />
+  <Presets />
+  <Cameras>
+    <Camera Name="Фоновый просмотр" eyeX="-17" eyeY="24" eyeZ="50" lookX="12" lookY="-13" lookZ="-58" upX="0" upY="1" upZ="0" />
+  </Cameras>
+</Workspace>

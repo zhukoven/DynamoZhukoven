@@ -1,0 +1,74 @@
+<Workspace Version="1.3.3.4651" X="10.22" Y="157.37" zoom="1.1575" ScaleFactor="1" Name="View.SetFilterVisibility" Description="This node sets view filter visibility (graphics overrides) for the chosen view(s) and filter(s). Input view(s), ParameterFilterElement and boolean switch, which toggles filter visibility. " ID="2e551af7-5cb7-4b2c-9314-e10bddf87de5" Category="Zhukoven.Revit.Views">
+  <NamespaceResolutionMap>
+    <ClassMap partialName="DSCore.List" resolvedName="DSCore.List" assemblyName="DSCoreNodes.dll" />
+  </NamespaceResolutionMap>
+  <Elements>
+    <PythonNodeModels.PythonNode guid="ab4bf7d3-91ed-4c64-8855-8dcde5650a46" type="PythonNodeModels.PythonNode" nickname="Python Script" x="487.848977433935" y="0" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false" inputcount="3">
+      <PortInfo index="0" default="False" />
+      <PortInfo index="1" default="False" />
+      <PortInfo index="2" default="False" />
+      <Script>#Author Konstantin Zhukoven @ https://zhukoven.com
+#Tested to work with Dynamo 1.3.0+
+import clr
+clr.AddReference('RevitAPI')
+from Autodesk.Revit.DB import *
+
+clr.AddReference("RevitNodes")
+import Revit
+clr.ImportExtensions(Revit.Elements)
+
+clr.AddReference("RevitServices")
+import RevitServices
+from RevitServices.Persistence import DocumentManager
+from RevitServices.Transactions import TransactionManager
+
+doc = DocumentManager.Instance.CurrentDBDocument
+view = UnwrapElement(IN[0])
+filter = UnwrapElement(IN[1])
+boolean = IN[2]
+result = []
+viewlist = []
+
+TransactionManager.Instance.EnsureInTransaction(doc)
+
+try:
+	for i in view:
+		viewlist.append(i.SetFilterVisibility(filter.Id, boolean))
+		result.append(True)
+except:
+	result.append(False)
+TransactionManager.Instance.TransactionTaskDone()
+
+OUT = (view,result)</Script>
+    </PythonNodeModels.PythonNode>
+    <Dynamo.Graph.Nodes.CodeBlockNodeModel guid="f94e477c-6760-4b2f-ac3e-52979283666a" type="Dynamo.Graph.Nodes.CodeBlockNodeModel" nickname="Code Block" x="250" y="4.09021551212967" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false" CodeText="Flatten({item});" ShouldFocus="false">
+      <PortInfo index="0" default="False" />
+    </Dynamo.Graph.Nodes.CodeBlockNodeModel>
+    <Dynamo.Graph.Nodes.CustomNodes.Symbol guid="350e7e1e-c9e6-430e-b00d-c5d8516764b1" type="Dynamo.Graph.Nodes.CustomNodes.Symbol" nickname="Input" x="155.929157667387" y="0" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" IsFrozen="false" isPinned="false">
+      <Symbol value="View(s)" />
+    </Dynamo.Graph.Nodes.CustomNodes.Symbol>
+    <Dynamo.Graph.Nodes.CustomNodes.Output guid="2b188eeb-0081-4c08-88e4-22dc9435793a" type="Dynamo.Graph.Nodes.CustomNodes.Output" nickname="Output" x="687.648977433936" y="0" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false">
+      <PortInfo index="0" default="False" />
+      <Symbol value="//Boolean&#xD;&#xA;Result" />
+    </Dynamo.Graph.Nodes.CustomNodes.Output>
+    <Dynamo.Graph.Nodes.CustomNodes.Symbol guid="29cc1110-8e9e-44d8-9e29-cd4b5d48637a" type="Dynamo.Graph.Nodes.CustomNodes.Symbol" nickname="Input" x="150.508855291577" y="69.6708423326133" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" IsFrozen="false" isPinned="false">
+      <Symbol value="ParameterFilterElement" />
+    </Dynamo.Graph.Nodes.CustomNodes.Symbol>
+    <Dynamo.Graph.Nodes.CustomNodes.Symbol guid="747e1303-7941-4d6e-8588-12a856a3088d" type="Dynamo.Graph.Nodes.CustomNodes.Symbol" nickname="Input" x="152" y="144.8" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" IsFrozen="false" isPinned="false">
+      <Symbol value="Visible : bool=True" />
+    </Dynamo.Graph.Nodes.CustomNodes.Symbol>
+  </Elements>
+  <Connectors>
+    <Dynamo.Graph.Connectors.ConnectorModel start="ab4bf7d3-91ed-4c64-8855-8dcde5650a46" start_index="0" end="2b188eeb-0081-4c08-88e4-22dc9435793a" end_index="0" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="f94e477c-6760-4b2f-ac3e-52979283666a" start_index="0" end="ab4bf7d3-91ed-4c64-8855-8dcde5650a46" end_index="0" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="350e7e1e-c9e6-430e-b00d-c5d8516764b1" start_index="0" end="f94e477c-6760-4b2f-ac3e-52979283666a" end_index="0" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="29cc1110-8e9e-44d8-9e29-cd4b5d48637a" start_index="0" end="ab4bf7d3-91ed-4c64-8855-8dcde5650a46" end_index="1" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="747e1303-7941-4d6e-8588-12a856a3088d" start_index="0" end="ab4bf7d3-91ed-4c64-8855-8dcde5650a46" end_index="2" portType="0" />
+  </Connectors>
+  <Notes />
+  <Annotations />
+  <Presets />
+  <Cameras>
+    <Camera Name="Фоновый просмотр" eyeX="-17" eyeY="24" eyeZ="50" lookX="12" lookY="-13" lookZ="-58" upX="0" upY="1" upZ="0" />
+  </Cameras>
+</Workspace>

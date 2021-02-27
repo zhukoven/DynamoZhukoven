@@ -1,0 +1,75 @@
+<Workspace Version="1.3.2.2480" X="442.620907667215" Y="303.523736166585" zoom="1.24844365397223" ScaleFactor="1" Name="Walls.AllowJoinAtEnd" Description="Allows the wall's end to join to other walls. If that end is near other walls it will become joined as a result." ID="ac4e7c11-111c-462c-98b9-d559969fd03a" Category="Zhukoven.Revit.Walls">
+  <NamespaceResolutionMap />
+  <Elements>
+    <PythonNodeModels.PythonNode guid="3a1a2934-d5a0-4be9-9e6f-06aa6fbd35f3" type="PythonNodeModels.PythonNode" nickname="Python Script" x="263.76524221443" y="-3.82367839289719" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false" inputcount="3">
+      <PortInfo index="0" default="False" />
+      <PortInfo index="1" default="False" />
+      <PortInfo index="2" default="False" />
+      <Script>#Author Konstantin Zhukoven @ https://zhukoven.com
+#Tested to work with Dynamo 1.3.0+
+import clr
+clr.AddReference('RevitServices')
+
+import RevitServices
+from RevitServices.Persistence import DocumentManager
+from RevitServices.Transactions import TransactionManager
+
+clr.AddReference('RevitAPI')
+from Autodesk.Revit.DB import WallUtils
+
+doc = DocumentManager.Instance.CurrentDBDocument
+
+walls = UnwrapElement(IN[0])
+startSwitch = IN[1]
+endSwitch = IN[2]
+success, error = [],[]
+
+for i in walls:
+	try:
+		TransactionManager.Instance.EnsureInTransaction(doc)
+		if startSwitch == True:
+			WallUtils.AllowWallJoinAtEnd(i,0)
+		if endSwitch == True:
+			WallUtils.AllowWallJoinAtEnd(i,1)
+		TransactionManager.Instance.TransactionTaskDone()
+		success.append(i)
+	except:
+		error.append("Error: Element category" +str(i.Category.Name))
+OUT = (success,error)</Script>
+    </PythonNodeModels.PythonNode>
+    <Dynamo.Graph.Nodes.CustomNodes.Symbol guid="81978d26-e94f-4256-896a-5f21a520f9d1" type="Dynamo.Graph.Nodes.CustomNodes.Symbol" nickname="Input" x="-47.4196836796293" y="-4.0645443153968" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" IsFrozen="false" isPinned="false">
+      <Symbol value="//Input walls to be joined&#xD;&#xA;Walls" />
+    </Dynamo.Graph.Nodes.CustomNodes.Symbol>
+    <Dynamo.Graph.Nodes.CustomNodes.Symbol guid="f5fb5987-2508-4b2a-8955-0c410c626297" type="Dynamo.Graph.Nodes.CustomNodes.Symbol" nickname="Input" x="-47.6103087167002" y="80.5922005455335" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" IsFrozen="false" isPinned="false">
+      <Symbol value="JoinAtStart:bool=true" />
+    </Dynamo.Graph.Nodes.CustomNodes.Symbol>
+    <Dynamo.Graph.Nodes.CustomNodes.Symbol guid="116a2cc4-61cd-4def-866d-bdde5a705aa8" type="Dynamo.Graph.Nodes.CustomNodes.Symbol" nickname="Input" x="-48.3915386445228" y="144.549473949087" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" IsFrozen="false" isPinned="false">
+      <Symbol value="JoinAtEnd:bool=true" />
+    </Dynamo.Graph.Nodes.CustomNodes.Symbol>
+    <Dynamo.Graph.Nodes.CustomNodes.Output guid="3f60bc2b-5431-4d30-926d-bb96b10a5e1c" type="Dynamo.Graph.Nodes.CustomNodes.Output" nickname="Output" x="553.28091966222" y="-3.83039070384288" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false">
+      <PortInfo index="0" default="False" />
+      <Symbol value="Success" />
+    </Dynamo.Graph.Nodes.CustomNodes.Output>
+    <Dynamo.Graph.Nodes.CustomNodes.Output guid="d1d09eb7-4b5f-4c8b-8b97-0ab2eed9a81f" type="Dynamo.Graph.Nodes.CustomNodes.Output" nickname="Output" x="553.974279470045" y="64.9612512803533" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false">
+      <PortInfo index="0" default="False" />
+      <Symbol value="Error" />
+    </Dynamo.Graph.Nodes.CustomNodes.Output>
+    <Dynamo.Graph.Nodes.CodeBlockNodeModel guid="c714bf94-bd14-499d-9a25-5fb664fdd190" type="Dynamo.Graph.Nodes.CodeBlockNodeModel" nickname="Code Block" x="409.747255005441" y="0.351359303558354" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false" CodeText="seq[0];&#xA;seq[1];" ShouldFocus="false">
+      <PortInfo index="0" default="False" />
+    </Dynamo.Graph.Nodes.CodeBlockNodeModel>
+  </Elements>
+  <Connectors>
+    <Dynamo.Graph.Connectors.ConnectorModel start="3a1a2934-d5a0-4be9-9e6f-06aa6fbd35f3" start_index="0" end="c714bf94-bd14-499d-9a25-5fb664fdd190" end_index="0" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="81978d26-e94f-4256-896a-5f21a520f9d1" start_index="0" end="3a1a2934-d5a0-4be9-9e6f-06aa6fbd35f3" end_index="0" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="f5fb5987-2508-4b2a-8955-0c410c626297" start_index="0" end="3a1a2934-d5a0-4be9-9e6f-06aa6fbd35f3" end_index="1" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="116a2cc4-61cd-4def-866d-bdde5a705aa8" start_index="0" end="3a1a2934-d5a0-4be9-9e6f-06aa6fbd35f3" end_index="2" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="c714bf94-bd14-499d-9a25-5fb664fdd190" start_index="0" end="3f60bc2b-5431-4d30-926d-bb96b10a5e1c" end_index="0" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="c714bf94-bd14-499d-9a25-5fb664fdd190" start_index="1" end="d1d09eb7-4b5f-4c8b-8b97-0ab2eed9a81f" end_index="0" portType="0" />
+  </Connectors>
+  <Notes />
+  <Annotations />
+  <Presets />
+  <Cameras>
+    <Camera Name="Фоновый просмотр" eyeX="-17" eyeY="24" eyeZ="50" lookX="12" lookY="-13" lookZ="-58" upX="0" upY="1" upZ="0" />
+  </Cameras>
+</Workspace>

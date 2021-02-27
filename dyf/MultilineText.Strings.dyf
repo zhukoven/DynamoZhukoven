@@ -1,0 +1,37 @@
+<Workspace Version="1.3.0.875" X="661.286082325464" Y="303.691343532544" zoom="1.51939327724693" ScaleFactor="1" Name="MultilineText.Strings" Description="Extract each line from multiline text parameter as a list of strings." ID="26f0ea51-f331-4bbf-99cc-3d3893e3754e" Category="Zhukoven.Revit.Text">
+  <NamespaceResolutionMap />
+  <Elements>
+    <PythonNodeModels.PythonNode guid="6b84be1f-1b80-42ac-b0d2-c30657e5227c" type="PythonNodeModels.PythonNode" nickname="Python Script" x="250" y="0" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="true" inputcount="1">
+      <PortInfo index="0" default="False" />
+      <Script>#Tested in Revit 2016+ and Dynamo 1.3.0 
+#Author © Konstantin Zhukoven @ https:\\zhukoven.com
+import clr
+clr.AddReference('ProtoGeometry')
+from Autodesk.DesignScript.Geometry import *
+#Введенные в этом узле данные сохраняется в виде списка в переменных IN.
+dataEnteringNode = IN
+mline = IN[0]
+nlines = mline.splitlines()
+count = len(nlines)
+#Назначьте вывод переменной OUT.
+OUT = nlines</Script>
+    </PythonNodeModels.PythonNode>
+    <Dynamo.Graph.Nodes.CustomNodes.Symbol guid="578f5527-51c5-4fde-b45b-d5f31b61c33e" type="Dynamo.Graph.Nodes.CustomNodes.Symbol" nickname="Input" x="-410.069155011047" y="0.0924173603145846" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" IsFrozen="false" isPinned="false">
+      <Symbol value="//Input multiline text parameter value (single string with multiple lines)&#xD;&#xA;MultilineText" />
+    </Dynamo.Graph.Nodes.CustomNodes.Symbol>
+    <Dynamo.Graph.Nodes.CustomNodes.Output guid="f290c8ae-0726-4a91-b8c3-72dbc514e4e0" type="Dynamo.Graph.Nodes.CustomNodes.Output" nickname="Output" x="394.930549189578" y="0" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false">
+      <PortInfo index="0" default="False" />
+      <Symbol value="Strings" />
+    </Dynamo.Graph.Nodes.CustomNodes.Output>
+  </Elements>
+  <Connectors>
+    <Dynamo.Graph.Connectors.ConnectorModel start="6b84be1f-1b80-42ac-b0d2-c30657e5227c" start_index="0" end="f290c8ae-0726-4a91-b8c3-72dbc514e4e0" end_index="0" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="578f5527-51c5-4fde-b45b-d5f31b61c33e" start_index="0" end="6b84be1f-1b80-42ac-b0d2-c30657e5227c" end_index="0" portType="0" />
+  </Connectors>
+  <Notes />
+  <Annotations />
+  <Presets />
+  <Cameras>
+    <Camera Name="Фоновый просмотр" eyeX="-17" eyeY="24" eyeZ="50" lookX="12" lookY="-13" lookZ="-58" upX="0" upY="1" upZ="0" />
+  </Cameras>
+</Workspace>

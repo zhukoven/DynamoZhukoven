@@ -1,0 +1,63 @@
+<Workspace Version="1.3.0.875" X="568.521950717776" Y="517.779846389466" zoom="1.40972876398001" ScaleFactor="1" Name="FamilyType.Activate" Description="This node eliminates the error &quot;The symbol is not active&quot; when placing family instances. " ID="9481639d-67dd-4edc-a1de-bab3335d1104" Category="Zhukoven.Revit.Elements">
+  <NamespaceResolutionMap />
+  <Elements>
+    <PythonNodeModels.PythonNode guid="03cc336d-0dde-4fc7-8fef-03c88b7b9006" type="PythonNodeModels.PythonNode" nickname="Python Script" x="250" y="0" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false" inputcount="1">
+      <PortInfo index="0" default="False" />
+      <Script>#Author Konstantin Zhukoven @ https://zhukoven.com
+#Tested to work with Dynamo 1.3.0+
+import clr
+clr.AddReference('RevitAPI')
+from Autodesk.Revit.DB import *
+
+clr.AddReference("RevitNodes")
+import Revit
+clr.ImportExtensions(Revit.Elements)
+clr.ImportExtensions(Revit.GeometryConversion)
+
+clr.AddReference("RevitServices")
+import RevitServices
+from RevitServices.Persistence import DocumentManager
+from RevitServices.Transactions import TransactionManager
+
+doc = DocumentManager.Instance.CurrentDBDocument
+famtype = UnwrapElement(IN[0])
+
+TransactionManager.Instance.EnsureInTransaction(doc)
+# Activating the Family Symbol
+for i in famtype:
+	if i.IsActive == False:
+		i.Activate()
+		doc.Regenerate()
+TransactionManager.Instance.TransactionTaskDone()
+OUT = famtype</Script>
+    </PythonNodeModels.PythonNode>
+    <Dynamo.Graph.Nodes.CustomNodes.Symbol guid="a92e55b2-6c02-4103-aba0-bd71c384c5a2" type="Dynamo.Graph.Nodes.CustomNodes.Symbol" nickname="Input" x="-211.010391511768" y="52.3392040166684" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" IsFrozen="false" isPinned="false">
+      <Symbol value="FamilyType" />
+    </Dynamo.Graph.Nodes.CustomNodes.Symbol>
+    <Dynamo.Graph.Nodes.CustomNodes.Output guid="099de4da-02e0-4639-9633-d6bb6aa3efd0" type="Dynamo.Graph.Nodes.CustomNodes.Output" nickname="Output" x="394.054925412691" y="0" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false">
+      <PortInfo index="0" default="False" />
+      <Symbol value="FamilyType" />
+    </Dynamo.Graph.Nodes.CustomNodes.Output>
+    <Dynamo.Graph.Nodes.ZeroTouch.DSFunction guid="bd8542eb-7e90-41f5-8b7f-6f6ce5f72bef" type="Dynamo.Graph.Nodes.ZeroTouch.DSFunction" nickname="List.Empty" x="-173.531047635409" y="-41.6832822003267" isVisible="true" isUpstreamVisible="true" lacing="Shortest" isSelectedInput="False" IsFrozen="false" isPinned="false" assembly="DSCoreNodes.dll" function="DSCore.List.Empty" />
+    <Dynamo.Graph.Nodes.ZeroTouch.DSFunction guid="ca0c9e2b-ae34-4e51-b443-daec1bf407a0" type="Dynamo.Graph.Nodes.ZeroTouch.DSFunction" nickname="Flatten" x="52.3333965264585" y="-0.660922740987687" isVisible="true" isUpstreamVisible="true" lacing="Shortest" isSelectedInput="False" IsFrozen="false" isPinned="false" assembly="BuiltIn" function="Flatten@var[]..[]">
+      <PortInfo index="0" default="False" />
+    </Dynamo.Graph.Nodes.ZeroTouch.DSFunction>
+    <CoreNodeModels.CreateList guid="31603ce5-5080-4e61-b841-0d70878d8c2a" type="CoreNodeModels.CreateList" nickname="List.Create" x="-77.6752408536171" y="-0.391380563944693" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false" inputcount="2">
+      <PortInfo index="0" default="False" />
+      <PortInfo index="1" default="False" />
+    </CoreNodeModels.CreateList>
+  </Elements>
+  <Connectors>
+    <Dynamo.Graph.Connectors.ConnectorModel start="03cc336d-0dde-4fc7-8fef-03c88b7b9006" start_index="0" end="099de4da-02e0-4639-9633-d6bb6aa3efd0" end_index="0" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="a92e55b2-6c02-4103-aba0-bd71c384c5a2" start_index="0" end="31603ce5-5080-4e61-b841-0d70878d8c2a" end_index="1" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="bd8542eb-7e90-41f5-8b7f-6f6ce5f72bef" start_index="0" end="31603ce5-5080-4e61-b841-0d70878d8c2a" end_index="0" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="ca0c9e2b-ae34-4e51-b443-daec1bf407a0" start_index="0" end="03cc336d-0dde-4fc7-8fef-03c88b7b9006" end_index="0" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="31603ce5-5080-4e61-b841-0d70878d8c2a" start_index="0" end="ca0c9e2b-ae34-4e51-b443-daec1bf407a0" end_index="0" portType="0" />
+  </Connectors>
+  <Notes />
+  <Annotations />
+  <Presets />
+  <Cameras>
+    <Camera Name="Фоновый просмотр" eyeX="-17" eyeY="24" eyeZ="50" lookX="12" lookY="-13" lookZ="-58" upX="0" upY="1" upZ="0" />
+  </Cameras>
+</Workspace>

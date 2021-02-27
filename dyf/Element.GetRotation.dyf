@@ -1,0 +1,51 @@
+<Workspace Version="1.3.0.875" X="186.157517861771" Y="387.266363006519" zoom="0.789531730130973" ScaleFactor="1" Name="Element.GetRotation" Description="This node calculates rotation angle between selected element's vector and Y axis. Vector Z is used as rotation axis. Use resulting degree as an input to the FamilyInstance.SetRotation node." ID="d8abf4a0-8a70-43b9-a881-6505b18fb8c2" Category="Zhukoven.Revit.Elements">
+  <NamespaceResolutionMap>
+    <ClassMap partialName="Vector" resolvedName="Autodesk.DesignScript.Geometry.Vector" assemblyName="ProtoGeometry.dll" />
+  </NamespaceResolutionMap>
+  <Elements>
+    <Dynamo.Graph.Nodes.ZeroTouch.DSFunction guid="0551b0ec-444d-4d18-97a3-66f826ddb2df" type="Dynamo.Graph.Nodes.ZeroTouch.DSFunction" nickname="Vector.AngleAboutAxis" x="385.010774830878" y="0.444469436394911" isVisible="true" isUpstreamVisible="true" lacing="Shortest" isSelectedInput="False" IsFrozen="false" isPinned="false" assembly="ProtoGeometry.dll" function="Autodesk.DesignScript.Geometry.Vector.AngleAboutAxis@Autodesk.DesignScript.Geometry.Vector,Autodesk.DesignScript.Geometry.Vector">
+      <PortInfo index="0" default="False" />
+      <PortInfo index="1" default="False" />
+      <PortInfo index="2" default="False" />
+    </Dynamo.Graph.Nodes.ZeroTouch.DSFunction>
+    <Dynamo.Graph.Nodes.ZeroTouch.DSFunction guid="a5b02fbb-2f15-47d7-8cec-9f80abf3a86c" type="Dynamo.Graph.Nodes.ZeroTouch.DSFunction" nickname="Vector.ZAxis" x="250.574327916224" y="115.379560954229" isVisible="true" isUpstreamVisible="true" lacing="Shortest" isSelectedInput="False" IsFrozen="false" isPinned="false" assembly="ProtoGeometry.dll" function="Autodesk.DesignScript.Geometry.Vector.ZAxis" />
+    <Dynamo.Graph.Nodes.ZeroTouch.DSFunction guid="6834c6b2-96be-4556-a949-a79257f96825" type="Dynamo.Graph.Nodes.ZeroTouch.DSFunction" nickname="Vector.YAxis" x="250" y="25.865048884466" isVisible="true" isUpstreamVisible="true" lacing="Shortest" isSelectedInput="False" IsFrozen="false" isPinned="false" assembly="ProtoGeometry.dll" function="Autodesk.DesignScript.Geometry.Vector.YAxis" />
+    <Dynamo.Graph.Nodes.CodeBlockNodeModel guid="d0ff779e-d2d2-4421-9502-3888785edbdf" type="Dynamo.Graph.Nodes.CodeBlockNodeModel" nickname="Code Block" x="1071.50597370758" y="8.53648414827614" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false" CodeText="degree &gt; 180 ? degree-360 : degree;" ShouldFocus="false">
+      <PortInfo index="0" default="False" />
+    </Dynamo.Graph.Nodes.CodeBlockNodeModel>
+    <Dynamo.Graph.Nodes.CustomNodes.Symbol guid="bd547559-c1dc-4f84-a967-b34e07311e1d" type="Dynamo.Graph.Nodes.CustomNodes.Symbol" nickname="Input" x="12.6715131874463" y="-76.3829456787262" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" IsFrozen="false" isPinned="false">
+      <Symbol value="InputVector:Vector" />
+    </Dynamo.Graph.Nodes.CustomNodes.Symbol>
+    <Dynamo.Graph.Nodes.CustomNodes.Output guid="fa87e34b-2db1-4314-87c6-9f22a0d994ea" type="Dynamo.Graph.Nodes.CustomNodes.Output" nickname="Output" x="1519.50597370758" y="8.53648414827614" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false">
+      <PortInfo index="0" default="False" />
+      <Symbol value="Degree" />
+    </Dynamo.Graph.Nodes.CustomNodes.Output>
+    <Dynamo.Graph.Nodes.CustomNodes.Symbol guid="7f1a846b-c47a-4a87-9bac-00f80677d7a5" type="Dynamo.Graph.Nodes.CustomNodes.Symbol" nickname="Input" x="141.713727991967" y="245.888367522484" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" IsFrozen="false" isPinned="false">
+      <Symbol value="Rotate90:bool=false" />
+    </Dynamo.Graph.Nodes.CustomNodes.Symbol>
+    <CoreNodeModels.Logic.If guid="268bbe1f-7893-4236-94f4-77263485b162" type="CoreNodeModels.Logic.If" nickname="If" x="877.867389835312" y="33.2714244013818" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false">
+      <PortInfo index="0" default="False" />
+      <PortInfo index="1" default="False" />
+      <PortInfo index="2" default="False" />
+    </CoreNodeModels.Logic.If>
+    <Dynamo.Graph.Nodes.CodeBlockNodeModel guid="2e532599-b9ab-4e06-b560-ee857035ef11" type="Dynamo.Graph.Nodes.CodeBlockNodeModel" nickname="Code Block" x="641.865918797842" y="4.81289804560697" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false" CodeText="angle+90;" ShouldFocus="false">
+      <PortInfo index="0" default="False" />
+    </Dynamo.Graph.Nodes.CodeBlockNodeModel>
+  </Elements>
+  <Connectors>
+    <Dynamo.Graph.Connectors.ConnectorModel start="0551b0ec-444d-4d18-97a3-66f826ddb2df" start_index="0" end="268bbe1f-7893-4236-94f4-77263485b162" end_index="2" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="0551b0ec-444d-4d18-97a3-66f826ddb2df" start_index="0" end="2e532599-b9ab-4e06-b560-ee857035ef11" end_index="0" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="a5b02fbb-2f15-47d7-8cec-9f80abf3a86c" start_index="0" end="0551b0ec-444d-4d18-97a3-66f826ddb2df" end_index="2" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="6834c6b2-96be-4556-a949-a79257f96825" start_index="0" end="0551b0ec-444d-4d18-97a3-66f826ddb2df" end_index="1" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="d0ff779e-d2d2-4421-9502-3888785edbdf" start_index="0" end="fa87e34b-2db1-4314-87c6-9f22a0d994ea" end_index="0" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="bd547559-c1dc-4f84-a967-b34e07311e1d" start_index="0" end="0551b0ec-444d-4d18-97a3-66f826ddb2df" end_index="0" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="7f1a846b-c47a-4a87-9bac-00f80677d7a5" start_index="0" end="268bbe1f-7893-4236-94f4-77263485b162" end_index="0" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="268bbe1f-7893-4236-94f4-77263485b162" start_index="0" end="d0ff779e-d2d2-4421-9502-3888785edbdf" end_index="0" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="2e532599-b9ab-4e06-b560-ee857035ef11" start_index="0" end="268bbe1f-7893-4236-94f4-77263485b162" end_index="1" portType="0" />
+  </Connectors>
+  <Notes>
+    <Dynamo.Graph.Notes.NoteModel guid="4008aae3-8aa4-4e65-a230-ce110d78665b" text="This could be a family instance orientation vector, or line direction vector" x="-52.5065531530149" y="-126.968775673634" />
+  </Notes>
+  <Annotations />
+  <Presets />
+</Workspace>

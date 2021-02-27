@@ -1,0 +1,63 @@
+<Workspace Version="1.3.2.2480" X="234.595985784387" Y="199.9599469205" zoom="2.37004060791358" ScaleFactor="1" Name="Room.CreateUnplacedAtPhase" Description="This node creates unplaces room at the desired phase, using number (str.) and name (str.) provided." ID="ac070273-5fc3-4eef-a45f-f6734e9c8fbf" Category="Zhukoven.Revit.Rooms">
+  <NamespaceResolutionMap />
+  <Elements>
+    <PythonNodeModels.PythonNode guid="21406deb-cefb-4dd5-9d4d-077fd213864c" type="PythonNodeModels.PythonNode" nickname="Python Script" x="250" y="0" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false" inputcount="3">
+      <PortInfo index="0" default="False" />
+      <PortInfo index="1" default="False" />
+      <PortInfo index="2" default="False" />
+      <Script>#Author Konstantin Zhukoven @ https://zhukoven.com
+#Tested to work with Dynamo 1.3.0+
+import clr
+clr.AddReference("RevitNodes")
+import Revit
+
+# Import DocumentManager and TransactionManager
+clr.AddReference("RevitServices")
+import RevitServices
+from RevitServices.Persistence import DocumentManager
+from RevitServices.Transactions import TransactionManager
+# Import RevitAPI
+clr.AddReference("RevitAPI")
+import Autodesk
+from Autodesk.Revit.DB import *
+from Autodesk.Revit.Creation.Document import NewRoom
+
+doc = DocumentManager.Instance.CurrentDBDocument
+phase = UnwrapElement(IN[0])
+
+TransactionManager.Instance.EnsureInTransaction(doc)
+createRoom = doc.Create.NewRoom(phase)
+createRoom.Name = IN[1]
+createRoom.Number = IN[2]
+TransactionManager.Instance.TransactionTaskDone()
+
+OUT = createRoom
+</Script>
+    </PythonNodeModels.PythonNode>
+    <Dynamo.Graph.Nodes.CustomNodes.Symbol guid="f008a3ec-672d-49fc-afd3-8e3456c97f4d" type="Dynamo.Graph.Nodes.CustomNodes.Symbol" nickname="Input" x="119.560800870552" y="-2.8421709430404E-14" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" IsFrozen="false" isPinned="false">
+      <Symbol value="Phase" />
+    </Dynamo.Graph.Nodes.CustomNodes.Symbol>
+    <Dynamo.Graph.Nodes.CustomNodes.Symbol guid="300caeda-1e35-405f-b887-62b1b988327c" type="Dynamo.Graph.Nodes.CustomNodes.Symbol" nickname="Input" x="120.082869986856" y="58.0876343307631" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" IsFrozen="false" isPinned="false">
+      <Symbol value="//String&#xD;&#xA;RoomName" />
+    </Dynamo.Graph.Nodes.CustomNodes.Symbol>
+    <Dynamo.Graph.Nodes.CustomNodes.Symbol guid="ef5a9f9b-e7bd-44e0-bdb4-559db9af3ea0" type="Dynamo.Graph.Nodes.CustomNodes.Symbol" nickname="Input" x="120.472478041989" y="127.458109827837" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" IsFrozen="false" isPinned="false">
+      <Symbol value="//String&#xD;&#xA;RoomNumber" />
+    </Dynamo.Graph.Nodes.CustomNodes.Symbol>
+    <Dynamo.Graph.Nodes.CustomNodes.Output guid="26f6927b-8611-4319-8cdf-619e26f2a15b" type="Dynamo.Graph.Nodes.CustomNodes.Output" nickname="Output" x="389.929282168188" y="-0.421933698798654" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false">
+      <PortInfo index="0" default="False" />
+      <Symbol value="Room" />
+    </Dynamo.Graph.Nodes.CustomNodes.Output>
+  </Elements>
+  <Connectors>
+    <Dynamo.Graph.Connectors.ConnectorModel start="21406deb-cefb-4dd5-9d4d-077fd213864c" start_index="0" end="26f6927b-8611-4319-8cdf-619e26f2a15b" end_index="0" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="f008a3ec-672d-49fc-afd3-8e3456c97f4d" start_index="0" end="21406deb-cefb-4dd5-9d4d-077fd213864c" end_index="0" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="300caeda-1e35-405f-b887-62b1b988327c" start_index="0" end="21406deb-cefb-4dd5-9d4d-077fd213864c" end_index="1" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="ef5a9f9b-e7bd-44e0-bdb4-559db9af3ea0" start_index="0" end="21406deb-cefb-4dd5-9d4d-077fd213864c" end_index="2" portType="0" />
+  </Connectors>
+  <Notes />
+  <Annotations />
+  <Presets />
+  <Cameras>
+    <Camera Name="Фоновый просмотр" eyeX="-17" eyeY="24" eyeZ="50" lookX="12" lookY="-13" lookZ="-58" upX="0" upY="1" upZ="0" />
+  </Cameras>
+</Workspace>

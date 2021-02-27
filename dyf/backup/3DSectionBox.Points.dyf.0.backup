@@ -1,0 +1,70 @@
+<Workspace Version="1.3.0.875" X="271.141466679782" Y="418.407706495521" zoom="1.21980720172549" ScaleFactor="1" Name="3DSectionBox.Points" Description="Extract section boxes from desired 3D views, and convert them into Dynamo Min &amp; Max points. Use these points with &quot;BoundingBox.ByCorners&quot; OOTB node to get the bounding box element." ID="f15a6524-f11a-41fb-a3c8-de9ee11090b5" Category="Zhukoven.Revit.BoundingBoxes">
+  <NamespaceResolutionMap />
+  <Elements>
+    <PythonNodeModels.PythonNode guid="f25e4629-22af-4db2-a8ee-9b92e121808e" type="PythonNodeModels.PythonNode" nickname="Python Script" x="312.304928100517" y="-111.739212740728" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false" inputcount="1">
+      <PortInfo index="0" default="False" />
+      <Script>#Author Konstantin Zhukoven @ https://zhukoven.com
+#Tested to work with Dynamo 1.3.0+
+import clr
+clr.AddReference("RevitAPI")
+import Autodesk
+from Autodesk.Revit.DB import *
+
+clr.AddReference("RevitNodes")
+import Revit
+clr.ImportExtensions(Revit.GeometryConversion)
+clr.ImportExtensions(Revit.Elements)
+
+clr.AddReference("RevitServices")
+import RevitServices
+from RevitServices.Persistence import DocumentManager
+from RevitServices.Transactions import TransactionManager
+
+doc = DocumentManager.Instance.CurrentDBDocument
+view = UnwrapElement(IN[0])
+bmin, bmax = [], []
+for i in view:
+	bmax.append(i.GetSectionBox().Max.ToPoint())
+	bmin.append(i.GetSectionBox().Min.ToPoint())
+
+OUT = bmin, bmax</Script>
+    </PythonNodeModels.PythonNode>
+    <Dynamo.Graph.Nodes.CustomNodes.Symbol guid="81d007dc-e9f9-4366-8683-8a3e145836b8" type="Dynamo.Graph.Nodes.CustomNodes.Symbol" nickname="Input" x="-107.615044243908" y="-66.4976810812715" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" IsFrozen="false" isPinned="false">
+      <Symbol value="3DView" />
+    </Dynamo.Graph.Nodes.CustomNodes.Symbol>
+    <Dynamo.Graph.Nodes.CustomNodes.Output guid="6851c19b-53c1-4b17-8520-2e399189f86b" type="Dynamo.Graph.Nodes.CustomNodes.Output" nickname="Output" x="620.068633755771" y="-111.662993263161" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false">
+      <PortInfo index="0" default="False" />
+      <Symbol value="//Use these points with &quot;BoundingBox.ByCorners&quot; OOTB node&#xD;&#xA;min" />
+    </Dynamo.Graph.Nodes.CustomNodes.Output>
+    <Dynamo.Graph.Nodes.CodeBlockNodeModel guid="dc1a9602-ab1f-4e52-96b0-de09d5c63ccf" type="Dynamo.Graph.Nodes.CodeBlockNodeModel" nickname="Code Block" x="447.966759067008" y="-107.513681388395" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false" CodeText="seq[0];&#xA;seq[1];" ShouldFocus="false">
+      <PortInfo index="0" default="False" />
+    </Dynamo.Graph.Nodes.CodeBlockNodeModel>
+    <Dynamo.Graph.Nodes.CustomNodes.Output guid="60c62620-d3c1-4872-bb3a-f4c457c880d9" type="Dynamo.Graph.Nodes.CustomNodes.Output" nickname="Output" x="621.29087936262" y="-47.6748410492972" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false">
+      <PortInfo index="0" default="False" />
+      <Symbol value="//Use these points with &quot;BoundingBox.ByCorners&quot; OOTB node&#xD;&#xA;max" />
+    </Dynamo.Graph.Nodes.CustomNodes.Output>
+    <Dynamo.Graph.Nodes.ZeroTouch.DSFunction guid="44b69f54-e3c6-4661-9a60-8fb7d35de367" type="Dynamo.Graph.Nodes.ZeroTouch.DSFunction" nickname="Flatten" x="118.730514409089" y="-112.034865350989" isVisible="true" isUpstreamVisible="true" lacing="Shortest" isSelectedInput="False" IsFrozen="false" isPinned="false" assembly="BuiltIn" function="Flatten@var[]..[]">
+      <PortInfo index="0" default="False" />
+    </Dynamo.Graph.Nodes.ZeroTouch.DSFunction>
+    <CoreNodeModels.CreateList guid="abfac594-245b-4477-88c0-489310fdba3c" type="CoreNodeModels.CreateList" nickname="List.Create" x="-11.2781229709866" y="-111.765323173946" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false" inputcount="2">
+      <PortInfo index="0" default="False" />
+      <PortInfo index="1" default="False" />
+    </CoreNodeModels.CreateList>
+    <Dynamo.Graph.Nodes.ZeroTouch.DSFunction guid="850b1cbf-edd0-4561-8eb9-23ac160cd60f" type="Dynamo.Graph.Nodes.ZeroTouch.DSFunction" nickname="List.Empty" x="-107.133929752779" y="-153.057224810328" isVisible="true" isUpstreamVisible="true" lacing="Shortest" isSelectedInput="False" IsFrozen="false" isPinned="false" assembly="DSCoreNodes.dll" function="DSCore.List.Empty" />
+  </Elements>
+  <Connectors>
+    <Dynamo.Graph.Connectors.ConnectorModel start="f25e4629-22af-4db2-a8ee-9b92e121808e" start_index="0" end="dc1a9602-ab1f-4e52-96b0-de09d5c63ccf" end_index="0" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="81d007dc-e9f9-4366-8683-8a3e145836b8" start_index="0" end="abfac594-245b-4477-88c0-489310fdba3c" end_index="1" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="dc1a9602-ab1f-4e52-96b0-de09d5c63ccf" start_index="0" end="6851c19b-53c1-4b17-8520-2e399189f86b" end_index="0" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="dc1a9602-ab1f-4e52-96b0-de09d5c63ccf" start_index="1" end="60c62620-d3c1-4872-bb3a-f4c457c880d9" end_index="0" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="44b69f54-e3c6-4661-9a60-8fb7d35de367" start_index="0" end="f25e4629-22af-4db2-a8ee-9b92e121808e" end_index="0" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="abfac594-245b-4477-88c0-489310fdba3c" start_index="0" end="44b69f54-e3c6-4661-9a60-8fb7d35de367" end_index="0" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="850b1cbf-edd0-4561-8eb9-23ac160cd60f" start_index="0" end="abfac594-245b-4477-88c0-489310fdba3c" end_index="0" portType="0" />
+  </Connectors>
+  <Notes />
+  <Annotations />
+  <Presets />
+  <Cameras>
+    <Camera Name="Фоновый просмотр" eyeX="-17" eyeY="24" eyeZ="50" lookX="12" lookY="-13" lookZ="-58" upX="0" upY="1" upZ="0" />
+  </Cameras>
+</Workspace>

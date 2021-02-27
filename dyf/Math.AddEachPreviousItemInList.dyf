@@ -1,0 +1,35 @@
+<Workspace Version="1.3.2.2480" X="133.906478288776" Y="227.577098021733" zoom="1.545620359375" ScaleFactor="1" Name="Math.AddEachPreviousItemInList" Description="This node adds each previous item in the input list. For example: input list of these values: [4, 2, 1, 3] will result in their sums: [4, 6, 7, 10]" ID="db9f499c-a8ad-4044-8eef-a0a7793dd3e8" Category="Zhukoven.Math">
+  <NamespaceResolutionMap />
+  <Elements>
+    <PythonNodeModels.PythonNode guid="32c2a08c-c50e-46e8-a25a-0d41a8d9ed3e" type="PythonNodeModels.PythonNode" nickname="Python Script" x="250" y="0" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false" inputcount="1">
+      <PortInfo index="0" default="False" />
+      <Script>#Author Konstantin Zhukoven @ https://zhukoven.com
+l = IN[0]
+newList = []
+def add_one_by_one(l):
+	cumsum = 0
+	for elt in l:
+		cumsum += elt
+		yield cumsum
+newList = list(add_one_by_one(l))
+OUT = newList</Script>
+    </PythonNodeModels.PythonNode>
+    <Dynamo.Graph.Nodes.CustomNodes.Symbol guid="72b3beb2-e27e-4f17-a493-ca5660c82d67" type="Dynamo.Graph.Nodes.CustomNodes.Symbol" nickname="Input" x="117.105082695204" y="-2.8421709430404E-14" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" IsFrozen="false" isPinned="false">
+      <Symbol value="//double[]&#xD;&#xA;values" />
+    </Dynamo.Graph.Nodes.CustomNodes.Symbol>
+    <Dynamo.Graph.Nodes.CustomNodes.Output guid="207129e4-137c-41a2-83a3-0b23642f85a9" type="Dynamo.Graph.Nodes.CustomNodes.Output" nickname="Output" x="396.593858020378" y="0" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false">
+      <PortInfo index="0" default="False" />
+      <Symbol value="//double[]&#xD;&#xA;list" />
+    </Dynamo.Graph.Nodes.CustomNodes.Output>
+  </Elements>
+  <Connectors>
+    <Dynamo.Graph.Connectors.ConnectorModel start="32c2a08c-c50e-46e8-a25a-0d41a8d9ed3e" start_index="0" end="207129e4-137c-41a2-83a3-0b23642f85a9" end_index="0" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="72b3beb2-e27e-4f17-a493-ca5660c82d67" start_index="0" end="32c2a08c-c50e-46e8-a25a-0d41a8d9ed3e" end_index="0" portType="0" />
+  </Connectors>
+  <Notes />
+  <Annotations />
+  <Presets />
+  <Cameras>
+    <Camera Name="Фоновый просмотр" eyeX="2572.43142679926" eyeY="22307.7183511969" eyeZ="20613.9421669373" lookX="666.903566489711" lookY="-31743.7570999103" lookZ="-14197.6392973836" upX="0.0377178585806911" upY="0.594822786751341" upZ="-0.802971491091343" />
+  </Cameras>
+</Workspace>

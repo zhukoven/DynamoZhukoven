@@ -1,0 +1,37 @@
+<Workspace Version="1.3.0.875" X="200.88730588998" Y="305.182978538595" zoom="1.130842140625" ScaleFactor="1" Name="ScopeBox.CenterPoint" Description="This node takes Scope Box element and extracts its center point as location." ID="33fb1615-60e1-42a5-8d75-1e6d6efc81c6" Category="Zhukoven.Revit.ScopeBoxes">
+  <NamespaceResolutionMap />
+  <Elements>
+    <Dynamo.Graph.Nodes.ZeroTouch.DSFunction guid="39452c24-df10-4f61-a339-e18a3d438ec2" type="Dynamo.Graph.Nodes.ZeroTouch.DSFunction" nickname="Element.BoundingBox" x="250" y="0" isVisible="true" isUpstreamVisible="true" lacing="Shortest" isSelectedInput="False" IsFrozen="false" isPinned="false" assembly="RevitNodes.dll" function="Revit.Elements.Element.BoundingBox">
+      <PortInfo index="0" default="False" />
+    </Dynamo.Graph.Nodes.ZeroTouch.DSFunction>
+    <Dynamo.Graph.Nodes.CustomNodes.Function guid="c02f2bef-a8fd-4242-82b4-a304b6758153" type="Dynamo.Graph.Nodes.CustomNodes.Function" nickname="BoundingBox.CenterPoint" x="522.716177327324" y="0.379380242845343" isVisible="true" isUpstreamVisible="true" lacing="Shortest" isSelectedInput="False" IsFrozen="false" isPinned="false">
+      <PortInfo index="0" default="False" />
+      <ID value="c80ce94f-4ed6-4625-a82d-ef806df1a731" />
+      <Name value="BoundingBox.CenterPoint" />
+      <Description value="Input Bounding Box element to get its center point. This node is little and lightweight, as it doesn't convert bounding box to geometry to get its centroid point." />
+      <Inputs>
+        <Input value="boundingBox" />
+      </Inputs>
+      <Outputs>
+        <Output value="Point" />
+      </Outputs>
+    </Dynamo.Graph.Nodes.CustomNodes.Function>
+    <Dynamo.Graph.Nodes.CustomNodes.Symbol guid="64d62449-e35b-4aa2-bcef-43d3b5cdb56d" type="Dynamo.Graph.Nodes.CustomNodes.Symbol" nickname="Input" x="-35.1209852557247" y="0" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" IsFrozen="false" isPinned="false">
+      <Symbol value="//Input Scope Box element(s)&#xD;&#xA;ScopeBox : Element" />
+    </Dynamo.Graph.Nodes.CustomNodes.Symbol>
+    <Dynamo.Graph.Nodes.CustomNodes.Output guid="b3bb50a0-2c0c-46dd-a1d6-e1034049e198" type="Dynamo.Graph.Nodes.CustomNodes.Output" nickname="Output" x="829.716177327324" y="0" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false">
+      <PortInfo index="0" default="False" />
+      <Symbol value="Point" />
+    </Dynamo.Graph.Nodes.CustomNodes.Output>
+  </Elements>
+  <Connectors>
+    <Dynamo.Graph.Connectors.ConnectorModel start="39452c24-df10-4f61-a339-e18a3d438ec2" start_index="0" end="c02f2bef-a8fd-4242-82b4-a304b6758153" end_index="0" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="c02f2bef-a8fd-4242-82b4-a304b6758153" start_index="0" end="b3bb50a0-2c0c-46dd-a1d6-e1034049e198" end_index="0" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="64d62449-e35b-4aa2-bcef-43d3b5cdb56d" start_index="0" end="39452c24-df10-4f61-a339-e18a3d438ec2" end_index="0" portType="0" />
+  </Connectors>
+  <Notes>
+    <Dynamo.Graph.Notes.NoteModel guid="891a2c94-0998-4065-bf9e-0537d8953838" text="Node from &quot;Zhukoven.com&quot; package" x="528.740485710307" y="-39.2966649075038" />
+  </Notes>
+  <Annotations />
+  <Presets />
+</Workspace>

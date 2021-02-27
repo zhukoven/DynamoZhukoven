@@ -1,0 +1,41 @@
+<Workspace Version="1.3.0.875" X="160.716051130866" Y="433.484853744859" zoom="1.31537540500821" ScaleFactor="1" Name="Document.CentralModelPath" Description="Extracts file path of the central model. Works from within both Central and Local workshared models. Returns null if worksharing is disabled in current Document." ID="79799b34-3da4-413f-8bd8-472bb7269d0d" Category="Zhukoven.Revit.Document">
+  <NamespaceResolutionMap />
+  <Elements>
+    <PythonNodeModels.PythonNode guid="2c53ed04-1d18-4c1e-821d-b2568f7f67c3" type="PythonNodeModels.PythonNode" nickname="Python Script" x="250" y="0" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false" inputcount="1">
+      <PortInfo index="0" default="False" />
+      <Script>#Tested in Revit 2016+ and Dynamo 1.3.0 
+#Author © Konstantin Zhukoven @ https:\\zhukoven.com
+import clr
+#Import Revit Services
+clr.AddReference("RevitServices")
+import RevitServices
+from RevitServices.Persistence import DocumentManager
+from RevitServices.Transactions import TransactionManager
+
+#Import Revit API
+clr.AddReference("RevitAPI")
+import Autodesk
+from Autodesk.Revit.DB import *
+
+doc = DocumentManager.Instance.CurrentDBDocument
+
+#Start Transaction
+TransactionManager.Instance.EnsureInTransaction(doc)
+
+centralpath = doc.GetWorksharingCentralModelPath() 
+mpath = ModelPathUtils.ConvertModelPathToUserVisiblePath(centralpath)
+
+OUT = mpath</Script>
+    </PythonNodeModels.PythonNode>
+    <Dynamo.Graph.Nodes.CustomNodes.Output guid="643db725-14b6-4423-818f-8775d36aebac" type="Dynamo.Graph.Nodes.CustomNodes.Output" nickname="Output" x="394.922658879412" y="-0.0840952800655828" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false">
+      <PortInfo index="0" default="False" />
+      <Symbol value="filePath" />
+    </Dynamo.Graph.Nodes.CustomNodes.Output>
+  </Elements>
+  <Connectors>
+    <Dynamo.Graph.Connectors.ConnectorModel start="2c53ed04-1d18-4c1e-821d-b2568f7f67c3" start_index="0" end="643db725-14b6-4423-818f-8775d36aebac" end_index="0" portType="0" />
+  </Connectors>
+  <Notes />
+  <Annotations />
+  <Presets />
+</Workspace>

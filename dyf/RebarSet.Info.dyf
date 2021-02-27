@@ -1,0 +1,62 @@
+<Workspace Version="1.3.2.2480" X="274.331441746804" Y="286.613359613065" zoom="1.130842140625" ScaleFactor="1" Name="RebarSet.Info" Description="Input rebar set to get information about nested rebars: quantity, total length." ID="ddb9be23-3fb6-4797-b20a-9524e1614bf2" Category="Zhukoven.Revit.Rebar">
+  <NamespaceResolutionMap />
+  <Elements>
+    <PythonNodeModels.PythonNode guid="d88d8d4d-0847-4d8e-acd7-4c1523f51be5" type="PythonNodeModels.PythonNode" nickname="Python Script" x="250" y="0" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false" inputcount="1">
+      <PortInfo index="0" default="False" />
+      <Script>#Author Konstantin Zhukoven @ https://zhukoven.com
+#Tested to work with Dynamo 1.3.0+
+import clr
+clr.AddReference('RevitAPI')
+from Autodesk.Revit.DB import *
+from Autodesk.Revit.DB.Structure import *
+
+clr.AddReference('RevitNodes')
+import Revit
+clr.ImportExtensions(Revit.GeometryConversion)
+clr.ImportExtensions(Revit.Elements)
+
+clr.AddReference('RevitServices')
+import RevitServices
+from RevitServices.Persistence import DocumentManager
+from RevitServices.Transactions import TransactionManager
+
+doc = DocumentManager.Instance.CurrentDBDocument
+#in Revit API: rebarSet means RebarInSystem
+rebarSet = UnwrapElement(IN[0])
+quantity, length = [], []
+
+TransactionManager.Instance.EnsureInTransaction(doc)
+for i in rebarSet:
+	quantity.append(i.Quantity)
+	length.append(i.TotalLength)
+TransactionManager.Instance.TransactionTaskDone()
+OUT = quantity, length</Script>
+    </PythonNodeModels.PythonNode>
+    <Dynamo.Graph.Nodes.CodeBlockNodeModel guid="4c61cc53-0f42-4db8-8a56-1888bbf06768" type="Dynamo.Graph.Nodes.CodeBlockNodeModel" nickname="Code Block" x="387.865411570136" y="4.04717296645867" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false" CodeText="seq[0];&#xA;seq[1];" ShouldFocus="false">
+      <PortInfo index="0" default="False" />
+    </Dynamo.Graph.Nodes.CodeBlockNodeModel>
+    <Dynamo.Graph.Nodes.CustomNodes.Symbol guid="59269a72-a414-4b53-9fc1-f9221fed50c3" type="Dynamo.Graph.Nodes.CustomNodes.Symbol" nickname="Input" x="137.494921001135" y="0" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" IsFrozen="false" isPinned="false">
+      <Symbol value="RebarSet" />
+    </Dynamo.Graph.Nodes.CustomNodes.Symbol>
+    <Dynamo.Graph.Nodes.CustomNodes.Output guid="e0b998cc-b0dc-41e9-bb5c-b816d5f9c8e7" type="Dynamo.Graph.Nodes.CustomNodes.Output" nickname="Output" x="583.865411570136" y="0" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false">
+      <PortInfo index="0" default="False" />
+      <Symbol value="//Identifies the number of bars in rebar set&#xD;&#xA;Quantity" />
+    </Dynamo.Graph.Nodes.CustomNodes.Output>
+    <Dynamo.Graph.Nodes.CustomNodes.Output guid="a0f42f16-a5a7-4809-96b2-0c5264b5cea0" type="Dynamo.Graph.Nodes.CustomNodes.Output" nickname="Output" x="583.865411570136" y="88.0992293395504" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false">
+      <PortInfo index="0" default="False" />
+      <Symbol value="//The length of an individual bar multiplied by Quantity&#xD;&#xA;TotalLength" />
+    </Dynamo.Graph.Nodes.CustomNodes.Output>
+  </Elements>
+  <Connectors>
+    <Dynamo.Graph.Connectors.ConnectorModel start="d88d8d4d-0847-4d8e-acd7-4c1523f51be5" start_index="0" end="4c61cc53-0f42-4db8-8a56-1888bbf06768" end_index="0" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="4c61cc53-0f42-4db8-8a56-1888bbf06768" start_index="0" end="e0b998cc-b0dc-41e9-bb5c-b816d5f9c8e7" end_index="0" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="4c61cc53-0f42-4db8-8a56-1888bbf06768" start_index="1" end="a0f42f16-a5a7-4809-96b2-0c5264b5cea0" end_index="0" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="59269a72-a414-4b53-9fc1-f9221fed50c3" start_index="0" end="d88d8d4d-0847-4d8e-acd7-4c1523f51be5" end_index="0" portType="0" />
+  </Connectors>
+  <Notes />
+  <Annotations />
+  <Presets />
+  <Cameras>
+    <Camera Name="Фоновый просмотр" eyeX="-17" eyeY="24" eyeZ="50" lookX="12" lookY="-13" lookZ="-58" upX="0" upY="1" upZ="0" />
+  </Cameras>
+</Workspace>

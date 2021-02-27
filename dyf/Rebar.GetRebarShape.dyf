@@ -1,0 +1,56 @@
+<Workspace Version="1.3.3.4111" X="222.007031237613" Y="195.945939732925" zoom="1.30764135636719" ScaleFactor="1" Name="Rebar.GetRebarShape" Description="Input rebar elements, including RebarInSystem, to get the underlying rebar shapes." ID="0b5cdbd8-c428-479a-8384-0f68246baee1" Category="Zhukoven.Revit.Rebar">
+  <NamespaceResolutionMap />
+  <Elements>
+    <PythonNodeModels.PythonNode guid="1959d86f-1eb4-4343-bcc8-813a01765cd1" type="PythonNodeModels.PythonNode" nickname="Python Script" x="462.535023728511" y="0" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false" inputcount="1">
+      <PortInfo index="0" default="False" />
+      <Script>#Author Konstantin Zhukoven @ https://zhukoven.com
+#Tested to work with Dynamo 1.3.0+
+import clr
+clr.AddReference("RevitAPI")
+import Autodesk
+from Autodesk.Revit.DB import *
+
+clr.AddReference("RevitNodes")
+import Revit
+clr.ImportExtensions(Revit.GeometryConversion)
+clr.ImportExtensions(Revit.Elements)
+
+clr.AddReference("RevitServices")
+import RevitServices
+from RevitServices.Persistence import DocumentManager
+doc = DocumentManager.Instance.CurrentDBDocument
+
+Rebars = UnwrapElement(IN[0])
+
+rebarShapes = []
+for r in Rebars:
+	rebarShapes.append(r.RebarShapeId)
+	for i in rebarShapes:
+		elt = doc.GetElement(i)
+
+OUT = elt
+</Script>
+    </PythonNodeModels.PythonNode>
+    <Dynamo.Graph.Nodes.CodeBlockNodeModel guid="e322ebdc-18d3-4f28-a7ae-68e1009505eb" type="Dynamo.Graph.Nodes.CodeBlockNodeModel" nickname="Code Block" x="250" y="3.94637227744352" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false" CodeText="Flatten({item});" ShouldFocus="false">
+      <PortInfo index="0" default="False" />
+    </Dynamo.Graph.Nodes.CodeBlockNodeModel>
+    <Dynamo.Graph.Nodes.CustomNodes.Symbol guid="66270b9b-9688-4d47-a879-480cbbc2984f" type="Dynamo.Graph.Nodes.CustomNodes.Symbol" nickname="Input" x="-131.338849652632" y="0" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" IsFrozen="false" isPinned="false">
+      <Symbol value="//Input rebars / rebarInSystem elements&#xD;&#xA;rebar" />
+    </Dynamo.Graph.Nodes.CustomNodes.Symbol>
+    <Dynamo.Graph.Nodes.CustomNodes.Output guid="a9a6a439-8794-4437-97e3-a0e05ef65562" type="Dynamo.Graph.Nodes.CustomNodes.Output" nickname="Output" x="611.716839377513" y="0" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false">
+      <PortInfo index="0" default="False" />
+      <Symbol value="rebarShape" />
+    </Dynamo.Graph.Nodes.CustomNodes.Output>
+  </Elements>
+  <Connectors>
+    <Dynamo.Graph.Connectors.ConnectorModel start="1959d86f-1eb4-4343-bcc8-813a01765cd1" start_index="0" end="a9a6a439-8794-4437-97e3-a0e05ef65562" end_index="0" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="e322ebdc-18d3-4f28-a7ae-68e1009505eb" start_index="0" end="1959d86f-1eb4-4343-bcc8-813a01765cd1" end_index="0" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="66270b9b-9688-4d47-a879-480cbbc2984f" start_index="0" end="e322ebdc-18d3-4f28-a7ae-68e1009505eb" end_index="0" portType="0" />
+  </Connectors>
+  <Notes />
+  <Annotations />
+  <Presets />
+  <Cameras>
+    <Camera Name="Фоновый просмотр" eyeX="-575.590929621129" eyeY="2124.71532895886" eyeZ="1448.77702539666" lookX="678.695396270852" lookY="-2124.33223980516" lookZ="-999.068639570381" upX="0.417595304345439" upY="0.669130606358858" upZ="-0.614718141445709" />
+  </Cameras>
+</Workspace>

@@ -1,0 +1,42 @@
+<Workspace Version="1.3.2.2480" X="136.72837324514" Y="192.480878577214" zoom="1.33823125" ScaleFactor="1" Name="Vector.IsParallelToView" Description="This node checks if a given vector is parallel to a given view." ID="733233fd-5eef-497b-ba4b-e19942337aaa" Category="Zhukoven.Revit.Views">
+  <NamespaceResolutionMap />
+  <Elements>
+    <Dynamo.Graph.Nodes.ZeroTouch.DSFunction guid="d8677ba6-afff-4532-94a1-46f825175b51" type="Dynamo.Graph.Nodes.ZeroTouch.DSFunction" nickname="Vector.IsParallel" x="321.286355050142" y="0" isVisible="true" isUpstreamVisible="true" lacing="Shortest" isSelectedInput="False" IsFrozen="false" isPinned="false" assembly="ProtoGeometry.dll" function="Autodesk.DesignScript.Geometry.Vector.IsParallel@Autodesk.DesignScript.Geometry.Vector">
+      <PortInfo index="0" default="False" />
+      <PortInfo index="1" default="False" />
+    </Dynamo.Graph.Nodes.ZeroTouch.DSFunction>
+    <PythonNodeModels.PythonNode guid="e1c5641b-9c29-4367-995d-0df232502b96" type="PythonNodeModels.PythonNode" nickname="Python Script" x="175.274499455905" y="64.2543187903224" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false" inputcount="1">
+      <PortInfo index="0" default="False" />
+      <Script>import clr
+clr.AddReference('RevitNodes')
+import Revit
+clr.ImportExtensions(Revit.GeometryConversion)
+
+view = UnwrapElement(IN[0])
+
+OUT = view.RightDirection.ToVector()</Script>
+    </PythonNodeModels.PythonNode>
+    <Dynamo.Graph.Nodes.CustomNodes.Symbol guid="8359a1e6-89f0-4816-92e2-494f69b8ea57" type="Dynamo.Graph.Nodes.CustomNodes.Symbol" nickname="Input" x="0" y="0" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" IsFrozen="false" isPinned="false">
+      <Symbol value="vector : Vector" />
+    </Dynamo.Graph.Nodes.CustomNodes.Symbol>
+    <Dynamo.Graph.Nodes.CustomNodes.Symbol guid="843ce261-6399-41f5-8974-31afd7f2624d" type="Dynamo.Graph.Nodes.CustomNodes.Symbol" nickname="Input" x="91.165110663796" y="64.0656743742907" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" IsFrozen="false" isPinned="false">
+      <Symbol value="view" />
+    </Dynamo.Graph.Nodes.CustomNodes.Symbol>
+    <Dynamo.Graph.Nodes.CustomNodes.Output guid="9f91f2cb-6ca4-4f64-a69f-9b78912a2c94" type="Dynamo.Graph.Nodes.CustomNodes.Output" nickname="Output" x="523.49497463663" y="0" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false">
+      <PortInfo index="0" default="False" />
+      <Symbol value="bool" />
+    </Dynamo.Graph.Nodes.CustomNodes.Output>
+  </Elements>
+  <Connectors>
+    <Dynamo.Graph.Connectors.ConnectorModel start="d8677ba6-afff-4532-94a1-46f825175b51" start_index="0" end="9f91f2cb-6ca4-4f64-a69f-9b78912a2c94" end_index="0" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="e1c5641b-9c29-4367-995d-0df232502b96" start_index="0" end="d8677ba6-afff-4532-94a1-46f825175b51" end_index="1" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="8359a1e6-89f0-4816-92e2-494f69b8ea57" start_index="0" end="d8677ba6-afff-4532-94a1-46f825175b51" end_index="0" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="843ce261-6399-41f5-8974-31afd7f2624d" start_index="0" end="e1c5641b-9c29-4367-995d-0df232502b96" end_index="0" portType="0" />
+  </Connectors>
+  <Notes />
+  <Annotations />
+  <Presets />
+  <Cameras>
+    <Camera Name="Фоновый просмотр" eyeX="-17" eyeY="24" eyeZ="50" lookX="12" lookY="-13" lookZ="-58" upX="0" upY="1" upZ="0" />
+  </Cameras>
+</Workspace>

@@ -1,0 +1,87 @@
+<Workspace Version="1.3.2.2480" X="170.885504707692" Y="250.062576462527" zoom="1.40972876398001" ScaleFactor="1" Name="Room.ByPhaseLevelView" Description="Place room elements at the desired phase in the selected view. Note that the phase of the selected view would be changed to be aligned with the phase that you choose in Dynamo." ID="0be182e6-cc48-42ff-8662-625cb462fbb0" Category="Zhukoven.Revit.Rooms">
+  <NamespaceResolutionMap />
+  <Elements>
+    <PythonNodeModels.PythonNode guid="73a8b08b-7a95-493d-aa04-035460953489" type="PythonNodeModels.PythonNode" nickname="Python Script" x="474.45447974721" y="106.110210772615" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false" inputcount="3">
+      <PortInfo index="0" default="False" />
+      <PortInfo index="1" default="False" />
+      <PortInfo index="2" default="False" />
+      <Script>#Author Konstantin Zhukoven @ https://zhukoven.com
+#Tested to work with Dynamo 1.3.0+
+import clr
+clr.AddReference("RevitNodes")
+import Revit
+
+# Import DocumentManager and TransactionManager
+clr.AddReference("RevitServices")
+import RevitServices
+from RevitServices.Persistence import DocumentManager
+from RevitServices.Transactions import TransactionManager
+# Import RevitAPI
+clr.AddReference("RevitAPI")
+import Autodesk
+from Autodesk.Revit.DB import *
+from Autodesk.Revit.Creation.Document import NewRooms2
+
+doc = DocumentManager.Instance.CurrentDBDocument
+phase = UnwrapElement(IN[0])
+lvl = UnwrapElement(IN[1])
+
+TransactionManager.Instance.EnsureInTransaction(doc)
+viewPhase = IN[2]
+if viewPhase:
+	createRoom = doc.Create.NewRooms2(lvl,phase)
+	if isinstance(createRoom, list):
+		roomElement = doc.GetElement(createRoom)
+	else:
+		roomElement = []
+		for i in createRoom:
+			roomElement.append(doc.GetElement(i))
+TransactionManager.Instance.TransactionTaskDone()
+
+OUT = roomElement
+</Script>
+    </PythonNodeModels.PythonNode>
+    <Dynamo.Graph.Nodes.CustomNodes.Symbol guid="8c0137a4-06d9-42e4-bbb0-61c3f5e19522" type="Dynamo.Graph.Nodes.CustomNodes.Symbol" nickname="Input" x="143.472961044663" y="106.110210772615" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" IsFrozen="false" isPinned="false">
+      <Symbol value="Phase" />
+    </Dynamo.Graph.Nodes.CustomNodes.Symbol>
+    <Dynamo.Graph.Nodes.CustomNodes.Symbol guid="57236099-b88d-4c0e-afa1-45cf16998e7c" type="Dynamo.Graph.Nodes.CustomNodes.Symbol" nickname="Input" x="143.472961044663" y="167.186865125142" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" IsFrozen="false" isPinned="false">
+      <Symbol value="Level" />
+    </Dynamo.Graph.Nodes.CustomNodes.Symbol>
+    <Dynamo.Graph.Nodes.CustomNodes.Output guid="38cba6b4-431c-4ac8-bfba-169f65598e35" type="Dynamo.Graph.Nodes.CustomNodes.Output" nickname="Output" x="614.421334317375" y="106.110210772615" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false">
+      <PortInfo index="0" default="False" />
+      <Symbol value="Rooms" />
+    </Dynamo.Graph.Nodes.CustomNodes.Output>
+    <Dynamo.Graph.Nodes.CustomNodes.Function guid="99be8ddd-38db-400e-9714-e8291a2e24b7" type="Dynamo.Graph.Nodes.CustomNodes.Function" nickname="View.SetPhase" x="252.140783733009" y="209.200827569083" isVisible="true" isUpstreamVisible="true" lacing="Shortest" isSelectedInput="False" IsFrozen="false" isPinned="false">
+      <PortInfo index="0" default="False" />
+      <PortInfo index="1" default="False" />
+      <ID value="163310c4-dd91-4d99-a019-9b5e12ebdb87" />
+      <Name value="View.SetPhase" />
+      <Description value="Input phase that you would like to set to the desired view." />
+      <Inputs>
+        <Input value="Phase" />
+        <Input value="View" />
+      </Inputs>
+      <Outputs>
+        <Output value="View" />
+        <Output value="Result" />
+      </Outputs>
+    </Dynamo.Graph.Nodes.CustomNodes.Function>
+    <Dynamo.Graph.Nodes.CustomNodes.Symbol guid="5beedc6b-1de2-4c86-99ec-6f6f39dce5bb" type="Dynamo.Graph.Nodes.CustomNodes.Symbol" nickname="Input" x="143.45492534112" y="236.2587572117" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" IsFrozen="false" isPinned="false">
+      <Symbol value="View" />
+    </Dynamo.Graph.Nodes.CustomNodes.Symbol>
+  </Elements>
+  <Connectors>
+    <Dynamo.Graph.Connectors.ConnectorModel start="73a8b08b-7a95-493d-aa04-035460953489" start_index="0" end="38cba6b4-431c-4ac8-bfba-169f65598e35" end_index="0" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="8c0137a4-06d9-42e4-bbb0-61c3f5e19522" start_index="0" end="73a8b08b-7a95-493d-aa04-035460953489" end_index="0" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="8c0137a4-06d9-42e4-bbb0-61c3f5e19522" start_index="0" end="99be8ddd-38db-400e-9714-e8291a2e24b7" end_index="0" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="57236099-b88d-4c0e-afa1-45cf16998e7c" start_index="0" end="73a8b08b-7a95-493d-aa04-035460953489" end_index="1" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="99be8ddd-38db-400e-9714-e8291a2e24b7" start_index="1" end="73a8b08b-7a95-493d-aa04-035460953489" end_index="2" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="5beedc6b-1de2-4c86-99ec-6f6f39dce5bb" start_index="0" end="99be8ddd-38db-400e-9714-e8291a2e24b7" end_index="1" portType="0" />
+  </Connectors>
+  <Notes />
+  <Annotations />
+  <Presets />
+  <Cameras>
+    <Camera Name="Фоновый просмотр" eyeX="-17" eyeY="24" eyeZ="50" lookX="12" lookY="-13" lookZ="-58" upX="0" upY="1" upZ="0" />
+  </Cameras>
+</Workspace>

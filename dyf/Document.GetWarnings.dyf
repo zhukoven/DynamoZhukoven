@@ -1,0 +1,57 @@
+<Workspace Version="1.3.0.875" X="68.3677020111066" Y="343.825625580846" zoom="1.44258909293314" ScaleFactor="1" Name="Document.GetWarnings" Description="NOTE: Works only with Revit 2018 and above!&#xD;&#xA;Get all warnings from the current document." ID="85bf7696-3e65-4547-9498-f24925e65f03" Category="Zhukoven.Revit.Document">
+  <NamespaceResolutionMap />
+  <Elements>
+    <PythonNodeModels.PythonNode guid="8b5e2338-63c0-43bb-844b-5dcd0caa286c" type="PythonNodeModels.PythonNode" nickname="Python Script" x="279.037930324113" y="4.03410966998646" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false" inputcount="1">
+      <PortInfo index="0" default="False" />
+      <Script>#Works only with Revit 2018+ and Dynamo 1.3.0+
+#Author © Konstantin Zhukoven @ https:\\zhukoven.com
+import clr
+#Import Revit Services
+clr.AddReference("RevitServices")
+import RevitServices
+from RevitServices.Persistence import DocumentManager
+
+doc = DocumentManager.Instance.CurrentDBDocument
+wlist = doc.GetWarnings()
+
+if isinstance(wlist, list):
+	wtext = wlist.GetDescriptionText()
+	welt = wlist.GetFailingElements()
+	wsev = wlist.GetSeverity()
+else:
+	wtext, welt, wsev = [], [], []
+	for i in wlist:
+		wtext.append(i.GetDescriptionText())
+		welt.append(i.GetFailingElements())
+		wsev.append(i.GetSeverity())
+OUT = wtext, welt, wsev</Script>
+    </PythonNodeModels.PythonNode>
+    <Dynamo.Graph.Nodes.CodeBlockNodeModel guid="907d5584-35b7-4cc8-a063-44688a67ee87" type="Dynamo.Graph.Nodes.CodeBlockNodeModel" nickname="Code Block" x="431.411339276144" y="8.46331818669012" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false" CodeText="seq[0];&#xA;seq[1];&#xA;seq[2];" ShouldFocus="false">
+      <PortInfo index="0" default="False" />
+    </Dynamo.Graph.Nodes.CodeBlockNodeModel>
+    <Dynamo.Graph.Nodes.CustomNodes.Output guid="2c4650e2-1c43-4253-8252-c12568e58f2d" type="Dynamo.Graph.Nodes.CustomNodes.Output" nickname="Output" x="660.737583112706" y="-28.9861668747646" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false">
+      <PortInfo index="0" default="False" />
+      <Symbol value="//Failure message (string)&#xD;&#xA;WarningText" />
+    </Dynamo.Graph.Nodes.CustomNodes.Output>
+    <Dynamo.Graph.Nodes.CustomNodes.Output guid="4b87f4f3-7e37-4e5a-8b5f-fb0a5742e0cb" type="Dynamo.Graph.Nodes.CustomNodes.Output" nickname="Output" x="661.618709756614" y="44.6378055137391" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false">
+      <PortInfo index="0" default="False" />
+      <Symbol value="//Ids of the failing elements&#xD;&#xA;FailingElementIds" />
+    </Dynamo.Graph.Nodes.CustomNodes.Output>
+    <Dynamo.Graph.Nodes.CustomNodes.Output guid="d3240ac3-7ab5-4a9b-94df-c5943f8939b8" type="Dynamo.Graph.Nodes.CustomNodes.Output" nickname="Output" x="662.844277745767" y="120.033805818556" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false">
+      <PortInfo index="0" default="False" />
+      <Symbol value="//Failure severity&#xD;&#xA;FailureType" />
+    </Dynamo.Graph.Nodes.CustomNodes.Output>
+  </Elements>
+  <Connectors>
+    <Dynamo.Graph.Connectors.ConnectorModel start="8b5e2338-63c0-43bb-844b-5dcd0caa286c" start_index="0" end="907d5584-35b7-4cc8-a063-44688a67ee87" end_index="0" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="907d5584-35b7-4cc8-a063-44688a67ee87" start_index="0" end="2c4650e2-1c43-4253-8252-c12568e58f2d" end_index="0" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="907d5584-35b7-4cc8-a063-44688a67ee87" start_index="1" end="4b87f4f3-7e37-4e5a-8b5f-fb0a5742e0cb" end_index="0" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="907d5584-35b7-4cc8-a063-44688a67ee87" start_index="2" end="d3240ac3-7ab5-4a9b-94df-c5943f8939b8" end_index="0" portType="0" />
+  </Connectors>
+  <Notes />
+  <Annotations />
+  <Presets />
+  <Cameras>
+    <Camera Name="Фоновый просмотр" eyeX="-17" eyeY="24" eyeZ="50" lookX="12" lookY="-13" lookZ="-58" upX="0" upY="1" upZ="0" />
+  </Cameras>
+</Workspace>

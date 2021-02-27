@@ -1,0 +1,37 @@
+<Workspace Version="1.3.2.2480" X="402.094187309023" Y="372.307590606136" zoom="1.00600419002725" ScaleFactor="1" Name="String.AddPrefixSuffix" Description="Add prefix and suffix to the input string." ID="433e20e9-bd2e-487c-af6c-15c3d5f6ed42" Category="Zhukoven.Revit.Text">
+  <NamespaceResolutionMap>
+    <ClassMap partialName="DSCore.String" resolvedName="DSCore.String" assemblyName="DSCoreNodes.dll" />
+  </NamespaceResolutionMap>
+  <Elements>
+    <Dynamo.Graph.Nodes.CodeBlockNodeModel guid="17e38e25-1c96-4100-b4f6-f2a74456abb9" type="Dynamo.Graph.Nodes.CodeBlockNodeModel" nickname="Code Block" x="250" y="0" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false" CodeText="t2 = DSCore.String.Insert(t3, 0, t4);&#xA;t5 = DSCore.String.Length(t2);&#xA;t7 = DSCore.String.Insert(t2, t5, t6);" ShouldFocus="false">
+      <PortInfo index="0" default="False" />
+      <PortInfo index="1" default="False" />
+      <PortInfo index="2" default="False" />
+    </Dynamo.Graph.Nodes.CodeBlockNodeModel>
+    <Dynamo.Graph.Nodes.CustomNodes.Symbol guid="47c5d089-82ae-4d19-bcb5-47897b4431e2" type="Dynamo.Graph.Nodes.CustomNodes.Symbol" nickname="Input" x="41.3791443400569" y="-4.52892585009074" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" IsFrozen="false" isPinned="false">
+      <Symbol value="//Input string&#xD;&#xA;String" />
+    </Dynamo.Graph.Nodes.CustomNodes.Symbol>
+    <Dynamo.Graph.Nodes.CustomNodes.Symbol guid="8eb8633e-d13c-4ad3-b37d-159206d5d070" type="Dynamo.Graph.Nodes.CustomNodes.Symbol" nickname="Input" x="40.7603326508168" y="65.2443876625873" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" IsFrozen="false" isPinned="false">
+      <Symbol value="//String&#xD;&#xA;Prefix" />
+    </Dynamo.Graph.Nodes.CustomNodes.Symbol>
+    <Dynamo.Graph.Nodes.CustomNodes.Symbol guid="db610121-fba4-4834-ba9a-dad12c8d06d0" type="Dynamo.Graph.Nodes.CustomNodes.Symbol" nickname="Input" x="41.4073220579726" y="136.311679989577" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" IsFrozen="false" isPinned="false">
+      <Symbol value="//String&#xD;&#xA;Suffix" />
+    </Dynamo.Graph.Nodes.CustomNodes.Symbol>
+    <Dynamo.Graph.Nodes.CustomNodes.Output guid="55bfdc69-d888-4b5d-bed2-80ba43e11582" type="Dynamo.Graph.Nodes.CustomNodes.Output" nickname="Output" x="638.197639608251" y="30.637455223079" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false">
+      <PortInfo index="0" default="False" />
+      <Symbol value="//Output string with prefix &amp; suffix&#xD;&#xA;String" />
+    </Dynamo.Graph.Nodes.CustomNodes.Output>
+  </Elements>
+  <Connectors>
+    <Dynamo.Graph.Connectors.ConnectorModel start="17e38e25-1c96-4100-b4f6-f2a74456abb9" start_index="2" end="55bfdc69-d888-4b5d-bed2-80ba43e11582" end_index="0" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="47c5d089-82ae-4d19-bcb5-47897b4431e2" start_index="0" end="17e38e25-1c96-4100-b4f6-f2a74456abb9" end_index="0" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="8eb8633e-d13c-4ad3-b37d-159206d5d070" start_index="0" end="17e38e25-1c96-4100-b4f6-f2a74456abb9" end_index="1" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="db610121-fba4-4834-ba9a-dad12c8d06d0" start_index="0" end="17e38e25-1c96-4100-b4f6-f2a74456abb9" end_index="2" portType="0" />
+  </Connectors>
+  <Notes />
+  <Annotations />
+  <Presets />
+  <Cameras>
+    <Camera Name="Фоновый просмотр" eyeX="-17" eyeY="24" eyeZ="50" lookX="12" lookY="-13" lookZ="-58" upX="0" upY="1" upZ="0" />
+  </Cameras>
+</Workspace>

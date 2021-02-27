@@ -1,0 +1,51 @@
+<Workspace Version="1.3.2.2480" X="327.279753601432" Y="274.088393067719" zoom="1.19179377129295" ScaleFactor="1" Name="Document.Close" Description="Close current Revit document. Use boolean switch (true / false) to save / discard any changes." ID="45102b65-7926-4e74-a0ec-49b7db7a2c6f" Category="Zhukoven.Revit.Document">
+  <NamespaceResolutionMap />
+  <Elements>
+    <Dynamo.Graph.Nodes.CustomNodes.Symbol guid="31e21d03-1ec7-42a3-b662-b750a9333c98" type="Dynamo.Graph.Nodes.CustomNodes.Symbol" nickname="Input" x="0" y="0" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" IsFrozen="false" isPinned="false">
+      <Symbol value="Document" />
+    </Dynamo.Graph.Nodes.CustomNodes.Symbol>
+    <Dynamo.Graph.Nodes.CustomNodes.Symbol guid="2d21afe4-8be1-4d9a-8772-c053b5f5629d" type="Dynamo.Graph.Nodes.CustomNodes.Symbol" nickname="Input" x="1.68199207920333" y="105.707541914312" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" IsFrozen="false" isPinned="false">
+      <Symbol value="Save : bool = false" />
+    </Dynamo.Graph.Nodes.CustomNodes.Symbol>
+    <Dynamo.Graph.Nodes.CustomNodes.Output guid="75a195f5-d046-42d3-bde3-32afffa6346f" type="Dynamo.Graph.Nodes.CustomNodes.Output" nickname="Output" x="469.976783569592" y="41.9535671391838" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false">
+      <PortInfo index="0" default="False" />
+      <Symbol value="//Boolean&#xD;&#xA;Saved" />
+    </Dynamo.Graph.Nodes.CustomNodes.Output>
+    <Dynamo.Graph.Nodes.CodeBlockNodeModel guid="6548f8e6-b217-45cd-b98d-bac5220dbfbd" type="Dynamo.Graph.Nodes.CodeBlockNodeModel" nickname="Code Block" x="119.707294923032" y="0.627191025951788" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false" CodeText="t1 = {t2};&#xA;t3 = Flatten(t1);" ShouldFocus="false">
+      <PortInfo index="0" default="False" />
+    </Dynamo.Graph.Nodes.CodeBlockNodeModel>
+    <PythonNodeModels.PythonNode guid="9faeea2e-7b4c-412e-8dcd-be5619bf5e81" type="PythonNodeModels.PythonNode" nickname="Python Script" x="327.704449571607" y="41.8009574803557" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false" inputcount="2">
+      <PortInfo index="0" default="False" />
+      <PortInfo index="1" default="False" />
+      <Script>#Tested in Revit 2016+ and Dynamo 1.3.0 
+#Author © Konstantin Zhukoven @ https:\\zhukoven.com
+#Import system libraries
+import sys
+pyt_path = r'C:\Program Files (x86)\IronPython 2.7\Lib'
+sys.path.append(pyt_path)
+import clr
+clr.AddReference("RevitServices")
+from RevitServices.Persistence import DocumentManager
+app = DocumentManager.Instance.CurrentUIApplication.Application
+doc = IN[0]
+saveDoc = IN[1]
+#Output
+closed = []
+for i in doc:
+	closed.append(i.Close(saveDoc))
+OUT = closed</Script>
+    </PythonNodeModels.PythonNode>
+  </Elements>
+  <Connectors>
+    <Dynamo.Graph.Connectors.ConnectorModel start="31e21d03-1ec7-42a3-b662-b750a9333c98" start_index="0" end="6548f8e6-b217-45cd-b98d-bac5220dbfbd" end_index="0" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="2d21afe4-8be1-4d9a-8772-c053b5f5629d" start_index="0" end="9faeea2e-7b4c-412e-8dcd-be5619bf5e81" end_index="1" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="6548f8e6-b217-45cd-b98d-bac5220dbfbd" start_index="1" end="9faeea2e-7b4c-412e-8dcd-be5619bf5e81" end_index="0" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="9faeea2e-7b4c-412e-8dcd-be5619bf5e81" start_index="0" end="75a195f5-d046-42d3-bde3-32afffa6346f" end_index="0" portType="0" />
+  </Connectors>
+  <Notes />
+  <Annotations />
+  <Presets />
+  <Cameras>
+    <Camera Name="Фоновый просмотр" eyeX="-17" eyeY="24" eyeZ="50" lookX="12" lookY="-13" lookZ="-58" upX="0" upY="1" upZ="0" />
+  </Cameras>
+</Workspace>

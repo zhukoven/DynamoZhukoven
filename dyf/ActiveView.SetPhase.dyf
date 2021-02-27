@@ -1,0 +1,63 @@
+<Workspace Version="1.3.2.2480" X="389.785110186369" Y="337.452038239803" zoom="1.47618023926361" ScaleFactor="1" Name="ActiveView.SetPhase" Description="Input phase that you would like to set to the active view." ID="a4822f50-9c30-45ca-8922-007281237cff" Category="Zhukoven.Revit.Views">
+  <NamespaceResolutionMap />
+  <Elements>
+    <PythonNodeModels.PythonNode guid="ed28f9f2-0299-4e8d-892d-0451532ebaac" type="PythonNodeModels.PythonNode" nickname="Python Script" x="250" y="0" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false" inputcount="1">
+      <PortInfo index="0" default="False" />
+      <Script>#Author Konstantin Zhukoven @ https://zhukoven.com
+#Tested to work with Dynamo 1.3.0+
+import clr
+clr.AddReference('RevitAPI')
+from Autodesk.Revit.DB import *
+
+clr.AddReference("RevitNodes")
+import Revit
+clr.ImportExtensions(Revit.Elements)
+
+clr.AddReference("RevitServices")
+import RevitServices
+from RevitServices.Persistence import DocumentManager
+from RevitServices.Transactions import TransactionManager
+
+doc = DocumentManager.Instance.CurrentDBDocument
+aview = doc.ActiveView
+phase = UnwrapElement(IN[0])
+result = []
+
+TransactionManager.Instance.EnsureInTransaction(doc)
+try:
+	aview.get_Parameter(BuiltInParameter.VIEW_PHASE).Set(phase.Id)
+	result.append(True)
+except:
+	result.append(False)
+TransactionManager.Instance.TransactionTaskDone()
+
+OUT = (aview,result)</Script>
+    </PythonNodeModels.PythonNode>
+    <Dynamo.Graph.Nodes.CustomNodes.Symbol guid="24da877a-5f1f-4650-8bab-3bd19c42535f" type="Dynamo.Graph.Nodes.CustomNodes.Symbol" nickname="Input" x="162.031903629921" y="2.8421709430404E-14" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" IsFrozen="false" isPinned="false">
+      <Symbol value="Phase" />
+    </Dynamo.Graph.Nodes.CustomNodes.Symbol>
+    <Dynamo.Graph.Nodes.CustomNodes.Output guid="0b34e24b-153a-4e70-a962-435abf7e5db6" type="Dynamo.Graph.Nodes.CustomNodes.Output" nickname="Output" x="529.519494314126" y="-1.72085453192892" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false">
+      <PortInfo index="0" default="False" />
+      <Symbol value="View" />
+    </Dynamo.Graph.Nodes.CustomNodes.Output>
+    <Dynamo.Graph.Nodes.CodeBlockNodeModel guid="5a18d485-e18f-42b3-b620-669be7c90466" type="Dynamo.Graph.Nodes.CodeBlockNodeModel" nickname="Code Block" x="391.006036057056" y="2.16581872284308" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false" CodeText="seq[0];&#xA;seq[1];" ShouldFocus="false">
+      <PortInfo index="0" default="False" />
+    </Dynamo.Graph.Nodes.CodeBlockNodeModel>
+    <Dynamo.Graph.Nodes.CustomNodes.Output guid="07bd5dde-748e-4911-806c-dc7e9c310723" type="Dynamo.Graph.Nodes.CustomNodes.Output" nickname="Output" x="529.978871329984" y="62.356810585618" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false">
+      <PortInfo index="0" default="False" />
+      <Symbol value="//Boolean&#xD;&#xA;Result" />
+    </Dynamo.Graph.Nodes.CustomNodes.Output>
+  </Elements>
+  <Connectors>
+    <Dynamo.Graph.Connectors.ConnectorModel start="ed28f9f2-0299-4e8d-892d-0451532ebaac" start_index="0" end="5a18d485-e18f-42b3-b620-669be7c90466" end_index="0" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="24da877a-5f1f-4650-8bab-3bd19c42535f" start_index="0" end="ed28f9f2-0299-4e8d-892d-0451532ebaac" end_index="0" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="5a18d485-e18f-42b3-b620-669be7c90466" start_index="0" end="0b34e24b-153a-4e70-a962-435abf7e5db6" end_index="0" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="5a18d485-e18f-42b3-b620-669be7c90466" start_index="1" end="07bd5dde-748e-4911-806c-dc7e9c310723" end_index="0" portType="0" />
+  </Connectors>
+  <Notes />
+  <Annotations />
+  <Presets />
+  <Cameras>
+    <Camera Name="Фоновый просмотр" eyeX="-17" eyeY="24" eyeZ="50" lookX="12" lookY="-13" lookZ="-58" upX="0" upY="1" upZ="0" />
+  </Cameras>
+</Workspace>

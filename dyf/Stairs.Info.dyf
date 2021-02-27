@@ -1,0 +1,95 @@
+<Workspace Version="1.3.2.2480" X="179.367711047846" Y="232.855265682232" zoom="0.847618571998227" ScaleFactor="1" Name="Stairs.Info" Description="This node returns some basic data from the input stair element(s): risers' and treads' height and number, stories, level, etc. " ID="62ad40c3-305b-49a1-bdcb-c2963dd60bd1" Category="Zhukoven.Revit.Stairs">
+  <NamespaceResolutionMap />
+  <Elements>
+    <Dynamo.Graph.Nodes.CodeBlockNodeModel guid="c70fbd79-5f1b-4ed3-89aa-45f50a00859c" type="Dynamo.Graph.Nodes.CodeBlockNodeModel" nickname="Code Block" x="250" y="4.15566276135655" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false" CodeText="Flatten({item});" ShouldFocus="false">
+      <PortInfo index="0" default="False" />
+    </Dynamo.Graph.Nodes.CodeBlockNodeModel>
+    <PythonNodeModels.PythonNode guid="790e77a5-f52c-472e-88ac-2166fa6a74ed" type="PythonNodeModels.PythonNode" nickname="Python Script" x="471.266167153772" y="0" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false" inputcount="1">
+      <PortInfo index="0" default="False" />
+      <Script>#Tested to work with Dynamo 1.3.0 + 
+#Author © Konstantin Zhukoven @ https:\\zhukoven.com
+import clr
+clr.AddReference('RevitAPI')
+from Autodesk.Revit.DB import *
+
+clr.AddReference("RevitNodes")
+import Revit
+clr.ImportExtensions(Revit.Elements)
+
+clr.AddReference("RevitServices")
+import RevitServices
+from RevitServices.Persistence import DocumentManager
+doc = DocumentManager.Instance.CurrentDBDocument
+
+stair = UnwrapElement(IN[0])
+for i in stair:
+	actualRH = i.ActualRiserHeight
+	actualRN = i.ActualRisersNumber
+	desiredRN = i.DesiredRisersNumber
+	actualTD = i.ActualTreadDepth
+	actualTN = i.ActualTreadsNumber
+	stories = i.NumberOfStories
+	height = i.Height
+	component = i.IsByComponent(doc, i.Id)
+#Output
+OUT = actualRH, actualRN, desiredRN, actualTD, actualTN, stories, height, component</Script>
+    </PythonNodeModels.PythonNode>
+    <Dynamo.Graph.Nodes.CustomNodes.Symbol guid="fdadd164-e491-4140-9839-7a5b87e779fb" type="Dynamo.Graph.Nodes.CustomNodes.Symbol" nickname="Input" x="-16.4396101197009" y="0" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" IsFrozen="false" isPinned="false">
+      <Symbol value="//Input stair(s) element(s)&#xD;&#xA;Stair" />
+    </Dynamo.Graph.Nodes.CustomNodes.Symbol>
+    <Dynamo.Graph.Nodes.CustomNodes.Output guid="2eb992b7-ac0a-4ece-9939-c264eea8572f" type="Dynamo.Graph.Nodes.CustomNodes.Output" nickname="Output" x="783.283808507988" y="-13.6523295947639" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false">
+      <PortInfo index="0" default="False" />
+      <Symbol value="//The actual height of the stairs risers in the stairs&#xD;&#xA;ActualRiserHeight" />
+    </Dynamo.Graph.Nodes.CustomNodes.Output>
+    <Dynamo.Graph.Nodes.CodeBlockNodeModel guid="27db3440-8cc5-4c2a-83c1-a6dbae02efa8" type="Dynamo.Graph.Nodes.CodeBlockNodeModel" nickname="Code Block" x="613.252744994559" y="3.37331926003074" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false" CodeText="seq[0];&#xA;seq[1];&#xA;seq[2];&#xA;seq[3];&#xA;seq[4];&#xA;seq[5];&#xA;seq[6];&#xA;seq[7];" ShouldFocus="false">
+      <PortInfo index="0" default="False" />
+    </Dynamo.Graph.Nodes.CodeBlockNodeModel>
+    <Dynamo.Graph.Nodes.CustomNodes.Output guid="6db123cd-27f5-44e6-9376-1bc02e0a4f63" type="Dynamo.Graph.Nodes.CustomNodes.Output" nickname="Output" x="783.461504931655" y="55.7338790134157" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false">
+      <PortInfo index="0" default="False" />
+      <Symbol value="//The total number of actually created risers in model&#xD;&#xA;ActualRisersNumber" />
+    </Dynamo.Graph.Nodes.CustomNodes.Output>
+    <Dynamo.Graph.Nodes.CustomNodes.Output guid="015aa203-966f-47b2-882c-564da4526e49" type="Dynamo.Graph.Nodes.CustomNodes.Output" nickname="Output" x="782.678858999545" y="131.650534428103" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false">
+      <PortInfo index="0" default="False" />
+      <Symbol value="//The number of risers is calculated based on the height between levels&#xD;&#xA;DesiredRisersNumber" />
+    </Dynamo.Graph.Nodes.CustomNodes.Output>
+    <Dynamo.Graph.Nodes.CustomNodes.Output guid="d53a22f2-60cc-4c7a-9070-d9c101b3e31b" type="Dynamo.Graph.Nodes.CustomNodes.Output" nickname="Output" x="783.461504931655" y="207.567189842791" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false">
+      <PortInfo index="0" default="False" />
+      <Symbol value="//The actual depth of the stairs treads in the stairs, actual tread depth is equal to minimum tread depth by default&#xD;&#xA;ActualTreadDepth" />
+    </Dynamo.Graph.Nodes.CustomNodes.Output>
+    <Dynamo.Graph.Nodes.CustomNodes.Output guid="a5aa2a48-b337-4297-ac59-8eaf47a5fb49" type="Dynamo.Graph.Nodes.CustomNodes.Output" nickname="Output" x="783.461504931655" y="302.267347628123" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false">
+      <PortInfo index="0" default="False" />
+      <Symbol value="//The number of treads actually created in the stairs&#xD;&#xA;ActualTreadsNumber" />
+    </Dynamo.Graph.Nodes.CustomNodes.Output>
+    <Dynamo.Graph.Nodes.CustomNodes.Output guid="b66e15d3-b36e-4e2b-931e-fcdd386eec7b" type="Dynamo.Graph.Nodes.CustomNodes.Output" nickname="Output" x="783.461504931655" y="374.539509315026" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false">
+      <PortInfo index="0" default="False" />
+      <Symbol value="//The number of stories of a multi-story stair, or 1 for a single-story stair&#xD;&#xA;NumberOfStories" />
+    </Dynamo.Graph.Nodes.CustomNodes.Output>
+    <Dynamo.Graph.Nodes.CustomNodes.Output guid="204ecfed-60c2-4c8c-91bb-c6f15192f841" type="Dynamo.Graph.Nodes.CustomNodes.Output" nickname="Output" x="784.388071107128" y="453.297634230241" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false">
+      <PortInfo index="0" default="False" />
+      <Symbol value="//The height of the stair between the base and top levels&#xD;&#xA;StairHeight" />
+    </Dynamo.Graph.Nodes.CustomNodes.Output>
+    <Dynamo.Graph.Nodes.CustomNodes.Output guid="27fbe109-455f-4ab6-86cf-7994ea0d078e" type="Dynamo.Graph.Nodes.CustomNodes.Output" nickname="Output" x="783.461504931655" y="531.129192969982" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false">
+      <PortInfo index="0" default="False" />
+      <Symbol value="//Indicates if the stairs is created by stairs components(runs, landings and supports)&#xD;&#xA;IsByComponent" />
+    </Dynamo.Graph.Nodes.CustomNodes.Output>
+  </Elements>
+  <Connectors>
+    <Dynamo.Graph.Connectors.ConnectorModel start="c70fbd79-5f1b-4ed3-89aa-45f50a00859c" start_index="0" end="790e77a5-f52c-472e-88ac-2166fa6a74ed" end_index="0" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="790e77a5-f52c-472e-88ac-2166fa6a74ed" start_index="0" end="27db3440-8cc5-4c2a-83c1-a6dbae02efa8" end_index="0" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="fdadd164-e491-4140-9839-7a5b87e779fb" start_index="0" end="c70fbd79-5f1b-4ed3-89aa-45f50a00859c" end_index="0" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="27db3440-8cc5-4c2a-83c1-a6dbae02efa8" start_index="0" end="2eb992b7-ac0a-4ece-9939-c264eea8572f" end_index="0" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="27db3440-8cc5-4c2a-83c1-a6dbae02efa8" start_index="1" end="6db123cd-27f5-44e6-9376-1bc02e0a4f63" end_index="0" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="27db3440-8cc5-4c2a-83c1-a6dbae02efa8" start_index="2" end="015aa203-966f-47b2-882c-564da4526e49" end_index="0" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="27db3440-8cc5-4c2a-83c1-a6dbae02efa8" start_index="3" end="d53a22f2-60cc-4c7a-9070-d9c101b3e31b" end_index="0" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="27db3440-8cc5-4c2a-83c1-a6dbae02efa8" start_index="4" end="a5aa2a48-b337-4297-ac59-8eaf47a5fb49" end_index="0" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="27db3440-8cc5-4c2a-83c1-a6dbae02efa8" start_index="5" end="b66e15d3-b36e-4e2b-931e-fcdd386eec7b" end_index="0" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="27db3440-8cc5-4c2a-83c1-a6dbae02efa8" start_index="6" end="204ecfed-60c2-4c8c-91bb-c6f15192f841" end_index="0" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="27db3440-8cc5-4c2a-83c1-a6dbae02efa8" start_index="7" end="27fbe109-455f-4ab6-86cf-7994ea0d078e" end_index="0" portType="0" />
+  </Connectors>
+  <Notes />
+  <Annotations />
+  <Presets />
+  <Cameras>
+    <Camera Name="Фоновый просмотр" eyeX="-17" eyeY="24" eyeZ="50" lookX="12" lookY="-13" lookZ="-58" upX="0" upY="1" upZ="0" />
+  </Cameras>
+</Workspace>

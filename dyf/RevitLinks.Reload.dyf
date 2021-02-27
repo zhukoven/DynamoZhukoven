@@ -1,0 +1,55 @@
+<Workspace Version="1.3.0.875" X="-49.8161515912016" Y="422.591977297987" zoom="1.24844365397223" ScaleFactor="1" Name="RevitLinks.Reload" Description="Reloads all linked Revit files loaded into the current document. Do NOT use this node in Automatic mode!" ID="1b2e1201-8d5d-4555-8310-0beae5f49147" Category="Zhukoven.Revit.Links">
+  <NamespaceResolutionMap />
+  <Elements>
+    <PythonNodeModels.PythonNode guid="4c0a60d3-27f0-40cc-98b1-127f9ad2a134" type="PythonNodeModels.PythonNode" nickname="Python Script" x="431.57891157773" y="0" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false" inputcount="1">
+      <PortInfo index="0" default="False" />
+      <Script>#Working from Dynamo 1.0.0
+#Based on the code posted by Nicklas Østertgaard  nvo@bimshark.com / nvo@shl.fk
+import clr
+clr.AddReference('ProtoGeometry')
+from Autodesk.DesignScript.Geometry import *
+# Import ToDSType(bool) extension method
+clr.AddReference("RevitNodes")
+import Revit
+clr.ImportExtensions(Revit.Elements)
+# Import geometry conversion extension methods
+clr.ImportExtensions(Revit.GeometryConversion)
+# Import DocumentManager and TransactionManager
+clr.AddReference("RevitServices")
+import RevitServices
+from RevitServices.Persistence import DocumentManager
+from RevitServices.Transactions import TransactionManager
+from System.Collections.Generic import *
+# Import RevitAPI
+clr.AddReference("RevitAPI")
+import Autodesk
+from Autodesk.Revit.DB import *
+doc = DocumentManager.Instance.CurrentDBDocument
+uiapp = DocumentManager.Instance.CurrentUIApplication
+app = uiapp.Application
+uidoc=DocumentManager.Instance.CurrentUIApplication.ActiveUIDocument
+collector = Autodesk.Revit.DB.FilteredElementCollector(doc)
+linkInstances = collector.OfClass(Autodesk.Revit.DB.RevitLinkInstance)
+
+for i in linkInstances:
+	RevitLinkType  = doc.GetElement(i.GetTypeId())
+	RevitLinkType.Load();
+OUT= "Successfully reloaded"
+</Script>
+    </PythonNodeModels.PythonNode>
+    <Dynamo.Graph.Nodes.CustomNodes.Output guid="8fbc00b6-e6d7-4c53-a55a-c085e2fc318a" type="Dynamo.Graph.Nodes.CustomNodes.Output" nickname="Output" x="588.927051812534" y="0" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false">
+      <PortInfo index="0" default="False" />
+      <Symbol value="OUT" />
+    </Dynamo.Graph.Nodes.CustomNodes.Output>
+    <Dynamo.Graph.Nodes.CustomNodes.Symbol guid="bc72b34d-44f3-43a3-b7f8-b5591b79d11d" type="Dynamo.Graph.Nodes.CustomNodes.Symbol" nickname="Input" x="220.878665952091" y="0.00692813811807014" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" IsFrozen="false" isPinned="false">
+      <Symbol value="Boolean: bool=false" />
+    </Dynamo.Graph.Nodes.CustomNodes.Symbol>
+  </Elements>
+  <Connectors>
+    <Dynamo.Graph.Connectors.ConnectorModel start="4c0a60d3-27f0-40cc-98b1-127f9ad2a134" start_index="0" end="8fbc00b6-e6d7-4c53-a55a-c085e2fc318a" end_index="0" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="bc72b34d-44f3-43a3-b7f8-b5591b79d11d" start_index="0" end="4c0a60d3-27f0-40cc-98b1-127f9ad2a134" end_index="0" portType="0" />
+  </Connectors>
+  <Notes />
+  <Annotations />
+  <Presets />
+</Workspace>
