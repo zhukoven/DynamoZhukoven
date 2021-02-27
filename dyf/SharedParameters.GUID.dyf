@@ -1,4 +1,4 @@
-<Workspace Version="1.3.3.4111" X="-267.477913518242" Y="232.900218567924" zoom="1.130842140625" ScaleFactor="1" Name="SharedParameters.GUID" Description="Get unique GUIDs of the shared parameters loaded in the Revit project." ID="d6c2a6f4-7b05-4adb-8ad7-983e9c88a44e" Category="Zhukoven.Revit.SharedParameters">
+<Workspace Version="1.3.3.4111" X="-267.477913518242" Y="232.900218567924" zoom="1.130842140625" ScaleFactor="1" Name="SharedParameters.GUID" Description="Get unique GUIDs of the shared parameters loaded in the Revit project." ID="d6c2a6f4-7b05-4adb-8ad7-983e9c88a44e" Category="Zhukoven.Revit">
   <NamespaceResolutionMap>
     <ClassMap partialName="Parameters.GUID" resolvedName="Revit.Parameters" assemblyName="LunchBox.dll" />
   </NamespaceResolutionMap>

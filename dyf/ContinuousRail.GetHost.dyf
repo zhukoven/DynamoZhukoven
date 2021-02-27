@@ -1,4 +1,4 @@
-<Workspace Version="1.3.0.875" X="43.6574704856018" Y="279.129278518406" zoom="1.78359936238281" ScaleFactor="1" Name="ContinuousRail.GetHost" Description="Get host railing element for the input continuous rail." ID="3c948435-f608-46c0-b2d2-a4cbc1ed8c80" Category="Zhukoven.Revit.Railings">
+<Workspace Version="1.3.0.875" X="43.6574704856018" Y="279.129278518406" zoom="1.78359936238281" ScaleFactor="1" Name="ContinuousRail.GetHost" Description="Get host railing element for the input continuous rail." ID="3c948435-f608-46c0-b2d2-a4cbc1ed8c80" Category="Zhukoven.Revit">
   <NamespaceResolutionMap>
     <ClassMap partialName="Math.PI" resolvedName="DSCore.Math" assemblyName="DSCoreNodes.dll" />
   </NamespaceResolutionMap>

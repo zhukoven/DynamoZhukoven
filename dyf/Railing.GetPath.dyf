@@ -1,4 +1,4 @@
-<Workspace Version="1.3.0.875" X="237.201453720497" Y="501.955067644068" zoom="1.47618023926361" ScaleFactor="1" Name="Railing.GetPath" Description="Extract railing path as Dynamo curves from the input railing element. Only single railing element allowed." ID="d27c2253-cc02-421e-8d4c-18978762e0f4" Category="Zhukoven.Revit.Railings">
+<Workspace Version="1.3.0.875" X="237.201453720497" Y="501.955067644068" zoom="1.47618023926361" ScaleFactor="1" Name="Railing.GetPath" Description="Extract railing path as Dynamo curves from the input railing element. Only single railing element allowed." ID="d27c2253-cc02-421e-8d4c-18978762e0f4" Category="Zhukoven.Revit">
   <NamespaceResolutionMap>
     <ClassMap partialName="Math.PI" resolvedName="DSCore.Math" assemblyName="DSCoreNodes.dll" />
   </NamespaceResolutionMap>

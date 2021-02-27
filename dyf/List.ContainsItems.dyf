@@ -1,4 +1,4 @@
-<Workspace Version="1.3.3.4651" X="52.203130712498" Y="314.328202500051" zoom="0.502546841188387" ScaleFactor="1" Name="List.ContainsItems" Description="Checks if each item of a given list matches at least one item of another list" ID="ff241a75-59fa-4b28-a4c0-a14fbf314918" Category="Zhukoven.ListLogic">
+<Workspace Version="1.3.3.4651" X="52.203130712498" Y="314.328202500051" zoom="0.502546841188387" ScaleFactor="1" Name="List.ContainsItems" Description="Checks if each item of a given list matches at least one item of another list" ID="ff241a75-59fa-4b28-a4c0-a14fbf314918" Category="Zhukoven.DynamoCore">
   <NamespaceResolutionMap />
   <Elements>
     <Dynamo.Graph.Nodes.CodeBlockNodeModel guid="9338e3ed-fb68-495a-aacf-fe1bc8be4dae" type="Dynamo.Graph.Nodes.CodeBlockNodeModel" nickname="Code Block" x="896.94424781279" y="91.2523965340401" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false" CodeText="0;" ShouldFocus="false" />

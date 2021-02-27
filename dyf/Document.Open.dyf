@@ -1,45 +1,224 @@
-<Workspace Version="1.3.2.2480" X="-120.848914569336" Y="425.086926430515" zoom="1.78359936238281" ScaleFactor="1" Name="Document.Open" Description="Open document from the input File Path" ID="74091d53-f02e-4dc9-a949-4c69db563ecc" Category="Zhukoven.Revit.Document">
-  <NamespaceResolutionMap />
-  <Elements>
-    <Dynamo.Graph.Nodes.CustomNodes.Symbol guid="ae4240bb-5bd7-41c5-8983-c0c761cacbe3" type="Dynamo.Graph.Nodes.CustomNodes.Symbol" nickname="Input" x="104.535637149028" y="0" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" IsFrozen="false" isPinned="false">
-      <Symbol value="FilePath" />
-    </Dynamo.Graph.Nodes.CustomNodes.Symbol>
-    <Dynamo.Graph.Nodes.CustomNodes.Output guid="12994ec4-29b2-46de-ae51-384727ef4d4f" type="Dynamo.Graph.Nodes.CustomNodes.Output" nickname="Output" x="573.467413861046" y="17.3805848184344" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false">
-      <PortInfo index="0" default="False" />
-      <Symbol value="Document" />
-    </Dynamo.Graph.Nodes.CustomNodes.Output>
-    <PythonNodeModels.PythonNode guid="23c2f18c-1c7d-4cc4-a899-4e05448fb7aa" type="PythonNodeModels.PythonNode" nickname="Python Script" x="433.357678976246" y="18.1108735060846" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false" inputcount="1">
-      <PortInfo index="0" default="False" />
-      <Script>#Tested in Revit 2016+ and Dynamo 1.3.0 
-#Author © Konstantin Zhukoven @ https:\\zhukoven.com
-#Import system libraries
-import sys
-pyt_path = r'C:\Program Files (x86)\IronPython 2.7\Lib'
-sys.path.append(pyt_path)
-import clr
-clr.AddReference("RevitServices")
-from RevitServices.Persistence import DocumentManager
-app = DocumentManager.Instance.CurrentUIApplication.Application
-filePath = IN[0]
-opened = []
-#Output
-for i in filePath:
-	opened.append(app.OpenDocumentFile(i))
-OUT = opened</Script>
-    </PythonNodeModels.PythonNode>
-    <Dynamo.Graph.Nodes.CodeBlockNodeModel guid="ea230525-6797-43cf-add1-704077132075" type="Dynamo.Graph.Nodes.CodeBlockNodeModel" nickname="Code Block" x="219.695590183348" y="4.43657568867565" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false" CodeText="t1 = {t2};&#xA;t3 = Flatten(t1);" ShouldFocus="false">
-      <PortInfo index="0" default="False" />
-    </Dynamo.Graph.Nodes.CodeBlockNodeModel>
-  </Elements>
-  <Connectors>
-    <Dynamo.Graph.Connectors.ConnectorModel start="ae4240bb-5bd7-41c5-8983-c0c761cacbe3" start_index="0" end="ea230525-6797-43cf-add1-704077132075" end_index="0" portType="0" />
-    <Dynamo.Graph.Connectors.ConnectorModel start="23c2f18c-1c7d-4cc4-a899-4e05448fb7aa" start_index="0" end="12994ec4-29b2-46de-ae51-384727ef4d4f" end_index="0" portType="0" />
-    <Dynamo.Graph.Connectors.ConnectorModel start="ea230525-6797-43cf-add1-704077132075" start_index="1" end="23c2f18c-1c7d-4cc4-a899-4e05448fb7aa" end_index="0" portType="0" />
-  </Connectors>
-  <Notes />
-  <Annotations />
-  <Presets />
-  <Cameras>
-    <Camera Name="Фоновый просмотр" eyeX="-17" eyeY="24" eyeZ="50" lookX="12" lookY="-13" lookZ="-58" upX="0" upY="1" upZ="0" />
-  </Cameras>
-</Workspace>
+{
+  "Uuid": "74091d53-f02e-4dc9-a949-4c69db563ecc",
+  "IsCustomNode": true,
+  "Category": "Zhukoven.Revit",
+  "Description": "Open document from the input File Path",
+  "Name": "Document.Open",
+  "ElementResolver": {
+    "ResolutionMap": {
+      "DSCore.List": {
+        "Key": "DSCore.List",
+        "Value": "DSCoreNodes.dll"
+      }
+    }
+  },
+  "Inputs": [],
+  "Outputs": [],
+  "Nodes": [
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Symbol, DynamoCore",
+      "NodeType": "InputNode",
+      "Parameter": {
+        "Name": "FilePath",
+        "TypeName": "var",
+        "TypeRank": -1,
+        "DefaultValue": null,
+        "Description": ""
+      },
+      "Id": "ae4240bb5bd741c58983c0c761cacbe3",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "1af98eee04964c91a9b9276f4f4ed618",
+          "Name": "",
+          "Description": "Symbol",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "A function parameter, use with custom nodes.\r\n\r\nYou can specify the type and default value for parameter. E.g.,\r\n\r\ninput : var[]..[]\r\nvalue : bool = false"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Output, DynamoCore",
+      "NodeType": "OutputNode",
+      "ElementResolver": null,
+      "Symbol": "Document",
+      "Id": "12994ec429b246deae51384727ef4d4f",
+      "Inputs": [
+        {
+          "Id": "0aae5fb18fbe495c87be9ae5647a84de",
+          "Name": "",
+          "Description": "",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [],
+      "Replication": "Disabled",
+      "Description": "A function output, use with custom nodes"
+    },
+    {
+      "ConcreteType": "PythonNodeModels.PythonNode, PythonNodeModels",
+      "NodeType": "PythonScriptNode",
+      "Code": "#Tested in Revit 2016+ and Dynamo 1.3.0 \n#Author © Konstantin Zhukoven @ https:\\\\zhukoven.com\n#Import system libraries\nimport sys\npyt_path = r'C:\\Program Files (x86)\\IronPython 2.7\\Lib'\nsys.path.append(pyt_path)\nimport clr\nclr.AddReference(\"RevitServices\")\nfrom RevitServices.Persistence import DocumentManager\napp = DocumentManager.Instance.CurrentUIApplication.Application\nfilePath = IN[0]\nopened = []\n#Output\nfor i in filePath:\n\topened.append(app.OpenDocumentFile(i))\nOUT = opened",
+      "VariableInputPorts": true,
+      "Id": "23c2f18c1c7d4cc4a8994e05448fb7aa",
+      "Inputs": [
+        {
+          "Id": "e0ce6175f33e4344b7f19bd19529507b",
+          "Name": "IN[0]",
+          "Description": "Input #0",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "316eb68e407f4d589a2b1d80c48e46d5",
+          "Name": "OUT",
+          "Description": "Result of the python script",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Runs an embedded IronPython script."
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
+      "NodeType": "CodeBlockNode",
+      "Code": "t1 = [t2];\nt3 = DSCore.List.Flatten(t1);",
+      "Id": "ea230525679743cfadd1704077132075",
+      "Inputs": [
+        {
+          "Id": "88a668b256494ce3acd93ca4b91d51ac",
+          "Name": "t2",
+          "Description": "t2",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "ce2b7ab65918492caa95e0b15b2591fd",
+          "Name": "",
+          "Description": "t1",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "6d34a0b7cb254bab9589a650693c4c8d",
+          "Name": "",
+          "Description": "t3",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Allows for DesignScript code to be authored directly"
+    }
+  ],
+  "Connectors": [
+    {
+      "Start": "1af98eee04964c91a9b9276f4f4ed618",
+      "End": "88a668b256494ce3acd93ca4b91d51ac",
+      "Id": "6781c9e9ed9e48f1999d88a202940801"
+    },
+    {
+      "Start": "316eb68e407f4d589a2b1d80c48e46d5",
+      "End": "0aae5fb18fbe495c87be9ae5647a84de",
+      "Id": "647559f4250347d98b29548d4d739274"
+    },
+    {
+      "Start": "6d34a0b7cb254bab9589a650693c4c8d",
+      "End": "e0ce6175f33e4344b7f19bd19529507b",
+      "Id": "fedccc25bedc4d34b094074009e8d290"
+    }
+  ],
+  "Dependencies": [],
+  "NodeLibraryDependencies": [],
+  "Bindings": [],
+  "View": {
+    "Dynamo": {
+      "ScaleFactor": 1.0,
+      "HasRunWithoutCrash": false,
+      "IsVisibleInDynamoLibrary": true,
+      "Version": "2.3.0.5885",
+      "RunType": "Manual",
+      "RunPeriod": "1000"
+    },
+    "Camera": {
+      "Name": "Background Preview",
+      "EyeX": -17.0,
+      "EyeY": 24.0,
+      "EyeZ": 50.0,
+      "LookX": 12.0,
+      "LookY": -13.0,
+      "LookZ": -58.0,
+      "UpX": 0.0,
+      "UpY": 1.0,
+      "UpZ": 0.0
+    },
+    "NodeViews": [
+      {
+        "ShowGeometry": true,
+        "Name": "Input",
+        "Id": "ae4240bb5bd741c58983c0c761cacbe3",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": -11.518682018941661,
+        "Y": 2.1897041352449378
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "Output",
+        "Id": "12994ec429b246deae51384727ef4d4f",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 573.467413861046,
+        "Y": 17.3805848184344
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "Python Script",
+        "Id": "23c2f18c1c7d4cc4a8994e05448fb7aa",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 433.357678976246,
+        "Y": 18.1108735060846
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "Code Block",
+        "Id": "ea230525679743cfadd1704077132075",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 103.64127101537835,
+        "Y": 6.6262798239205871
+      }
+    ],
+    "Annotations": [],
+    "X": 180.71599875864246,
+    "Y": 354.2482497313822,
+    "Zoom": 0.36534616121122465
+  }
+}

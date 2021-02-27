@@ -1,4 +1,4 @@
-<Workspace Version="1.3.0.875" X="160.716051130866" Y="433.484853744859" zoom="1.31537540500821" ScaleFactor="1" Name="Document.CentralModelPath" Description="Extracts file path of the central model. Works from within both Central and Local workshared models. Returns null if worksharing is disabled in current Document." ID="79799b34-3da4-413f-8bd8-472bb7269d0d" Category="Zhukoven.Revit.Document">
+<Workspace Version="1.3.0.875" X="160.716051130866" Y="433.484853744859" zoom="1.31537540500821" ScaleFactor="1" Name="Document.CentralModelPath" Description="Extracts file path of the central model. Works from within both Central and Local workshared models. Returns null if worksharing is disabled in current Document." ID="79799b34-3da4-413f-8bd8-472bb7269d0d" Category="Zhukoven.Revit">
   <NamespaceResolutionMap />
   <Elements>
     <PythonNodeModels.PythonNode guid="2c53ed04-1d18-4c1e-821d-b2568f7f67c3" type="PythonNodeModels.PythonNode" nickname="Python Script" x="250" y="0" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false" inputcount="1">

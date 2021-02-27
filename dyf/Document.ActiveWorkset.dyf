@@ -1,4 +1,4 @@
-<Workspace Version="1.3.0.875" X="72.0222773032233" Y="207.97358316396" zoom="1.51939327724692" ScaleFactor="1" Name="Document.ActiveWorkset" Description="Get active workset name from the current document." ID="ce4f1f6b-cf31-4f6c-8f03-fd8a633a2de5" Category="Zhukoven.Revit.Document">
+<Workspace Version="1.3.0.875" X="72.0222773032233" Y="207.97358316396" zoom="1.51939327724692" ScaleFactor="1" Name="Document.ActiveWorkset" Description="Get active workset name from the current document." ID="ce4f1f6b-cf31-4f6c-8f03-fd8a633a2de5" Category="Zhukoven.Revit">
   <NamespaceResolutionMap />
   <Elements>
     <PythonNodeModels.PythonNode guid="a5d7bfc4-e091-40ad-af8d-2e8b6c9a78bb" type="PythonNodeModels.PythonNode" nickname="Python Script" x="402.787476547468" y="70.6711009600282" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false" inputcount="1">

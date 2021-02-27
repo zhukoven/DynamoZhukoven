@@ -1,56 +1,215 @@
-<Workspace Version="1.3.3.4111" X="222.007031237613" Y="195.945939732925" zoom="1.30764135636719" ScaleFactor="1" Name="Rebar.GetRebarShape" Description="Input rebar elements, including RebarInSystem, to get the underlying rebar shapes." ID="0b5cdbd8-c428-479a-8384-0f68246baee1" Category="Zhukoven.Revit.Rebar">
-  <NamespaceResolutionMap />
-  <Elements>
-    <PythonNodeModels.PythonNode guid="1959d86f-1eb4-4343-bcc8-813a01765cd1" type="PythonNodeModels.PythonNode" nickname="Python Script" x="462.535023728511" y="0" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false" inputcount="1">
-      <PortInfo index="0" default="False" />
-      <Script>#Author Konstantin Zhukoven @ https://zhukoven.com
-#Tested to work with Dynamo 1.3.0+
-import clr
-clr.AddReference("RevitAPI")
-import Autodesk
-from Autodesk.Revit.DB import *
-
-clr.AddReference("RevitNodes")
-import Revit
-clr.ImportExtensions(Revit.GeometryConversion)
-clr.ImportExtensions(Revit.Elements)
-
-clr.AddReference("RevitServices")
-import RevitServices
-from RevitServices.Persistence import DocumentManager
-doc = DocumentManager.Instance.CurrentDBDocument
-
-Rebars = UnwrapElement(IN[0])
-
-rebarShapes = []
-for r in Rebars:
-	rebarShapes.append(r.RebarShapeId)
-	for i in rebarShapes:
-		elt = doc.GetElement(i)
-
-OUT = elt
-</Script>
-    </PythonNodeModels.PythonNode>
-    <Dynamo.Graph.Nodes.CodeBlockNodeModel guid="e322ebdc-18d3-4f28-a7ae-68e1009505eb" type="Dynamo.Graph.Nodes.CodeBlockNodeModel" nickname="Code Block" x="250" y="3.94637227744352" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false" CodeText="Flatten({item});" ShouldFocus="false">
-      <PortInfo index="0" default="False" />
-    </Dynamo.Graph.Nodes.CodeBlockNodeModel>
-    <Dynamo.Graph.Nodes.CustomNodes.Symbol guid="66270b9b-9688-4d47-a879-480cbbc2984f" type="Dynamo.Graph.Nodes.CustomNodes.Symbol" nickname="Input" x="-131.338849652632" y="0" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" IsFrozen="false" isPinned="false">
-      <Symbol value="//Input rebars / rebarInSystem elements&#xD;&#xA;rebar" />
-    </Dynamo.Graph.Nodes.CustomNodes.Symbol>
-    <Dynamo.Graph.Nodes.CustomNodes.Output guid="a9a6a439-8794-4437-97e3-a0e05ef65562" type="Dynamo.Graph.Nodes.CustomNodes.Output" nickname="Output" x="611.716839377513" y="0" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false">
-      <PortInfo index="0" default="False" />
-      <Symbol value="rebarShape" />
-    </Dynamo.Graph.Nodes.CustomNodes.Output>
-  </Elements>
-  <Connectors>
-    <Dynamo.Graph.Connectors.ConnectorModel start="1959d86f-1eb4-4343-bcc8-813a01765cd1" start_index="0" end="a9a6a439-8794-4437-97e3-a0e05ef65562" end_index="0" portType="0" />
-    <Dynamo.Graph.Connectors.ConnectorModel start="e322ebdc-18d3-4f28-a7ae-68e1009505eb" start_index="0" end="1959d86f-1eb4-4343-bcc8-813a01765cd1" end_index="0" portType="0" />
-    <Dynamo.Graph.Connectors.ConnectorModel start="66270b9b-9688-4d47-a879-480cbbc2984f" start_index="0" end="e322ebdc-18d3-4f28-a7ae-68e1009505eb" end_index="0" portType="0" />
-  </Connectors>
-  <Notes />
-  <Annotations />
-  <Presets />
-  <Cameras>
-    <Camera Name="Фоновый просмотр" eyeX="-575.590929621129" eyeY="2124.71532895886" eyeZ="1448.77702539666" lookX="678.695396270852" lookY="-2124.33223980516" lookZ="-999.068639570381" upX="0.417595304345439" upY="0.669130606358858" upZ="-0.614718141445709" />
-  </Cameras>
-</Workspace>
+{
+  "Uuid": "0b5cdbd8-c428-479a-8384-0f68246baee1",
+  "IsCustomNode": true,
+  "Category": "Zhukoven.Revit",
+  "Description": "Input rebar elements, including RebarInSystem, to get the underlying rebar shapes.",
+  "Name": "Rebar.GetRebarShape",
+  "ElementResolver": {
+    "ResolutionMap": {
+      "DSCore.List": {
+        "Key": "DSCore.List",
+        "Value": "DSCoreNodes.dll"
+      }
+    }
+  },
+  "Inputs": [],
+  "Outputs": [],
+  "Nodes": [
+    {
+      "ConcreteType": "PythonNodeModels.PythonNode, PythonNodeModels",
+      "NodeType": "PythonScriptNode",
+      "Code": "#Author Konstantin Zhukoven @ https://zhukoven.com\n#Tested to work with Dynamo 1.3.0+\nimport clr\nclr.AddReference(\"RevitAPI\")\nimport Autodesk\nfrom Autodesk.Revit.DB import *\n\nclr.AddReference(\"RevitNodes\")\nimport Revit\nclr.ImportExtensions(Revit.GeometryConversion)\nclr.ImportExtensions(Revit.Elements)\n\nclr.AddReference(\"RevitServices\")\nimport RevitServices\nfrom RevitServices.Persistence import DocumentManager\ndoc = DocumentManager.Instance.CurrentDBDocument\n\nRebars = UnwrapElement(IN[0])\n\nrebarShapes = []\nfor r in Rebars:\n\trebarShapes.append(r.RebarShapeId)\n\tfor i in rebarShapes:\n\t\telt = doc.GetElement(i)\n\nOUT = elt\n",
+      "VariableInputPorts": true,
+      "Id": "1959d86f1eb44343bcc8813a01765cd1",
+      "Inputs": [
+        {
+          "Id": "f2983f4b723c48a0b9b37b11e7363d13",
+          "Name": "IN[0]",
+          "Description": "Input #0",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "65b2afa1e0c64d6cb6645727748d6651",
+          "Name": "OUT",
+          "Description": "Result of the python script",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Runs an embedded IronPython script."
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
+      "NodeType": "CodeBlockNode",
+      "Code": "DSCore.List.Flatten([item]);",
+      "Id": "e322ebdc18d34f28a7ae68e1009505eb",
+      "Inputs": [
+        {
+          "Id": "0ae5199b137d4855a7b31f4406660fc5",
+          "Name": "item",
+          "Description": "item",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "a53d11c1f358429f9a6eccedbab9ef99",
+          "Name": "",
+          "Description": "Value of expression at line 1",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Allows for DesignScript code to be authored directly"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Symbol, DynamoCore",
+      "NodeType": "InputNode",
+      "Parameter": {
+        "Name": "rebar",
+        "TypeName": "var",
+        "TypeRank": -1,
+        "DefaultValue": null,
+        "Description": "Input rebars / rebarInSystem elements"
+      },
+      "Id": "66270b9b96884d47a879480cbbc2984f",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "ac86679516414c8d95175f2f235950aa",
+          "Name": "",
+          "Description": "Symbol",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "A function parameter, use with custom nodes.\r\n\r\nYou can specify the type and default value for parameter. E.g.,\r\n\r\ninput : var[]..[]\r\nvalue : bool = false"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Output, DynamoCore",
+      "NodeType": "OutputNode",
+      "ElementResolver": null,
+      "Symbol": "rebarShape",
+      "Id": "a9a6a4398794443797e3a0e05ef65562",
+      "Inputs": [
+        {
+          "Id": "9cb893fc6dcc499ea88e4cda1654ad7f",
+          "Name": "",
+          "Description": "",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [],
+      "Replication": "Disabled",
+      "Description": "A function output, use with custom nodes"
+    }
+  ],
+  "Connectors": [
+    {
+      "Start": "65b2afa1e0c64d6cb6645727748d6651",
+      "End": "9cb893fc6dcc499ea88e4cda1654ad7f",
+      "Id": "121ddcc33d324ceba309d7407f006638"
+    },
+    {
+      "Start": "a53d11c1f358429f9a6eccedbab9ef99",
+      "End": "f2983f4b723c48a0b9b37b11e7363d13",
+      "Id": "6c2c815c38e845ec874f6849d04e9117"
+    },
+    {
+      "Start": "ac86679516414c8d95175f2f235950aa",
+      "End": "0ae5199b137d4855a7b31f4406660fc5",
+      "Id": "2e0306e6c14847d18aa62c5c5374e3f9"
+    }
+  ],
+  "Dependencies": [],
+  "NodeLibraryDependencies": [],
+  "Bindings": [],
+  "View": {
+    "Dynamo": {
+      "ScaleFactor": 1.0,
+      "HasRunWithoutCrash": false,
+      "IsVisibleInDynamoLibrary": true,
+      "Version": "2.3.0.5885",
+      "RunType": "Manual",
+      "RunPeriod": "1000"
+    },
+    "Camera": {
+      "Name": "Background Preview",
+      "EyeX": -17.0,
+      "EyeY": 24.0,
+      "EyeZ": 50.0,
+      "LookX": 12.0,
+      "LookY": -13.0,
+      "LookZ": -58.0,
+      "UpX": 0.0,
+      "UpY": 1.0,
+      "UpZ": 0.0
+    },
+    "NodeViews": [
+      {
+        "ShowGeometry": true,
+        "Name": "Python Script",
+        "Id": "1959d86f1eb44343bcc8813a01765cd1",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 462.535023728511,
+        "Y": 0.0
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "Code Block",
+        "Id": "e322ebdc18d34f28a7ae68e1009505eb",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 123.26281526973798,
+        "Y": 3.946372277443519
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "Input",
+        "Id": "66270b9b96884d47a879480cbbc2984f",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": -258.076034382894,
+        "Y": 0.0
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "Output",
+        "Id": "a9a6a4398794443797e3a0e05ef65562",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 611.716839377513,
+        "Y": 0.0
+      }
+    ],
+    "Annotations": [],
+    "X": 399.057696567903,
+    "Y": 301.43868504900803,
+    "Zoom": 0.42923471998988211
+  }
+}

@@ -1,4 +1,4 @@
-<Workspace Version="1.3.0.875" X="194.802518589091" Y="327.667460529603" zoom="1.40210270027359" ScaleFactor="1" Name="Railing.TypeInfo" Description="Input railing instance element to get its type info: railing type, primary handrail type, secondary handrail type, top rail type." ID="aa675b04-7dd9-4bad-b703-7a70b2d752e1" Category="Zhukoven.Revit.Railings">
+<Workspace Version="1.3.0.875" X="194.802518589091" Y="327.667460529603" zoom="1.40210270027359" ScaleFactor="1" Name="Railing.TypeInfo" Description="Input railing instance element to get its type info: railing type, primary handrail type, secondary handrail type, top rail type." ID="aa675b04-7dd9-4bad-b703-7a70b2d752e1" Category="Zhukoven.Revit">
   <NamespaceResolutionMap>
     <ClassMap partialName="Math.PI" resolvedName="DSCore.Math" assemblyName="DSCoreNodes.dll" />
   </NamespaceResolutionMap>

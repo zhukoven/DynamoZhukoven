@@ -1,57 +1,215 @@
-<Workspace Version="1.3.4.6666" X="246.287451662365" Y="294.224537726687" zoom="1.24844365397223" ScaleFactor="1" Name="Workset.Create" Description="Create new worksets with the input names (strings) in the current document." ID="2799d1b0-11b3-4c17-8d73-930a058e0e6c" Category="Zhukoven.Revit.Worksharing">
-  <NamespaceResolutionMap />
-  <Elements>
-    <PythonNodeModels.PythonNode guid="3861d35a-ba59-450f-b32a-d0533b5c037c" type="PythonNodeModels.PythonNode" nickname="Python Script" x="250" y="0" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false" inputcount="1">
-      <PortInfo index="0" default="False" />
-      <Script>#Author Konstantin Zhukoven @ https://zhukoven.com
-#Tested to work with Dynamo 1.3.3+
-import clr
-clr.AddReference("RevitServices")
-import RevitServices
-from RevitServices.Persistence import DocumentManager
-from RevitServices.Transactions import TransactionManager
-# Import RevitAPI
-clr.AddReference("RevitAPI")
-import Autodesk
-from Autodesk.Revit.DB import *
-
-doc = DocumentManager.Instance.CurrentDBDocument
-
-names = IN[0]
-newWorksets = []
-
-wsTable = doc.GetWorksetTable()
-for i in names:
-	if wsTable.IsWorksetNameUnique(doc, i):
-		# Start Transaction
-		TransactionManager.Instance.EnsureInTransaction(doc)
-		newWorksets.append(Workset.Create(doc,i))
-		# End Transaction
-		TransactionManager.Instance.TransactionTaskDone()
-		OUT = newWorksets
-	else:
-		OUT = "Error: workset name is already in use"</Script>
-    </PythonNodeModels.PythonNode>
-    <Dynamo.Graph.Nodes.CustomNodes.Symbol guid="042eb17d-d1b1-45f8-b9e2-a6855fbd3347" type="Dynamo.Graph.Nodes.CustomNodes.Symbol" nickname="Input" x="-318.96577772782" y="0" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" IsFrozen="false" isPinned="false">
-      <Symbol value="//Input workset name(s) as string(s)&#xD;&#xA;worksetName" />
-    </Dynamo.Graph.Nodes.CustomNodes.Symbol>
-    <Dynamo.Graph.Nodes.CustomNodes.Output guid="3d8e0a48-93d3-4dba-9ae4-b80029b3705c" type="Dynamo.Graph.Nodes.CustomNodes.Output" nickname="Output" x="391.915058547675" y="0" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false">
-      <PortInfo index="0" default="False" />
-      <Symbol value="//Workset element&#xD;&#xA;workset" />
-    </Dynamo.Graph.Nodes.CustomNodes.Output>
-    <Dynamo.Graph.Nodes.CodeBlockNodeModel guid="40da81ee-cf83-46a1-9fe8-a6f75ff5217f" type="Dynamo.Graph.Nodes.CodeBlockNodeModel" nickname="Code Block" x="25.7839342178374" y="4.12868426222428" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false" CodeText="Flatten({item});" ShouldFocus="false">
-      <PortInfo index="0" default="False" />
-    </Dynamo.Graph.Nodes.CodeBlockNodeModel>
-  </Elements>
-  <Connectors>
-    <Dynamo.Graph.Connectors.ConnectorModel start="3861d35a-ba59-450f-b32a-d0533b5c037c" start_index="0" end="3d8e0a48-93d3-4dba-9ae4-b80029b3705c" end_index="0" portType="0" />
-    <Dynamo.Graph.Connectors.ConnectorModel start="042eb17d-d1b1-45f8-b9e2-a6855fbd3347" start_index="0" end="40da81ee-cf83-46a1-9fe8-a6f75ff5217f" end_index="0" portType="0" />
-    <Dynamo.Graph.Connectors.ConnectorModel start="40da81ee-cf83-46a1-9fe8-a6f75ff5217f" start_index="0" end="3861d35a-ba59-450f-b32a-d0533b5c037c" end_index="0" portType="0" />
-  </Connectors>
-  <Notes />
-  <Annotations />
-  <Presets />
-  <Cameras>
-    <Camera Name="Background Preview" eyeX="-17" eyeY="24" eyeZ="50" lookX="12" lookY="-13" lookZ="-58" upX="0" upY="1" upZ="0" />
-  </Cameras>
-</Workspace>
+{
+  "Uuid": "2799d1b0-11b3-4c17-8d73-930a058e0e6c",
+  "IsCustomNode": true,
+  "Category": "Zhukoven.Revit",
+  "Description": "Create new worksets with the input names (strings) in the current document.",
+  "Name": "Workset.Create",
+  "ElementResolver": {
+    "ResolutionMap": {
+      "DSCore.List": {
+        "Key": "DSCore.List",
+        "Value": "DSCoreNodes.dll"
+      }
+    }
+  },
+  "Inputs": [],
+  "Outputs": [],
+  "Nodes": [
+    {
+      "ConcreteType": "PythonNodeModels.PythonNode, PythonNodeModels",
+      "NodeType": "PythonScriptNode",
+      "Code": "#Author Konstantin Zhukoven @ https://zhukoven.com\r\n#Tested to work with Dynamo 1.3.3+\r\nimport clr\r\nclr.AddReference(\"RevitServices\")\r\nimport RevitServices\r\nfrom RevitServices.Persistence import DocumentManager\r\nfrom RevitServices.Transactions import TransactionManager\r\n# Import RevitAPI\r\nclr.AddReference(\"RevitAPI\")\r\nimport Autodesk\r\nfrom Autodesk.Revit.DB import *\r\n\r\ndoc = DocumentManager.Instance.CurrentDBDocument\r\n\r\nnames = IN[0]\r\nnewWorksets = []\r\n\r\nwsTable = doc.GetWorksetTable()\r\nfor i in names:\r\n\tif wsTable.IsWorksetNameUnique(doc, i):\r\n\t\t# Start Transaction\r\n\t\tTransactionManager.Instance.EnsureInTransaction(doc)\r\n\t\tnewWorksets.append(Workset.Create(doc,i))\r\n\t\t# End Transaction\r\n\t\tTransactionManager.Instance.TransactionTaskDone()\r\n\t\tOUT = newWorksets\r\n\telse:\r\n\t\tOUT = \"Error: workset name is already in use\"",
+      "VariableInputPorts": true,
+      "Id": "3861d35aba59450fb32ad0533b5c037c",
+      "Inputs": [
+        {
+          "Id": "15eb53fea0174552879d98db2192ca72",
+          "Name": "IN[0]",
+          "Description": "Input #0",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "3b738be0bac14279b7adaaf243f82e22",
+          "Name": "OUT",
+          "Description": "Result of the python script",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Runs an embedded IronPython script."
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Symbol, DynamoCore",
+      "NodeType": "InputNode",
+      "Parameter": {
+        "Name": "worksetName",
+        "TypeName": "var",
+        "TypeRank": -1,
+        "DefaultValue": null,
+        "Description": "Input workset name(s) as string(s)"
+      },
+      "Id": "042eb17dd1b145f8b9e2a6855fbd3347",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "ca6acaf5eda94e79aef4b8eb6494cd27",
+          "Name": "",
+          "Description": "Symbol",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "A function parameter, use with custom nodes.\r\n\r\nYou can specify the type and default value for parameter. E.g.,\r\n\r\ninput : var[]..[]\r\nvalue : bool = false"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Output, DynamoCore",
+      "NodeType": "OutputNode",
+      "ElementResolver": null,
+      "Symbol": "//Workset element\r\nworkset",
+      "Id": "3d8e0a4893d34dba9ae4b80029b3705c",
+      "Inputs": [
+        {
+          "Id": "4dca7ff0528e4aea994e9affe28fa13e",
+          "Name": "",
+          "Description": "",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [],
+      "Replication": "Disabled",
+      "Description": "A function output, use with custom nodes"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
+      "NodeType": "CodeBlockNode",
+      "Code": "DSCore.List.Flatten([item]);",
+      "Id": "40da81eecf8346a19fe8a6f75ff5217f",
+      "Inputs": [
+        {
+          "Id": "6d981743e4244157b4264f9e27c8fcac",
+          "Name": "item",
+          "Description": "item",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "7f1267cef0184240982b68e814c3272b",
+          "Name": "",
+          "Description": "Value of expression at line 1",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Allows for DesignScript code to be authored directly"
+    }
+  ],
+  "Connectors": [
+    {
+      "Start": "3b738be0bac14279b7adaaf243f82e22",
+      "End": "4dca7ff0528e4aea994e9affe28fa13e",
+      "Id": "4c743926536748b09bcf312e11359be4"
+    },
+    {
+      "Start": "ca6acaf5eda94e79aef4b8eb6494cd27",
+      "End": "6d981743e4244157b4264f9e27c8fcac",
+      "Id": "034d4f577ebf4a1483a83c902ad078f3"
+    },
+    {
+      "Start": "7f1267cef0184240982b68e814c3272b",
+      "End": "15eb53fea0174552879d98db2192ca72",
+      "Id": "19daad23d168477d905fad9995f2170b"
+    }
+  ],
+  "Dependencies": [],
+  "NodeLibraryDependencies": [],
+  "Bindings": [],
+  "View": {
+    "Dynamo": {
+      "ScaleFactor": 1.0,
+      "HasRunWithoutCrash": false,
+      "IsVisibleInDynamoLibrary": true,
+      "Version": "2.3.0.5885",
+      "RunType": "Manual",
+      "RunPeriod": "1000"
+    },
+    "Camera": {
+      "Name": "Background Preview",
+      "EyeX": -17.0,
+      "EyeY": 24.0,
+      "EyeZ": 50.0,
+      "LookX": 12.0,
+      "LookY": -13.0,
+      "LookZ": -58.0,
+      "UpX": 0.0,
+      "UpY": 1.0,
+      "UpZ": 0.0
+    },
+    "NodeViews": [
+      {
+        "ShowGeometry": true,
+        "Name": "Python Script",
+        "Id": "3861d35aba59450fb32ad0533b5c037c",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 350.90040768251583,
+        "Y": 1.4414343954645119
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "Input",
+        "Id": "042eb17dd1b145f8b9e2a6855fbd3347",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": -318.96577772782,
+        "Y": 0.0
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "Output",
+        "Id": "3d8e0a4893d34dba9ae4b80029b3705c",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 492.81546623019085,
+        "Y": 1.4414343954645119
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "Code Block",
+        "Id": "40da81eecf8346a19fe8a6f75ff5217f",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 29.628721273086185,
+        "Y": 2.8470885771412782
+      }
+    ],
+    "Annotations": [],
+    "X": 280.56533633655306,
+    "Y": 233.00094391575195,
+    "Zoom": 0.55500271293456549
+  }
+}

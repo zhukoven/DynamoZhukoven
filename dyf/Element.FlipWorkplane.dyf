@@ -1,62 +1,283 @@
-<Workspace Version="1.3.3.4111" X="384" Y="155" zoom="1" ScaleFactor="1" Name="Element.FlipWorkplane" Description="Flip workplane for single or multiple elements. Input element(s) and boolean (true / false)." ID="16893140-3b6a-4269-8c85-4248ee65071b" Category="Zhukoven.Revit.Elements">
-  <NamespaceResolutionMap />
-  <Elements>
-    <Dynamo.Graph.Nodes.ZeroTouch.DSFunction guid="269a83c6-b93e-44ab-a4d5-cfd6727c94d6" type="Dynamo.Graph.Nodes.ZeroTouch.DSFunction" nickname="List.OfRepeatedItem" x="434" y="62" isVisible="true" isUpstreamVisible="true" lacing="Shortest" isSelectedInput="False" IsFrozen="false" isPinned="false" assembly="DSCoreNodes.dll" function="DSCore.List.OfRepeatedItem@var[]..[],int">
-      <PortInfo index="0" default="False" />
-      <PortInfo index="1" default="False" />
-    </Dynamo.Graph.Nodes.ZeroTouch.DSFunction>
-    <PythonNodeModels.PythonNode guid="82b6d01c-03c1-408b-8ad5-afe8e4101d9d" type="PythonNodeModels.PythonNode" nickname="Python Script" x="643" y="0" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false" inputcount="2">
-      <PortInfo index="0" default="False" />
-      <PortInfo index="1" default="False" />
-      <Script>#Many thanks to Daniel_Woodcock1 for posting the code on foum.dynamobim.com
-import clr
-
-clr.AddReference("RevitServices")
-import RevitServices
-from RevitServices.Persistence import DocumentManager
-from RevitServices.Transactions import TransactionManager
-doc =  DocumentManager.Instance.CurrentDBDocument
-
-clr.AddReference("RevitNodes")
-import Revit
-clr.ImportExtensions(Revit.Elements)
-clr.ImportExtensions(Revit.GeometryConversion)
-
-clr.AddReference("RevitAPI")
-from Autodesk.Revit.DB import *
-
-def tolist(obj1):
-	if hasattr(obj1,"__iter__"): return obj1
-	else: return [obj1]
-
-elems = tolist(UnwrapElement(IN[0]))
-bools = tolist(IN[1])
-TransactionManager.Instance.EnsureInTransaction(doc)
-for elem,b in zip(elems, bools):
-	elem.IsWorkPlaneFlipped = b
-TransactionManager.Instance.TransactionTaskDone()</Script>
-    </PythonNodeModels.PythonNode>
-    <Dynamo.Graph.Nodes.ZeroTouch.DSFunction guid="cfc3e204-ef43-4955-8fdf-34fa04f50a5b" type="Dynamo.Graph.Nodes.ZeroTouch.DSFunction" nickname="Count" x="250" y="127" isVisible="true" isUpstreamVisible="true" lacing="Shortest" isSelectedInput="False" IsFrozen="false" isPinned="false" assembly="BuiltIn" function="Count@var[]..[]">
-      <PortInfo index="0" default="False" />
-    </Dynamo.Graph.Nodes.ZeroTouch.DSFunction>
-    <Dynamo.Graph.Nodes.CustomNodes.Symbol guid="0aca96cd-ec2e-4086-bcfd-ae9fec697949" type="Dynamo.Graph.Nodes.CustomNodes.Symbol" nickname="Input" x="42" y="2" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" IsFrozen="false" isPinned="false">
-      <Symbol value="Element[]" />
-    </Dynamo.Graph.Nodes.CustomNodes.Symbol>
-    <Dynamo.Graph.Nodes.CustomNodes.Symbol guid="6c81aee1-2749-4e7d-9efa-160f4316fb5c" type="Dynamo.Graph.Nodes.CustomNodes.Symbol" nickname="Input" x="-72" y="83" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" IsFrozen="false" isPinned="false">
-      <Symbol value="boolean : var[]..[]" />
-    </Dynamo.Graph.Nodes.CustomNodes.Symbol>
-  </Elements>
-  <Connectors>
-    <Dynamo.Graph.Connectors.ConnectorModel start="269a83c6-b93e-44ab-a4d5-cfd6727c94d6" start_index="0" end="82b6d01c-03c1-408b-8ad5-afe8e4101d9d" end_index="1" portType="0" />
-    <Dynamo.Graph.Connectors.ConnectorModel start="cfc3e204-ef43-4955-8fdf-34fa04f50a5b" start_index="0" end="269a83c6-b93e-44ab-a4d5-cfd6727c94d6" end_index="1" portType="0" />
-    <Dynamo.Graph.Connectors.ConnectorModel start="0aca96cd-ec2e-4086-bcfd-ae9fec697949" start_index="0" end="82b6d01c-03c1-408b-8ad5-afe8e4101d9d" end_index="0" portType="0" />
-    <Dynamo.Graph.Connectors.ConnectorModel start="0aca96cd-ec2e-4086-bcfd-ae9fec697949" start_index="0" end="cfc3e204-ef43-4955-8fdf-34fa04f50a5b" end_index="0" portType="0" />
-    <Dynamo.Graph.Connectors.ConnectorModel start="6c81aee1-2749-4e7d-9efa-160f4316fb5c" start_index="0" end="269a83c6-b93e-44ab-a4d5-cfd6727c94d6" end_index="0" portType="0" />
-  </Connectors>
-  <Notes />
-  <Annotations />
-  <Presets />
-  <Cameras>
-    <Camera Name="Фоновый просмотр" eyeX="-17" eyeY="24" eyeZ="50" lookX="12" lookY="-13" lookZ="-58" upX="0" upY="1" upZ="0" />
-  </Cameras>
-</Workspace>
+{
+  "Uuid": "16893140-3b6a-4269-8c85-4248ee65071b",
+  "IsCustomNode": true,
+  "Category": "Zhukoven.Revit",
+  "Description": "Flip workplane for single or multiple elements. Input element(s) and boolean (true / false).",
+  "Name": "Element.FlipWorkplane",
+  "ElementResolver": {
+    "ResolutionMap": {}
+  },
+  "Inputs": [],
+  "Outputs": [],
+  "Nodes": [
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
+      "NodeType": "FunctionNode",
+      "FunctionSignature": "DSCore.List.OfRepeatedItem@var[]..[],int",
+      "Id": "269a83c6b93e44aba4d5cfd6727c94d6",
+      "Inputs": [
+        {
+          "Id": "2f1b10fcca3d483890b65618a4880f29",
+          "Name": "item",
+          "Description": "The item to repeat.\n\nvar[]..[]",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "4c5b4a8b581f4daaac7335788bee2898",
+          "Name": "amount",
+          "Description": "The number of times to repeat.\n\nint",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "d177f5ee7a36475297d6a001fa6bd77d",
+          "Name": "list",
+          "Description": "List of repeated items.",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Auto",
+      "Description": "Creates a list containing the given item the given number of times.\n\nList.OfRepeatedItem (item: var[]..[], amount: int): var[]..[]"
+    },
+    {
+      "ConcreteType": "PythonNodeModels.PythonNode, PythonNodeModels",
+      "NodeType": "PythonScriptNode",
+      "Code": "#Many thanks to Daniel_Woodcock1 for posting the code on foum.dynamobim.com\nimport clr\n\nclr.AddReference(\"RevitServices\")\nimport RevitServices\nfrom RevitServices.Persistence import DocumentManager\nfrom RevitServices.Transactions import TransactionManager\ndoc =  DocumentManager.Instance.CurrentDBDocument\n\nclr.AddReference(\"RevitNodes\")\nimport Revit\nclr.ImportExtensions(Revit.Elements)\nclr.ImportExtensions(Revit.GeometryConversion)\n\nclr.AddReference(\"RevitAPI\")\nfrom Autodesk.Revit.DB import *\n\ndef tolist(obj1):\n\tif hasattr(obj1,\"__iter__\"): return obj1\n\telse: return [obj1]\n\nelems = tolist(UnwrapElement(IN[0]))\nbools = tolist(IN[1])\nTransactionManager.Instance.EnsureInTransaction(doc)\nfor elem,b in zip(elems, bools):\n\telem.IsWorkPlaneFlipped = b\nTransactionManager.Instance.TransactionTaskDone()",
+      "VariableInputPorts": true,
+      "Id": "82b6d01c03c1408b8ad5afe8e4101d9d",
+      "Inputs": [
+        {
+          "Id": "c363e291b1b14e6da9b2a93992ec0916",
+          "Name": "IN[0]",
+          "Description": "Input #0",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "8baa72b93c744f8e99a7f03ab9a5fa6d",
+          "Name": "IN[1]",
+          "Description": "Input #1",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "626bf27443d6468ab00776d682008c6e",
+          "Name": "OUT",
+          "Description": "Result of the python script",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Runs an embedded IronPython script."
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
+      "NodeType": "FunctionNode",
+      "FunctionSignature": "DSCore.List.Count@var[]..[]",
+      "Id": "cfc3e204ef4349558fdf34fa04f50a5b",
+      "Inputs": [
+        {
+          "Id": "8b527532c8d04dc5b6a2363d3b71ec99",
+          "Name": "list",
+          "Description": "List to get the item count of.\n\nvar[]..[]",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "fd1582f3fb9947efaf19a8fdf3d565a9",
+          "Name": "count",
+          "Description": "List length.",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Auto",
+      "Description": "Returns the number of items stored in the given list.\n\nList.Count (list: var[]..[]): int"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Symbol, DynamoCore",
+      "NodeType": "InputNode",
+      "Parameter": {
+        "Name": "element",
+        "TypeName": "var",
+        "TypeRank": -1,
+        "DefaultValue": null,
+        "Description": ""
+      },
+      "Id": "0aca96cdec2e4086bcfdae9fec697949",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "33b74e22dc1b45f89a98e2c8002132a4",
+          "Name": "",
+          "Description": "Symbol",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "A function parameter, use with custom nodes.\r\n\r\nYou can specify the type and default value for parameter. E.g.,\r\n\r\ninput : var[]..[]\r\nvalue : bool = false"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Symbol, DynamoCore",
+      "NodeType": "InputNode",
+      "Parameter": {
+        "Name": "boolean",
+        "TypeName": "var",
+        "TypeRank": -1,
+        "DefaultValue": null,
+        "Description": ""
+      },
+      "Id": "6c81aee127494e7d9efa160f4316fb5c",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "a24d456275ff4abea7405c0e18aec6c9",
+          "Name": "",
+          "Description": "Symbol",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "A function parameter, use with custom nodes.\r\n\r\nYou can specify the type and default value for parameter. E.g.,\r\n\r\ninput : var[]..[]\r\nvalue : bool = false"
+    }
+  ],
+  "Connectors": [
+    {
+      "Start": "d177f5ee7a36475297d6a001fa6bd77d",
+      "End": "8baa72b93c744f8e99a7f03ab9a5fa6d",
+      "Id": "a49705b409ca48e7beefa1613a0a630f"
+    },
+    {
+      "Start": "fd1582f3fb9947efaf19a8fdf3d565a9",
+      "End": "4c5b4a8b581f4daaac7335788bee2898",
+      "Id": "22cf503118654ef7b000f1f10a8cb0a6"
+    },
+    {
+      "Start": "33b74e22dc1b45f89a98e2c8002132a4",
+      "End": "c363e291b1b14e6da9b2a93992ec0916",
+      "Id": "d2c1f86b8d8747b6b6d54b6cb764e121"
+    },
+    {
+      "Start": "33b74e22dc1b45f89a98e2c8002132a4",
+      "End": "8b527532c8d04dc5b6a2363d3b71ec99",
+      "Id": "2e359febddbe49a5aa350db946f4fe2d"
+    },
+    {
+      "Start": "a24d456275ff4abea7405c0e18aec6c9",
+      "End": "2f1b10fcca3d483890b65618a4880f29",
+      "Id": "ea6507d7d4c9444db652dec4eca1d8dd"
+    }
+  ],
+  "Dependencies": [],
+  "NodeLibraryDependencies": [],
+  "Bindings": [],
+  "View": {
+    "Dynamo": {
+      "ScaleFactor": 1.0,
+      "HasRunWithoutCrash": false,
+      "IsVisibleInDynamoLibrary": true,
+      "Version": "2.3.0.5885",
+      "RunType": "Manual",
+      "RunPeriod": "1000"
+    },
+    "Camera": {
+      "Name": "Background Preview",
+      "EyeX": -17.0,
+      "EyeY": 24.0,
+      "EyeZ": 50.0,
+      "LookX": 12.0,
+      "LookY": -13.0,
+      "LookZ": -58.0,
+      "UpX": 0.0,
+      "UpY": 1.0,
+      "UpZ": 0.0
+    },
+    "NodeViews": [
+      {
+        "ShowGeometry": true,
+        "Name": "List.OfRepeatedItem",
+        "Id": "269a83c6b93e44aba4d5cfd6727c94d6",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 434.0,
+        "Y": 62.0
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "Python Script",
+        "Id": "82b6d01c03c1408b8ad5afe8e4101d9d",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 643.0,
+        "Y": 0.0
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "List.Count",
+        "Id": "cfc3e204ef4349558fdf34fa04f50a5b",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 250.0,
+        "Y": 127.0
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "Input",
+        "Id": "0aca96cdec2e4086bcfdae9fec697949",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 42.0,
+        "Y": 2.0
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "Input",
+        "Id": "6c81aee127494e7d9efa160f4316fb5c",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": -72.0,
+        "Y": 83.0
+      }
+    ],
+    "Annotations": [],
+    "X": 271.039513682969,
+    "Y": 211.81777449213212,
+    "Zoom": 0.43744777730562229
+  }
+}

@@ -1,51 +1,259 @@
-<Workspace Version="1.3.0.875" X="81" Y="207" zoom="1" ScaleFactor="1" Name="Element.CopyID" Description="This node copies element's ID to clipboard." ID="a2054132-92f3-4131-b11e-702395b496c6" Category="Zhukoven.Revit.Elements">
-  <NamespaceResolutionMap />
-  <Elements>
-    <CoreNodeModels.FromObject guid="e80aaf66-c715-4b2d-a3fe-bf411ab77975" type="CoreNodeModels.FromObject" nickname="String from Object" x="452.183626252497" y="0.712605962953148" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false">
-      <PortInfo index="0" default="False" />
-    </CoreNodeModels.FromObject>
-    <PythonNodeModels.PythonNode guid="0c7b8bb6-a4c0-4a8d-aa92-28d5ef8e5b28" type="PythonNodeModels.PythonNode" nickname="Python Script" x="595.12008006203" y="0" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false" inputcount="1">
-      <PortInfo index="0" default="False" />
-      <Script>#Refer to https://github.com/andydandy74/ClockworkForDynamo
-import clr
-import System
-from System.Threading import Thread, ThreadStart
-clr.AddReference("System.Windows.Forms")
-
-def SetText(text):
-    def thread_proc():
-        System.Windows.Forms.Clipboard.SetText(text)
-    t = Thread(ThreadStart(thread_proc))
-    t.ApartmentState = System.Threading.ApartmentState.STA
-    t.Start()
-    
-try:
-	SetText(IN[0])
-	OUT = IN[0]
-except:
-	OUT = 'Error: element ID could not be copied to clipboard'</Script>
-    </PythonNodeModels.PythonNode>
-    <Dynamo.Graph.Nodes.ZeroTouch.DSFunction guid="fde49a4d-9b13-493e-ba96-589acd37fd9b" type="Dynamo.Graph.Nodes.ZeroTouch.DSFunction" nickname="Element.Id" x="250" y="1.81143001867326" isVisible="true" isUpstreamVisible="true" lacing="Shortest" isSelectedInput="False" IsFrozen="false" isPinned="false" assembly="RevitNodes.dll" function="Revit.Elements.Element.Id">
-      <PortInfo index="0" default="False" />
-    </Dynamo.Graph.Nodes.ZeroTouch.DSFunction>
-    <Dynamo.Graph.Nodes.CustomNodes.Symbol guid="7faff931-6b27-4832-bb80-8a40179affbe" type="Dynamo.Graph.Nodes.CustomNodes.Symbol" nickname="Input" x="-214" y="3" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" IsFrozen="false" isPinned="false">
-      <Symbol value="//Input single element to copy its ID to clipboard&#xD;&#xA;Element : Element" />
-    </Dynamo.Graph.Nodes.CustomNodes.Symbol>
-    <Dynamo.Graph.Nodes.CustomNodes.Output guid="2647eece-b1d8-4310-ab28-c782acb72c21" type="Dynamo.Graph.Nodes.CustomNodes.Output" nickname="Output" x="794.12008006203" y="0" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false">
-      <PortInfo index="0" default="False" />
-      <Symbol value="id" />
-    </Dynamo.Graph.Nodes.CustomNodes.Output>
-  </Elements>
-  <Connectors>
-    <Dynamo.Graph.Connectors.ConnectorModel start="e80aaf66-c715-4b2d-a3fe-bf411ab77975" start_index="0" end="0c7b8bb6-a4c0-4a8d-aa92-28d5ef8e5b28" end_index="0" portType="0" />
-    <Dynamo.Graph.Connectors.ConnectorModel start="0c7b8bb6-a4c0-4a8d-aa92-28d5ef8e5b28" start_index="0" end="2647eece-b1d8-4310-ab28-c782acb72c21" end_index="0" portType="0" />
-    <Dynamo.Graph.Connectors.ConnectorModel start="fde49a4d-9b13-493e-ba96-589acd37fd9b" start_index="0" end="e80aaf66-c715-4b2d-a3fe-bf411ab77975" end_index="0" portType="0" />
-    <Dynamo.Graph.Connectors.ConnectorModel start="7faff931-6b27-4832-bb80-8a40179affbe" start_index="0" end="fde49a4d-9b13-493e-ba96-589acd37fd9b" end_index="0" portType="0" />
-  </Connectors>
-  <Notes />
-  <Annotations />
-  <Presets />
-  <Cameras>
-    <Camera Name="Фоновый просмотр" eyeX="-17" eyeY="24" eyeZ="50" lookX="12" lookY="-13" lookZ="-58" upX="0" upY="1" upZ="0" />
-  </Cameras>
-</Workspace>
+{
+  "Uuid": "a2054132-92f3-4131-b11e-702395b496c6",
+  "IsCustomNode": true,
+  "Category": "Zhukoven.Revit",
+  "Description": "This node copies element's ID to clipboard.",
+  "Name": "Element.CopyID",
+  "ElementResolver": {
+    "ResolutionMap": {
+      "Element": {
+        "Key": "Revit.Elements.Element",
+        "Value": "RevitNodes.dll"
+      }
+    }
+  },
+  "Inputs": [],
+  "Outputs": [],
+  "Nodes": [
+    {
+      "ConcreteType": "CoreNodeModels.FromObject, CoreNodeModels",
+      "NodeType": "ExtensionNode",
+      "Id": "e80aaf66c7154b2da3febf411ab77975",
+      "Inputs": [
+        {
+          "Id": "47bbf4be279c4e92a5038f116a79142a",
+          "Name": "obj",
+          "Description": "Object to be serialized",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "78adce741e3d4b6f9fa67147b6aba05e",
+          "Name": "str",
+          "Description": "Result of math computation",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Convert an object to a string representation."
+    },
+    {
+      "ConcreteType": "PythonNodeModels.PythonNode, PythonNodeModels",
+      "NodeType": "PythonScriptNode",
+      "Code": "#Refer to https://github.com/andydandy74/ClockworkForDynamo\nimport clr\nimport System\nfrom System.Threading import Thread, ThreadStart\nclr.AddReference(\"System.Windows.Forms\")\n\ndef SetText(text):\n    def thread_proc():\n        System.Windows.Forms.Clipboard.SetText(text)\n    t = Thread(ThreadStart(thread_proc))\n    t.ApartmentState = System.Threading.ApartmentState.STA\n    t.Start()\n    \ntry:\n\tSetText(IN[0])\n\tOUT = IN[0]\nexcept:\n\tOUT = 'Error: element ID could not be copied to clipboard'",
+      "VariableInputPorts": true,
+      "Id": "0c7b8bb6a4c04a8daa9228d5ef8e5b28",
+      "Inputs": [
+        {
+          "Id": "8db8b0b9ca3248628be84f03af2e8ed7",
+          "Name": "IN[0]",
+          "Description": "Input #0",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "0fa98d6764e04d6aaadbd9c70e233ffe",
+          "Name": "OUT",
+          "Description": "Result of the python script",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Runs an embedded IronPython script."
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
+      "NodeType": "FunctionNode",
+      "FunctionSignature": "Revit.Elements.Element.Id",
+      "Id": "fde49a4d9b13493eba96589acd37fd9b",
+      "Inputs": [
+        {
+          "Id": "268a3e8ec05544c9a98d3df027480403",
+          "Name": "element",
+          "Description": "Revit.Elements.Element",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "a3f45721b5e84b519767b04463f90eb8",
+          "Name": "int",
+          "Description": "int",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Auto",
+      "Description": "Get the Element Id for this element\n\nElement.Id: int"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Symbol, DynamoCore",
+      "NodeType": "InputNode",
+      "Parameter": {
+        "Name": "element",
+        "TypeName": "Revit.Elements.Element",
+        "TypeRank": 0,
+        "DefaultValue": null,
+        "Description": "Input single element to copy its ID to clipboard"
+      },
+      "Id": "7faff9316b274832bb808a40179affbe",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "0896781ee05446c99ae1648f4dbfdf6c",
+          "Name": "",
+          "Description": "Symbol",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "A function parameter, use with custom nodes.\r\n\r\nYou can specify the type and default value for parameter. E.g.,\r\n\r\ninput : var[]..[]\r\nvalue : bool = false"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Output, DynamoCore",
+      "NodeType": "OutputNode",
+      "ElementResolver": null,
+      "Symbol": "id",
+      "Id": "2647eeceb1d84310ab28c782acb72c21",
+      "Inputs": [
+        {
+          "Id": "499157b49d0b416c873c4f759c5ce12c",
+          "Name": "",
+          "Description": "",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [],
+      "Replication": "Disabled",
+      "Description": "A function output, use with custom nodes"
+    }
+  ],
+  "Connectors": [
+    {
+      "Start": "78adce741e3d4b6f9fa67147b6aba05e",
+      "End": "8db8b0b9ca3248628be84f03af2e8ed7",
+      "Id": "969b20711fd44427bc1820b5a8e4288e"
+    },
+    {
+      "Start": "0fa98d6764e04d6aaadbd9c70e233ffe",
+      "End": "499157b49d0b416c873c4f759c5ce12c",
+      "Id": "14dcd198b37546fd9a00c10c4048f27a"
+    },
+    {
+      "Start": "a3f45721b5e84b519767b04463f90eb8",
+      "End": "47bbf4be279c4e92a5038f116a79142a",
+      "Id": "bb7f09dbf43e472583d3eee4c3140003"
+    },
+    {
+      "Start": "0896781ee05446c99ae1648f4dbfdf6c",
+      "End": "268a3e8ec05544c9a98d3df027480403",
+      "Id": "094bc73180f44eb2b92380558261fd53"
+    }
+  ],
+  "Dependencies": [],
+  "NodeLibraryDependencies": [],
+  "Bindings": [],
+  "View": {
+    "Dynamo": {
+      "ScaleFactor": 1.0,
+      "HasRunWithoutCrash": false,
+      "IsVisibleInDynamoLibrary": true,
+      "Version": "2.3.0.5885",
+      "RunType": "Manual",
+      "RunPeriod": "1000"
+    },
+    "Camera": {
+      "Name": "Background Preview",
+      "EyeX": -17.0,
+      "EyeY": 24.0,
+      "EyeZ": 50.0,
+      "LookX": 12.0,
+      "LookY": -13.0,
+      "LookZ": -58.0,
+      "UpX": 0.0,
+      "UpY": 1.0,
+      "UpZ": 0.0
+    },
+    "NodeViews": [
+      {
+        "ShowGeometry": true,
+        "Name": "String from Object",
+        "Id": "e80aaf66c7154b2da3febf411ab77975",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 452.183626252497,
+        "Y": 0.712605962953148
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "Python Script",
+        "Id": "0c7b8bb6a4c04a8daa9228d5ef8e5b28",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 595.12008006203,
+        "Y": 0.0
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "Element.Id",
+        "Id": "fde49a4d9b13493eba96589acd37fd9b",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 250.0,
+        "Y": 1.81143001867326
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "Input",
+        "Id": "7faff9316b274832bb808a40179affbe",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": -214.0,
+        "Y": 3.0
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "Output",
+        "Id": "2647eeceb1d84310ab28c782acb72c21",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 794.12008006203,
+        "Y": 0.0
+      }
+    ],
+    "Annotations": [],
+    "X": 230.07856767617321,
+    "Y": 224.10166189739726,
+    "Zoom": 0.52819794974068057
+  }
+}

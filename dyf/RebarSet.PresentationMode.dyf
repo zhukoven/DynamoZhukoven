@@ -1,83 +1,365 @@
-<Workspace Version="1.3.2.2480" X="637.014667862114" Y="304.610994677284" zoom="1.37758335255867" ScaleFactor="1" Name="RebarSet.PresentationMode" Description="Choose one the presentation modes for the input rebar set(s): Show All Rebars (default), Show First and Last Rebar, Show Middle Rebar. These presentation modes are view-specific, so be sure to input the desired view(s)." ID="fdc3f750-d3f3-45b5-a0ab-d6619eb6cb6d" Category="Zhukoven.Revit.Rebar">
-  <NamespaceResolutionMap />
-  <Elements>
-    <PythonNodeModels.PythonNode guid="f7f99766-1514-4b78-b347-4cdd1de0814e" type="PythonNodeModels.PythonNode" nickname="Python Script" x="261.058795114329" y="0" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false" inputcount="4">
-      <PortInfo index="0" default="False" />
-      <PortInfo index="1" default="False" />
-      <PortInfo index="2" default="False" />
-      <PortInfo index="3" default="False" />
-      <Script>#Author Konstantin Zhukoven @ https://zhukoven.com
-#Tested to work with Dynamo 1.3.0+
-import clr
-clr.AddReference('RevitAPI')
-from Autodesk.Revit.DB import *
-from Autodesk.Revit.DB.Structure import *
-from Autodesk.Revit.DB.Structure import RebarPresentationMode
-
-clr.AddReference('RevitNodes')
-import Revit
-clr.ImportExtensions(Revit.GeometryConversion)
-clr.ImportExtensions(Revit.Elements)
-
-clr.AddReference('RevitServices')
-import RevitServices
-from RevitServices.Persistence import DocumentManager
-from RevitServices.Transactions import TransactionManager
-
-doc = DocumentManager.Instance.CurrentDBDocument
-#in Revit API: rebarSet means RebarInSystem
-rebarSet = UnwrapElement(IN[0])
-rebarMode = RebarPresentationMode
-view = UnwrapElement(IN[1])
-showFirstLast = IN[2]
-showMiddle = IN[3]
-
-rebarPresent = []
-
-TransactionManager.Instance.EnsureInTransaction(doc)
-for i in rebarSet:
-	if showFirstLast:
-		rebarPresent.append(i.SetPresentationMode(view, rebarMode.FirstLast))
-	elif showMiddle:
-		rebarPresent.append(i.SetPresentationMode(view, rebarMode.Middle))
-	else:
-		rebarPresent.append(i.SetPresentationMode(view, rebarMode.All))
-		
-TransactionManager.Instance.TransactionTaskDone()
-OUT = rebarSet</Script>
-    </PythonNodeModels.PythonNode>
-    <Dynamo.Graph.Nodes.CustomNodes.Symbol guid="ebd8b640-551f-48a2-8340-872b16eac29c" type="Dynamo.Graph.Nodes.CustomNodes.Symbol" nickname="Input" x="-59.582191542782" y="-0.534255274820936" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" IsFrozen="false" isPinned="false">
-      <Symbol value="RebarSet" />
-    </Dynamo.Graph.Nodes.CustomNodes.Symbol>
-    <Dynamo.Graph.Nodes.CustomNodes.Symbol guid="208df1fd-d8d0-4a8e-b235-d1f21d2ff672" type="Dynamo.Graph.Nodes.CustomNodes.Symbol" nickname="Input" x="-59.8122532636872" y="57.523937838141" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" IsFrozen="false" isPinned="false">
-      <Symbol value="View" />
-    </Dynamo.Graph.Nodes.CustomNodes.Symbol>
-    <Dynamo.Graph.Nodes.CustomNodes.Symbol guid="e837a168-b5e1-4039-8aa6-41cd15c28bdc" type="Dynamo.Graph.Nodes.CustomNodes.Symbol" nickname="Input" x="-59.6493829291962" y="126.405000962467" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" IsFrozen="false" isPinned="false">
-      <Symbol value="ShowFirstLast : bool = false" />
-    </Dynamo.Graph.Nodes.CustomNodes.Symbol>
-    <Dynamo.Graph.Nodes.CustomNodes.Symbol guid="44f046bc-acb0-47d4-b9fc-88ff0e161f7e" type="Dynamo.Graph.Nodes.CustomNodes.Symbol" nickname="Input" x="-59.5940035647897" y="186.930926568673" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" IsFrozen="false" isPinned="false">
-      <Symbol value="ShowMiddle : bool = false" />
-    </Dynamo.Graph.Nodes.CustomNodes.Symbol>
-    <Dynamo.Graph.Nodes.CustomNodes.Output guid="672fe0d3-416e-4a3f-8db7-aee5c92ee736" type="Dynamo.Graph.Nodes.CustomNodes.Output" nickname="Output" x="395.827030496666" y="0" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false">
-      <PortInfo index="0" default="False" />
-      <Symbol value="RebarSets" />
-    </Dynamo.Graph.Nodes.CustomNodes.Output>
-    <Dynamo.Graph.Nodes.CodeBlockNodeModel guid="937c03ef-0c58-423f-b18e-6bf56d9f51a6" type="Dynamo.Graph.Nodes.CodeBlockNodeModel" nickname="Code Block" x="52.4575100254065" y="3.4703609146317" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false" CodeText="Flatten({item});" ShouldFocus="false">
-      <PortInfo index="0" default="False" />
-    </Dynamo.Graph.Nodes.CodeBlockNodeModel>
-  </Elements>
-  <Connectors>
-    <Dynamo.Graph.Connectors.ConnectorModel start="f7f99766-1514-4b78-b347-4cdd1de0814e" start_index="0" end="672fe0d3-416e-4a3f-8db7-aee5c92ee736" end_index="0" portType="0" />
-    <Dynamo.Graph.Connectors.ConnectorModel start="ebd8b640-551f-48a2-8340-872b16eac29c" start_index="0" end="937c03ef-0c58-423f-b18e-6bf56d9f51a6" end_index="0" portType="0" />
-    <Dynamo.Graph.Connectors.ConnectorModel start="208df1fd-d8d0-4a8e-b235-d1f21d2ff672" start_index="0" end="f7f99766-1514-4b78-b347-4cdd1de0814e" end_index="1" portType="0" />
-    <Dynamo.Graph.Connectors.ConnectorModel start="e837a168-b5e1-4039-8aa6-41cd15c28bdc" start_index="0" end="f7f99766-1514-4b78-b347-4cdd1de0814e" end_index="2" portType="0" />
-    <Dynamo.Graph.Connectors.ConnectorModel start="44f046bc-acb0-47d4-b9fc-88ff0e161f7e" start_index="0" end="f7f99766-1514-4b78-b347-4cdd1de0814e" end_index="3" portType="0" />
-    <Dynamo.Graph.Connectors.ConnectorModel start="937c03ef-0c58-423f-b18e-6bf56d9f51a6" start_index="0" end="f7f99766-1514-4b78-b347-4cdd1de0814e" end_index="0" portType="0" />
-  </Connectors>
-  <Notes />
-  <Annotations />
-  <Presets />
-  <Cameras>
-    <Camera Name="Фоновый просмотр" eyeX="-17" eyeY="24" eyeZ="50" lookX="12" lookY="-13" lookZ="-58" upX="0" upY="1" upZ="0" />
-  </Cameras>
-</Workspace>
+{
+  "Uuid": "fdc3f750-d3f3-45b5-a0ab-d6619eb6cb6d",
+  "IsCustomNode": true,
+  "Category": "Zhukoven.Revit",
+  "Description": "Choose one the presentation modes for the input rebar set(s): Show All Rebars (default), Show First and Last Rebar, Show Middle Rebar. These presentation modes are view-specific, so be sure to input the desired view(s).",
+  "Name": "RebarSet.PresentationMode",
+  "ElementResolver": {
+    "ResolutionMap": {
+      "DSCore.List": {
+        "Key": "DSCore.List",
+        "Value": "DSCoreNodes.dll"
+      }
+    }
+  },
+  "Inputs": [],
+  "Outputs": [],
+  "Nodes": [
+    {
+      "ConcreteType": "PythonNodeModels.PythonNode, PythonNodeModels",
+      "NodeType": "PythonScriptNode",
+      "Code": "#Author Konstantin Zhukoven @ https://zhukoven.com\n#Tested to work with Dynamo 1.3.0+\nimport clr\nclr.AddReference('RevitAPI')\nfrom Autodesk.Revit.DB import *\nfrom Autodesk.Revit.DB.Structure import *\nfrom Autodesk.Revit.DB.Structure import RebarPresentationMode\n\nclr.AddReference('RevitNodes')\nimport Revit\nclr.ImportExtensions(Revit.GeometryConversion)\nclr.ImportExtensions(Revit.Elements)\n\nclr.AddReference('RevitServices')\nimport RevitServices\nfrom RevitServices.Persistence import DocumentManager\nfrom RevitServices.Transactions import TransactionManager\n\ndoc = DocumentManager.Instance.CurrentDBDocument\n#in Revit API: rebarSet means RebarInSystem\nrebarSet = UnwrapElement(IN[0])\nrebarMode = RebarPresentationMode\nview = UnwrapElement(IN[1])\nshowFirstLast = IN[2]\nshowMiddle = IN[3]\n\nrebarPresent = []\n\nTransactionManager.Instance.EnsureInTransaction(doc)\nfor i in rebarSet:\n\tif showFirstLast:\n\t\trebarPresent.append(i.SetPresentationMode(view, rebarMode.FirstLast))\n\telif showMiddle:\n\t\trebarPresent.append(i.SetPresentationMode(view, rebarMode.Middle))\n\telse:\n\t\trebarPresent.append(i.SetPresentationMode(view, rebarMode.All))\n\t\t\nTransactionManager.Instance.TransactionTaskDone()\nOUT = rebarSet",
+      "VariableInputPorts": true,
+      "Id": "f7f9976615144b78b3474cdd1de0814e",
+      "Inputs": [
+        {
+          "Id": "9d2258c650754251a9ee72f934d4ba15",
+          "Name": "IN[0]",
+          "Description": "Input #0",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "0f4ca475427f4c1aa148934a3a1312d0",
+          "Name": "IN[1]",
+          "Description": "Input #1",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "836aa3d76a5c4ec5966ca53081943931",
+          "Name": "IN[2]",
+          "Description": "Input #2",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "4501e393507448f0b1314038b021dc73",
+          "Name": "IN[3]",
+          "Description": "Input #3",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "e2e85d54b6b24f54a9cd50bd40ee2d48",
+          "Name": "OUT",
+          "Description": "Result of the python script",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Runs an embedded IronPython script."
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Symbol, DynamoCore",
+      "NodeType": "InputNode",
+      "Parameter": {
+        "Name": "RebarSet",
+        "TypeName": "var",
+        "TypeRank": -1,
+        "DefaultValue": null,
+        "Description": ""
+      },
+      "Id": "ebd8b640551f48a28340872b16eac29c",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "80a923cefdf845a9abadcd9eeac59729",
+          "Name": "",
+          "Description": "Symbol",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "A function parameter, use with custom nodes.\r\n\r\nYou can specify the type and default value for parameter. E.g.,\r\n\r\ninput : var[]..[]\r\nvalue : bool = false"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Symbol, DynamoCore",
+      "NodeType": "InputNode",
+      "Parameter": {
+        "Name": "view",
+        "TypeName": "var",
+        "TypeRank": -1,
+        "DefaultValue": null,
+        "Description": ""
+      },
+      "Id": "208df1fdd8d04a8eb235d1f21d2ff672",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "ca45357bc3be46419400e4c7756ed13c",
+          "Name": "",
+          "Description": "Symbol",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "A function parameter, use with custom nodes.\r\n\r\nYou can specify the type and default value for parameter. E.g.,\r\n\r\ninput : var[]..[]\r\nvalue : bool = false"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Symbol, DynamoCore",
+      "NodeType": "InputNode",
+      "Parameter": {
+        "Name": "ShowFirstLast",
+        "TypeName": "bool",
+        "TypeRank": 0,
+        "DefaultValue": "false",
+        "Description": ""
+      },
+      "Id": "e837a168b5e140398aa641cd15c28bdc",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "5119162b9e564894b60443db4fbf55ed",
+          "Name": "",
+          "Description": "Symbol",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "A function parameter, use with custom nodes.\r\n\r\nYou can specify the type and default value for parameter. E.g.,\r\n\r\ninput : var[]..[]\r\nvalue : bool = false"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Symbol, DynamoCore",
+      "NodeType": "InputNode",
+      "Parameter": {
+        "Name": "ShowMiddle",
+        "TypeName": "bool",
+        "TypeRank": 0,
+        "DefaultValue": "false",
+        "Description": ""
+      },
+      "Id": "44f046bcacb047d4b9fc88ff0e161f7e",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "897e21100b9d4e999e82c69834b562ae",
+          "Name": "",
+          "Description": "Symbol",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "A function parameter, use with custom nodes.\r\n\r\nYou can specify the type and default value for parameter. E.g.,\r\n\r\ninput : var[]..[]\r\nvalue : bool = false"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Output, DynamoCore",
+      "NodeType": "OutputNode",
+      "ElementResolver": null,
+      "Symbol": "RebarSets",
+      "Id": "672fe0d3416e4a3f8db7aee5c92ee736",
+      "Inputs": [
+        {
+          "Id": "feaac2f94a264aceb6e4e924cf5f1f54",
+          "Name": "",
+          "Description": "",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [],
+      "Replication": "Disabled",
+      "Description": "A function output, use with custom nodes"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
+      "NodeType": "CodeBlockNode",
+      "Code": "DSCore.List.Flatten([item]);",
+      "Id": "937c03ef0c58423fb18e6bf56d9f51a6",
+      "Inputs": [
+        {
+          "Id": "2e30c89469ae40de9d3cdcc34200abbc",
+          "Name": "item",
+          "Description": "item",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "2a7939459bca4dcc99684173ddb7494f",
+          "Name": "",
+          "Description": "Value of expression at line 1",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Allows for DesignScript code to be authored directly"
+    }
+  ],
+  "Connectors": [
+    {
+      "Start": "e2e85d54b6b24f54a9cd50bd40ee2d48",
+      "End": "feaac2f94a264aceb6e4e924cf5f1f54",
+      "Id": "c71e19e0c3b740449ec0c90d24fd3b7f"
+    },
+    {
+      "Start": "80a923cefdf845a9abadcd9eeac59729",
+      "End": "2e30c89469ae40de9d3cdcc34200abbc",
+      "Id": "8f5b38d07d3d4045951f8ea20b287f35"
+    },
+    {
+      "Start": "ca45357bc3be46419400e4c7756ed13c",
+      "End": "0f4ca475427f4c1aa148934a3a1312d0",
+      "Id": "634e92740a2344e0a2b66fc9dc548aa5"
+    },
+    {
+      "Start": "5119162b9e564894b60443db4fbf55ed",
+      "End": "836aa3d76a5c4ec5966ca53081943931",
+      "Id": "818bd3cb4ee242539f4e29d0846f6257"
+    },
+    {
+      "Start": "897e21100b9d4e999e82c69834b562ae",
+      "End": "4501e393507448f0b1314038b021dc73",
+      "Id": "40d1962134e04ab0935bf5e81cf114f2"
+    },
+    {
+      "Start": "2a7939459bca4dcc99684173ddb7494f",
+      "End": "9d2258c650754251a9ee72f934d4ba15",
+      "Id": "9d3f515fe8984944a6866e2deba10398"
+    }
+  ],
+  "Dependencies": [],
+  "NodeLibraryDependencies": [],
+  "Bindings": [],
+  "View": {
+    "Dynamo": {
+      "ScaleFactor": 1.0,
+      "HasRunWithoutCrash": false,
+      "IsVisibleInDynamoLibrary": true,
+      "Version": "2.3.0.5885",
+      "RunType": "Manual",
+      "RunPeriod": "1000"
+    },
+    "Camera": {
+      "Name": "Background Preview",
+      "EyeX": -17.0,
+      "EyeY": 24.0,
+      "EyeZ": 50.0,
+      "LookX": 12.0,
+      "LookY": -13.0,
+      "LookZ": -58.0,
+      "UpX": 0.0,
+      "UpY": 1.0,
+      "UpZ": 0.0
+    },
+    "NodeViews": [
+      {
+        "ShowGeometry": true,
+        "Name": "Python Script",
+        "Id": "f7f9976615144b78b3474cdd1de0814e",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 420.74779279257348,
+        "Y": 2.2179027455310916
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "Input",
+        "Id": "ebd8b640551f48a28340872b16eac29c",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": -59.582191542782,
+        "Y": -0.534255274820936
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "Input",
+        "Id": "208df1fdd8d04a8eb235d1f21d2ff672",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": -59.8122532636872,
+        "Y": 57.523937838141
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "Input",
+        "Id": "e837a168b5e140398aa641cd15c28bdc",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": -59.6493829291962,
+        "Y": 126.405000962467
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "Input",
+        "Id": "44f046bcacb047d4b9fc88ff0e161f7e",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": -59.5940035647897,
+        "Y": 186.930926568673
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "Output",
+        "Id": "672fe0d3416e4a3f8db7aee5c92ee736",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 555.5160281749105,
+        "Y": 2.2179027455310916
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "Code Block",
+        "Id": "937c03ef0c58423fb18e6bf56d9f51a6",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 52.4575100254065,
+        "Y": 3.4703609146317
+      }
+    ],
+    "Annotations": [],
+    "X": 380.16211300982638,
+    "Y": 362.4715747992513,
+    "Zoom": 0.36070111803229887
+  }
+}

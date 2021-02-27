@@ -1,4 +1,4 @@
-<Workspace Version="1.3.0.875" X="68.3677020111066" Y="343.825625580846" zoom="1.44258909293314" ScaleFactor="1" Name="Document.GetWarnings" Description="NOTE: Works only with Revit 2018 and above!&#xD;&#xA;Get all warnings from the current document." ID="85bf7696-3e65-4547-9498-f24925e65f03" Category="Zhukoven.Revit.Document">
+<Workspace Version="1.3.0.875" X="68.3677020111066" Y="343.825625580846" zoom="1.44258909293314" ScaleFactor="1" Name="Document.GetWarnings" Description="NOTE: Works only with Revit 2018 and above!&#xD;&#xA;Get all warnings from the current document." ID="85bf7696-3e65-4547-9498-f24925e65f03" Category="Zhukoven.Revit">
   <NamespaceResolutionMap />
   <Elements>
     <PythonNodeModels.PythonNode guid="8b5e2338-63c0-43bb-844b-5dcd0caa286c" type="PythonNodeModels.PythonNode" nickname="Python Script" x="279.037930324113" y="4.03410966998646" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false" inputcount="1">

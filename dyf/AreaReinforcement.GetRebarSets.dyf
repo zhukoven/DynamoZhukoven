@@ -1,4 +1,4 @@
-<Workspace Version="1.3.2.2480" X="610.871868888342" Y="385.266351723847" zoom="1.44258909293313" ScaleFactor="1" Name="AreaReinforcement.GetRebarSets" Description="This node extracts all the rebar sets from the input Structural Area Reinforcement element. The output elements are shown as &quot;RebarInSystem&quot;." ID="a157d366-df3f-46fe-b785-ea5fa35f9b11" Category="Zhukoven.Revit.Rebar">
+<Workspace Version="1.3.2.2480" X="610.871868888342" Y="385.266351723847" zoom="1.44258909293313" ScaleFactor="1" Name="AreaReinforcement.GetRebarSets" Description="This node extracts all the rebar sets from the input Structural Area Reinforcement element. The output elements are shown as &quot;RebarInSystem&quot;." ID="a157d366-df3f-46fe-b785-ea5fa35f9b11" Category="Zhukoven.Revit">
   <NamespaceResolutionMap />
   <Elements>
     <PythonNodeModels.PythonNode guid="1ca34ed4-a3e9-47af-ade9-19f95161c534" type="PythonNodeModels.PythonNode" nickname="Python Script" x="250" y="0" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false" inputcount="1">

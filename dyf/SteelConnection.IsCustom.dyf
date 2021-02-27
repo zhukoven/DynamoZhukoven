@@ -1,47 +1,215 @@
-<Workspace Version="1.3.3.4111" X="720.029972507257" Y="417.060453290051" zoom="0.921091684435557" ScaleFactor="1" Name="SteelConnection.IsCustom" Description="Input structural steel connection to check if it is custom or not (boolean output)" ID="9b174656-888a-41d7-9f38-ce40bbb108c2" Category="Zhukoven.Revit.SteelConnections">
-  <NamespaceResolutionMap />
-  <Elements>
-    <PythonNodeModels.PythonNode guid="2e74054d-9290-40bc-9688-4591ab5d2881" type="PythonNodeModels.PythonNode" nickname="Python Script" x="474.852110376237" y="0" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false" inputcount="1">
-      <PortInfo index="0" default="False" />
-      <Script>#Author © Konstantin Zhukoven @ https:\\zhukoven.com
-import clr
-#Import Revit Services
-clr.AddReference("RevitServices")
-import RevitServices
-from RevitServices.Persistence import DocumentManager
-from RevitServices.Transactions import TransactionManager
-
-#Import Revit API
-clr.AddReference("RevitAPI")
-import Autodesk
-from Autodesk.Revit.DB import Steel
-
-#Start Transaction
-stlcon = UnwrapElement(IN[0])
-for i in stlcon:
-	custom = i.IsCustom()
-OUT = custom</Script>
-    </PythonNodeModels.PythonNode>
-    <Dynamo.Graph.Nodes.CodeBlockNodeModel guid="b9cbca7f-2efa-4f24-bcd3-bcaed9700050" type="Dynamo.Graph.Nodes.CodeBlockNodeModel" nickname="Code Block" x="250" y="4.27028934943655" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false" CodeText="Flatten({item});" ShouldFocus="false">
-      <PortInfo index="0" default="False" />
-    </Dynamo.Graph.Nodes.CodeBlockNodeModel>
-    <Dynamo.Graph.Nodes.CustomNodes.Symbol guid="984c3cdb-1a1a-4879-930f-5fb026d5f42e" type="Dynamo.Graph.Nodes.CustomNodes.Symbol" nickname="Input" x="-190.324644187286" y="0" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" IsFrozen="false" isPinned="false">
-      <Symbol value="//Input Structural Steel Connection element(s)&#xD;&#xA;StlCon" />
-    </Dynamo.Graph.Nodes.CustomNodes.Symbol>
-    <Dynamo.Graph.Nodes.CustomNodes.Output guid="97cf8606-464e-4a95-aaca-f419cff25d26" type="Dynamo.Graph.Nodes.CustomNodes.Output" nickname="Output" x="673.852110376237" y="0" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false">
-      <PortInfo index="0" default="False" />
-      <Symbol value="Custom" />
-    </Dynamo.Graph.Nodes.CustomNodes.Output>
-  </Elements>
-  <Connectors>
-    <Dynamo.Graph.Connectors.ConnectorModel start="2e74054d-9290-40bc-9688-4591ab5d2881" start_index="0" end="97cf8606-464e-4a95-aaca-f419cff25d26" end_index="0" portType="0" />
-    <Dynamo.Graph.Connectors.ConnectorModel start="b9cbca7f-2efa-4f24-bcd3-bcaed9700050" start_index="0" end="2e74054d-9290-40bc-9688-4591ab5d2881" end_index="0" portType="0" />
-    <Dynamo.Graph.Connectors.ConnectorModel start="984c3cdb-1a1a-4879-930f-5fb026d5f42e" start_index="0" end="b9cbca7f-2efa-4f24-bcd3-bcaed9700050" end_index="0" portType="0" />
-  </Connectors>
-  <Notes />
-  <Annotations />
-  <Presets />
-  <Cameras>
-    <Camera Name="Фоновый просмотр" eyeX="-17" eyeY="24" eyeZ="50" lookX="12" lookY="-13" lookZ="-58" upX="0" upY="1" upZ="0" />
-  </Cameras>
-</Workspace>
+{
+  "Uuid": "9b174656-888a-41d7-9f38-ce40bbb108c2",
+  "IsCustomNode": true,
+  "Category": "Zhukoven.Revit",
+  "Description": "Input structural steel connection to check if it is custom or not (boolean output)",
+  "Name": "SteelConnection.IsCustom",
+  "ElementResolver": {
+    "ResolutionMap": {
+      "DSCore.List": {
+        "Key": "DSCore.List",
+        "Value": "DSCoreNodes.dll"
+      }
+    }
+  },
+  "Inputs": [],
+  "Outputs": [],
+  "Nodes": [
+    {
+      "ConcreteType": "PythonNodeModels.PythonNode, PythonNodeModels",
+      "NodeType": "PythonScriptNode",
+      "Code": "#Author © Konstantin Zhukoven @ https:\\\\zhukoven.com\r\nimport clr\r\n#Import Revit Services\r\nclr.AddReference(\"RevitServices\")\r\nimport RevitServices\r\nfrom RevitServices.Persistence import DocumentManager\r\nfrom RevitServices.Transactions import TransactionManager\r\n\r\n#Import Revit API\r\nclr.AddReference(\"RevitAPI\")\r\nimport Autodesk\r\nfrom Autodesk.Revit.DB import Steel\r\n\r\n#Start Transaction\r\nstlcon = UnwrapElement(IN[0])\r\nfor i in stlcon:\r\n\tcustom = i.IsCustom()\r\nOUT = custom",
+      "VariableInputPorts": true,
+      "Id": "2e74054d929040bc96884591ab5d2881",
+      "Inputs": [
+        {
+          "Id": "4a8a71b735b84de281a7cc87ee9451dd",
+          "Name": "IN[0]",
+          "Description": "Input #0",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "0a00310a534b4b0e8841c250b49b1ed4",
+          "Name": "OUT",
+          "Description": "Result of the python script",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Runs an embedded IronPython script."
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
+      "NodeType": "CodeBlockNode",
+      "Code": "DSCore.List.Flatten([item]);",
+      "Id": "b9cbca7f2efa4f24bcd3bcaed9700050",
+      "Inputs": [
+        {
+          "Id": "e67e184248384feea3f614a32328c0cb",
+          "Name": "item",
+          "Description": "item",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "126daa9315e04b168cc4acb32dcec078",
+          "Name": "",
+          "Description": "Value of expression at line 1",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Allows for DesignScript code to be authored directly"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Symbol, DynamoCore",
+      "NodeType": "InputNode",
+      "Parameter": {
+        "Name": "StlCon",
+        "TypeName": "var",
+        "TypeRank": -1,
+        "DefaultValue": null,
+        "Description": "Input Structural Steel Connection element(s)"
+      },
+      "Id": "984c3cdb1a1a4879930f5fb026d5f42e",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "c6d0c290266840cda641ee22fa53c5cb",
+          "Name": "",
+          "Description": "Symbol",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "A function parameter, use with custom nodes.\r\n\r\nYou can specify the type and default value for parameter. E.g.,\r\n\r\ninput : var[]..[]\r\nvalue : bool = false"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Output, DynamoCore",
+      "NodeType": "OutputNode",
+      "ElementResolver": null,
+      "Symbol": "Custom",
+      "Id": "97cf8606464e4a95aacaf419cff25d26",
+      "Inputs": [
+        {
+          "Id": "86acfe3ab579478bb622e1537c11aa65",
+          "Name": "",
+          "Description": "",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [],
+      "Replication": "Disabled",
+      "Description": "A function output, use with custom nodes"
+    }
+  ],
+  "Connectors": [
+    {
+      "Start": "0a00310a534b4b0e8841c250b49b1ed4",
+      "End": "86acfe3ab579478bb622e1537c11aa65",
+      "Id": "bb63f477fae94df68b75947f53041fed"
+    },
+    {
+      "Start": "126daa9315e04b168cc4acb32dcec078",
+      "End": "4a8a71b735b84de281a7cc87ee9451dd",
+      "Id": "b57b51da1b2d42f8bf5210529995d289"
+    },
+    {
+      "Start": "c6d0c290266840cda641ee22fa53c5cb",
+      "End": "e67e184248384feea3f614a32328c0cb",
+      "Id": "4b239a8fd2134676b670c5b405169fbd"
+    }
+  ],
+  "Dependencies": [],
+  "NodeLibraryDependencies": [],
+  "Bindings": [],
+  "View": {
+    "Dynamo": {
+      "ScaleFactor": 1.0,
+      "HasRunWithoutCrash": false,
+      "IsVisibleInDynamoLibrary": true,
+      "Version": "2.3.0.5885",
+      "RunType": "Manual",
+      "RunPeriod": "1000"
+    },
+    "Camera": {
+      "Name": "Background Preview",
+      "EyeX": -17.0,
+      "EyeY": 24.0,
+      "EyeZ": 50.0,
+      "LookX": 12.0,
+      "LookY": -13.0,
+      "LookZ": -58.0,
+      "UpX": 0.0,
+      "UpY": 1.0,
+      "UpZ": 0.0
+    },
+    "NodeViews": [
+      {
+        "ShowGeometry": true,
+        "Name": "Python Script",
+        "Id": "2e74054d929040bc96884591ab5d2881",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 584.36596867019443,
+        "Y": 1.1775683687521905
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "Code Block",
+        "Id": "b9cbca7f2efa4f24bcd3bcaed9700050",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 250.0,
+        "Y": 4.27028934943655
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "Input",
+        "Id": "984c3cdb1a1a4879930f5fb026d5f42e",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": -190.324644187286,
+        "Y": 0.0
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "Output",
+        "Id": "97cf8606464e4a95aacaf419cff25d26",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 783.36596867019432,
+        "Y": 1.1775683687521905
+      }
+    ],
+    "Annotations": [],
+    "X": 111.83702039426484,
+    "Y": 256.17065098772969,
+    "Zoom": 0.67936607438572183
+  }
+}

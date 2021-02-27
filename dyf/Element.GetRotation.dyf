@@ -1,4 +1,4 @@
-<Workspace Version="1.3.0.875" X="186.157517861771" Y="387.266363006519" zoom="0.789531730130973" ScaleFactor="1" Name="Element.GetRotation" Description="This node calculates rotation angle between selected element's vector and Y axis. Vector Z is used as rotation axis. Use resulting degree as an input to the FamilyInstance.SetRotation node." ID="d8abf4a0-8a70-43b9-a881-6505b18fb8c2" Category="Zhukoven.Revit.Elements">
+<Workspace Version="1.3.0.875" X="186.157517861771" Y="387.266363006519" zoom="0.789531730130973" ScaleFactor="1" Name="Element.GetRotation" Description="This node calculates rotation angle between selected element's vector and Y axis. Vector Z is used as rotation axis. Use resulting degree as an input to the FamilyInstance.SetRotation node." ID="d8abf4a0-8a70-43b9-a881-6505b18fb8c2" Category="Zhukoven.Revit">
   <NamespaceResolutionMap>
     <ClassMap partialName="Vector" resolvedName="Autodesk.DesignScript.Geometry.Vector" assemblyName="ProtoGeometry.dll" />
   </NamespaceResolutionMap>

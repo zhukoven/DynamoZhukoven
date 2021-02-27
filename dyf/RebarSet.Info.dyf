@@ -1,4 +1,4 @@
-<Workspace Version="1.3.2.2480" X="274.331441746804" Y="286.613359613065" zoom="1.130842140625" ScaleFactor="1" Name="RebarSet.Info" Description="Input rebar set to get information about nested rebars: quantity, total length." ID="ddb9be23-3fb6-4797-b20a-9524e1614bf2" Category="Zhukoven.Revit.Rebar">
+<Workspace Version="1.3.2.2480" X="274.331441746804" Y="286.613359613065" zoom="1.130842140625" ScaleFactor="1" Name="RebarSet.Info" Description="Input rebar set to get information about nested rebars: quantity, total length." ID="ddb9be23-3fb6-4797-b20a-9524e1614bf2" Category="Zhukoven.Revit">
   <NamespaceResolutionMap />
   <Elements>
     <PythonNodeModels.PythonNode guid="d88d8d4d-0847-4d8e-acd7-4c1523f51be5" type="PythonNodeModels.PythonNode" nickname="Python Script" x="250" y="0" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false" inputcount="1">

@@ -1,4 +1,4 @@
-<Workspace Version="1.3.0.875" X="432.288079215253" Y="226.497605775152" zoom="1.78359936238281" ScaleFactor="1" Name="WallSweep.GetProfile" Description="This node takes wall sweep elements and extracts their profiles. It works both with standard sweeps, and wall assemblies. " ID="867ac7aa-1161-470a-83a8-fe37d40e9bdd" Category="Zhukoven.Revit.Walls">
+<Workspace Version="1.3.0.875" X="432.288079215253" Y="226.497605775152" zoom="1.78359936238281" ScaleFactor="1" Name="WallSweep.GetProfile" Description="This node takes wall sweep elements and extracts their profiles. It works both with standard sweeps, and wall assemblies. " ID="867ac7aa-1161-470a-83a8-fe37d40e9bdd" Category="Zhukoven.Revit">
   <NamespaceResolutionMap />
   <Elements>
     <PythonNodeModels.PythonNode guid="6c02988b-3f09-47c5-a200-a8b70f387195" type="PythonNodeModels.PythonNode" nickname="Python Script" x="250" y="0.560664026401128" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false" inputcount="1">

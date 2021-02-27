@@ -1,51 +1,274 @@
-<Workspace Version="1.3.2.2480" X="327.279753601432" Y="274.088393067719" zoom="1.19179377129295" ScaleFactor="1" Name="Document.Close" Description="Close current Revit document. Use boolean switch (true / false) to save / discard any changes." ID="45102b65-7926-4e74-a0ec-49b7db7a2c6f" Category="Zhukoven.Revit.Document">
-  <NamespaceResolutionMap />
-  <Elements>
-    <Dynamo.Graph.Nodes.CustomNodes.Symbol guid="31e21d03-1ec7-42a3-b662-b750a9333c98" type="Dynamo.Graph.Nodes.CustomNodes.Symbol" nickname="Input" x="0" y="0" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" IsFrozen="false" isPinned="false">
-      <Symbol value="Document" />
-    </Dynamo.Graph.Nodes.CustomNodes.Symbol>
-    <Dynamo.Graph.Nodes.CustomNodes.Symbol guid="2d21afe4-8be1-4d9a-8772-c053b5f5629d" type="Dynamo.Graph.Nodes.CustomNodes.Symbol" nickname="Input" x="1.68199207920333" y="105.707541914312" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" IsFrozen="false" isPinned="false">
-      <Symbol value="Save : bool = false" />
-    </Dynamo.Graph.Nodes.CustomNodes.Symbol>
-    <Dynamo.Graph.Nodes.CustomNodes.Output guid="75a195f5-d046-42d3-bde3-32afffa6346f" type="Dynamo.Graph.Nodes.CustomNodes.Output" nickname="Output" x="469.976783569592" y="41.9535671391838" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false">
-      <PortInfo index="0" default="False" />
-      <Symbol value="//Boolean&#xD;&#xA;Saved" />
-    </Dynamo.Graph.Nodes.CustomNodes.Output>
-    <Dynamo.Graph.Nodes.CodeBlockNodeModel guid="6548f8e6-b217-45cd-b98d-bac5220dbfbd" type="Dynamo.Graph.Nodes.CodeBlockNodeModel" nickname="Code Block" x="119.707294923032" y="0.627191025951788" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false" CodeText="t1 = {t2};&#xA;t3 = Flatten(t1);" ShouldFocus="false">
-      <PortInfo index="0" default="False" />
-    </Dynamo.Graph.Nodes.CodeBlockNodeModel>
-    <PythonNodeModels.PythonNode guid="9faeea2e-7b4c-412e-8dcd-be5619bf5e81" type="PythonNodeModels.PythonNode" nickname="Python Script" x="327.704449571607" y="41.8009574803557" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false" inputcount="2">
-      <PortInfo index="0" default="False" />
-      <PortInfo index="1" default="False" />
-      <Script>#Tested in Revit 2016+ and Dynamo 1.3.0 
-#Author © Konstantin Zhukoven @ https:\\zhukoven.com
-#Import system libraries
-import sys
-pyt_path = r'C:\Program Files (x86)\IronPython 2.7\Lib'
-sys.path.append(pyt_path)
-import clr
-clr.AddReference("RevitServices")
-from RevitServices.Persistence import DocumentManager
-app = DocumentManager.Instance.CurrentUIApplication.Application
-doc = IN[0]
-saveDoc = IN[1]
-#Output
-closed = []
-for i in doc:
-	closed.append(i.Close(saveDoc))
-OUT = closed</Script>
-    </PythonNodeModels.PythonNode>
-  </Elements>
-  <Connectors>
-    <Dynamo.Graph.Connectors.ConnectorModel start="31e21d03-1ec7-42a3-b662-b750a9333c98" start_index="0" end="6548f8e6-b217-45cd-b98d-bac5220dbfbd" end_index="0" portType="0" />
-    <Dynamo.Graph.Connectors.ConnectorModel start="2d21afe4-8be1-4d9a-8772-c053b5f5629d" start_index="0" end="9faeea2e-7b4c-412e-8dcd-be5619bf5e81" end_index="1" portType="0" />
-    <Dynamo.Graph.Connectors.ConnectorModel start="6548f8e6-b217-45cd-b98d-bac5220dbfbd" start_index="1" end="9faeea2e-7b4c-412e-8dcd-be5619bf5e81" end_index="0" portType="0" />
-    <Dynamo.Graph.Connectors.ConnectorModel start="9faeea2e-7b4c-412e-8dcd-be5619bf5e81" start_index="0" end="75a195f5-d046-42d3-bde3-32afffa6346f" end_index="0" portType="0" />
-  </Connectors>
-  <Notes />
-  <Annotations />
-  <Presets />
-  <Cameras>
-    <Camera Name="Фоновый просмотр" eyeX="-17" eyeY="24" eyeZ="50" lookX="12" lookY="-13" lookZ="-58" upX="0" upY="1" upZ="0" />
-  </Cameras>
-</Workspace>
+{
+  "Uuid": "45102b65-7926-4e74-a0ec-49b7db7a2c6f",
+  "IsCustomNode": true,
+  "Category": "Zhukoven.Revit",
+  "Description": "Close current Revit document. Use boolean switch (true / false) to save / discard any changes.",
+  "Name": "Document.Close",
+  "ElementResolver": {
+    "ResolutionMap": {
+      "DSCore.List": {
+        "Key": "DSCore.List",
+        "Value": "DSCoreNodes.dll"
+      }
+    }
+  },
+  "Inputs": [],
+  "Outputs": [],
+  "Nodes": [
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Symbol, DynamoCore",
+      "NodeType": "InputNode",
+      "Parameter": {
+        "Name": "document",
+        "TypeName": "var",
+        "TypeRank": -1,
+        "DefaultValue": null,
+        "Description": ""
+      },
+      "Id": "31e21d031ec742a3b662b750a9333c98",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "fc31bf252f454da9b3e610a7227e9598",
+          "Name": "",
+          "Description": "Symbol",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "A function parameter, use with custom nodes.\r\n\r\nYou can specify the type and default value for parameter. E.g.,\r\n\r\ninput : var[]..[]\r\nvalue : bool = false"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Symbol, DynamoCore",
+      "NodeType": "InputNode",
+      "Parameter": {
+        "Name": "save",
+        "TypeName": "bool",
+        "TypeRank": 0,
+        "DefaultValue": "false",
+        "Description": ""
+      },
+      "Id": "2d21afe48be14d9a8772c053b5f5629d",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "15a63eb389054ea8b13eac917da845fd",
+          "Name": "",
+          "Description": "Symbol",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "A function parameter, use with custom nodes.\r\n\r\nYou can specify the type and default value for parameter. E.g.,\r\n\r\ninput : var[]..[]\r\nvalue : bool = false"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Output, DynamoCore",
+      "NodeType": "OutputNode",
+      "ElementResolver": null,
+      "Symbol": "//Boolean\r\nSaved",
+      "Id": "75a195f5d04642d3bde332afffa6346f",
+      "Inputs": [
+        {
+          "Id": "7802a8d566c848f9b2b3eaf0479287ed",
+          "Name": "",
+          "Description": "",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [],
+      "Replication": "Disabled",
+      "Description": "A function output, use with custom nodes"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
+      "NodeType": "CodeBlockNode",
+      "Code": "t1 = [t2];\nt3 = DSCore.List.Flatten(t1);",
+      "Id": "6548f8e6b21745cdb98dbac5220dbfbd",
+      "Inputs": [
+        {
+          "Id": "50cf814706534db58bff0ed9e3f762f0",
+          "Name": "t2",
+          "Description": "t2",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "984c306d91d7415f9c3751ebba8b994d",
+          "Name": "",
+          "Description": "t1",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "746119c37b63484cb8b6bd7d83ea4dbc",
+          "Name": "",
+          "Description": "t3",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Allows for DesignScript code to be authored directly"
+    },
+    {
+      "ConcreteType": "PythonNodeModels.PythonNode, PythonNodeModels",
+      "NodeType": "PythonScriptNode",
+      "Code": "#Tested in Revit 2016+ and Dynamo 1.3.0 \n#Author © Konstantin Zhukoven @ https:\\\\zhukoven.com\n#Import system libraries\nimport sys\npyt_path = r'C:\\Program Files (x86)\\IronPython 2.7\\Lib'\nsys.path.append(pyt_path)\nimport clr\nclr.AddReference(\"RevitServices\")\nfrom RevitServices.Persistence import DocumentManager\napp = DocumentManager.Instance.CurrentUIApplication.Application\ndoc = IN[0]\nsaveDoc = IN[1]\n#Output\nclosed = []\nfor i in doc:\n\tclosed.append(i.Close(saveDoc))\nOUT = closed",
+      "VariableInputPorts": true,
+      "Id": "9faeea2e7b4c412e8dcdbe5619bf5e81",
+      "Inputs": [
+        {
+          "Id": "1d4cd338ed7e4feebecf50aa743ede3a",
+          "Name": "IN[0]",
+          "Description": "Input #0",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "e630a6e6cd9549d6bbe52bd2406e1730",
+          "Name": "IN[1]",
+          "Description": "Input #1",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "b6faf288511d482d98964f4fea52c05d",
+          "Name": "OUT",
+          "Description": "Result of the python script",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Runs an embedded IronPython script."
+    }
+  ],
+  "Connectors": [
+    {
+      "Start": "fc31bf252f454da9b3e610a7227e9598",
+      "End": "50cf814706534db58bff0ed9e3f762f0",
+      "Id": "71f89cb0d40f470caf773d2a4f1939e1"
+    },
+    {
+      "Start": "15a63eb389054ea8b13eac917da845fd",
+      "End": "e630a6e6cd9549d6bbe52bd2406e1730",
+      "Id": "27dd966cdc7745d49671ac7391b39321"
+    },
+    {
+      "Start": "746119c37b63484cb8b6bd7d83ea4dbc",
+      "End": "1d4cd338ed7e4feebecf50aa743ede3a",
+      "Id": "4630c682e2a44ace83c593ddb71a8744"
+    },
+    {
+      "Start": "b6faf288511d482d98964f4fea52c05d",
+      "End": "7802a8d566c848f9b2b3eaf0479287ed",
+      "Id": "876cdc31527346ef804706f493ad4377"
+    }
+  ],
+  "Dependencies": [],
+  "NodeLibraryDependencies": [],
+  "Bindings": [],
+  "View": {
+    "Dynamo": {
+      "ScaleFactor": 1.0,
+      "HasRunWithoutCrash": false,
+      "IsVisibleInDynamoLibrary": true,
+      "Version": "2.3.0.5885",
+      "RunType": "Manual",
+      "RunPeriod": "1000"
+    },
+    "Camera": {
+      "Name": "Background Preview",
+      "EyeX": -17.0,
+      "EyeY": 24.0,
+      "EyeZ": 50.0,
+      "LookX": 12.0,
+      "LookY": -13.0,
+      "LookZ": -58.0,
+      "UpX": 0.0,
+      "UpY": 1.0,
+      "UpZ": 0.0
+    },
+    "NodeViews": [
+      {
+        "ShowGeometry": true,
+        "Name": "Input",
+        "Id": "31e21d031ec742a3b662b750a9333c98",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": -151.53740114146751,
+        "Y": 2.4707184968718252
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "Input",
+        "Id": "2d21afe48be14d9a8772c053b5f5629d",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": -149.85540906226419,
+        "Y": 108.17826041118383
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "Output",
+        "Id": "75a195f5d04642d3bde332afffa6346f",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 469.976783569592,
+        "Y": 41.9535671391838
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "Code Block",
+        "Id": "6548f8e6b21745cdb98dbac5220dbfbd",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": -31.830106218435517,
+        "Y": 3.0979095228236133
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "Python Script",
+        "Id": "9faeea2e7b4c412e8dcdbe5619bf5e81",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 327.704449571607,
+        "Y": 41.8009574803557
+      }
+    ],
+    "Annotations": [],
+    "X": 305.66341613364528,
+    "Y": 264.08500991866561,
+    "Zoom": 0.97137735563104766
+  }
+}

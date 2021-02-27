@@ -1,4 +1,4 @@
-<Workspace Version="1.3.0.875" X="228.280764313942" Y="239.01847486591" zoom="0.888789228297156" ScaleFactor="1" Name="BoundingBox.CenterPoint" Description="Input Bounding Box element to get its center point. This node is little and lightweight, as it doesn't convert bounding box to geometry to get its centroid point." ID="c80ce94f-4ed6-4625-a82d-ef806df1a731" Category="Zhukoven.Revit.BoundingBoxes">
+<Workspace Version="1.3.0.875" X="228.280764313942" Y="239.01847486591" zoom="0.888789228297156" ScaleFactor="1" Name="BoundingBox.CenterPoint" Description="Input Bounding Box element to get its center point. This node is little and lightweight, as it doesn't convert bounding box to geometry to get its centroid point." ID="c80ce94f-4ed6-4625-a82d-ef806df1a731" Category="Zhukoven.Revit">
   <NamespaceResolutionMap>
     <ClassMap partialName="BoundingBox" resolvedName="Autodesk.DesignScript.Geometry.BoundingBox" assemblyName="ProtoGeometry.dll" />
   </NamespaceResolutionMap>

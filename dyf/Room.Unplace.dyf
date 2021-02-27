@@ -1,63 +1,219 @@
-<Workspace Version="1.3.2.2480" X="246.987232328125" Y="288.91605509375" zoom="1.545620359375" ScaleFactor="1" Name="Room.Unplace" Description="Input room(s) that you wish to unplace (remove from the model views). These rooms would be stored in the project, and could be placed again in another location. " ID="39eb52f4-90d1-4c57-8ee1-b56f36b3c604" Category="Zhukoven.Revit.Rooms">
-  <NamespaceResolutionMap>
-    <ClassMap partialName="DSCore.List.__Create" resolvedName="DSCore.List" assemblyName="DSCoreNodes.dll" />
-    <ClassMap partialName="DSCore.List" resolvedName="DSCore.List" assemblyName="DSCoreNodes.dll" />
-  </NamespaceResolutionMap>
-  <Elements>
-    <PythonNodeModels.PythonNode guid="0f7f5256-730f-4b4d-82e7-4401bb83f522" type="PythonNodeModels.PythonNode" nickname="Python Script" x="469.191783203112" y="0" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false" inputcount="1">
-      <PortInfo index="0" default="False" />
-      <Script>#Author Konstantin Zhukoven @ https://zhukoven.com
-#Tested to work with Dynamo 1.3.0+
-import clr
-clr.AddReference("RevitNodes")
-import Revit
-
-# Import DocumentManager and TransactionManager
-clr.AddReference("RevitServices")
-import RevitServices
-from RevitServices.Persistence import DocumentManager
-from RevitServices.Transactions import TransactionManager
-# Import RevitAPI
-clr.AddReference("RevitAPI")
-import Autodesk
-from Autodesk.Revit.DB import *
-
-doc = DocumentManager.Instance.CurrentDBDocument
-rooms = UnwrapElement(IN[0])
-
-TransactionManager.Instance.EnsureInTransaction(doc)
-
-if isinstance(rooms, list):
-	unplaceRooms = rooms.Unplace()
-else:
-	unplaceRooms = []
-	for i in rooms:
-		unplaceRooms.append(i.Unplace())
-TransactionManager.Instance.TransactionTaskDone()
-
-OUT = rooms
-</Script>
-    </PythonNodeModels.PythonNode>
-    <Dynamo.Graph.Nodes.CodeBlockNodeModel guid="fd2a3964-90f6-40a3-9088-636c936bbcc3" type="Dynamo.Graph.Nodes.CodeBlockNodeModel" nickname="Code Block" x="250" y="4.37603275423476" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false" CodeText="Flatten({item});" ShouldFocus="false">
-      <PortInfo index="0" default="False" />
-    </Dynamo.Graph.Nodes.CodeBlockNodeModel>
-    <Dynamo.Graph.Nodes.CustomNodes.Symbol guid="e50f312e-f4cf-4234-b518-371fbe15aced" type="Dynamo.Graph.Nodes.CustomNodes.Symbol" nickname="Input" x="168.86423526767" y="0.646989407155843" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" IsFrozen="false" isPinned="false">
-      <Symbol value="Room" />
-    </Dynamo.Graph.Nodes.CustomNodes.Symbol>
-    <Dynamo.Graph.Nodes.CustomNodes.Output guid="675cf47d-74b2-40f6-8362-c3367b21f2d7" type="Dynamo.Graph.Nodes.CustomNodes.Output" nickname="Output" x="612.550694187711" y="0" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false">
-      <PortInfo index="0" default="False" />
-      <Symbol value="Room" />
-    </Dynamo.Graph.Nodes.CustomNodes.Output>
-  </Elements>
-  <Connectors>
-    <Dynamo.Graph.Connectors.ConnectorModel start="0f7f5256-730f-4b4d-82e7-4401bb83f522" start_index="0" end="675cf47d-74b2-40f6-8362-c3367b21f2d7" end_index="0" portType="0" />
-    <Dynamo.Graph.Connectors.ConnectorModel start="fd2a3964-90f6-40a3-9088-636c936bbcc3" start_index="0" end="0f7f5256-730f-4b4d-82e7-4401bb83f522" end_index="0" portType="0" />
-    <Dynamo.Graph.Connectors.ConnectorModel start="e50f312e-f4cf-4234-b518-371fbe15aced" start_index="0" end="fd2a3964-90f6-40a3-9088-636c936bbcc3" end_index="0" portType="0" />
-  </Connectors>
-  <Notes />
-  <Annotations />
-  <Presets />
-  <Cameras>
-    <Camera Name="Фоновый просмотр" eyeX="-17" eyeY="24" eyeZ="50" lookX="12" lookY="-13" lookZ="-58" upX="0" upY="1" upZ="0" />
-  </Cameras>
-</Workspace>
+{
+  "Uuid": "39eb52f4-90d1-4c57-8ee1-b56f36b3c604",
+  "IsCustomNode": true,
+  "Category": "Zhukoven.Revit",
+  "Description": "Input room(s) that you wish to unplace (remove from the model views). These rooms would be stored in the project, and could be placed again in another location. ",
+  "Name": "Room.Unplace",
+  "ElementResolver": {
+    "ResolutionMap": {
+      "DSCore.List.__Create": {
+        "Key": "DSCore.List",
+        "Value": "DSCoreNodes.dll"
+      },
+      "DSCore.List": {
+        "Key": "DSCore.List",
+        "Value": "DSCoreNodes.dll"
+      }
+    }
+  },
+  "Inputs": [],
+  "Outputs": [],
+  "Nodes": [
+    {
+      "ConcreteType": "PythonNodeModels.PythonNode, PythonNodeModels",
+      "NodeType": "PythonScriptNode",
+      "Code": "#Author Konstantin Zhukoven @ https://zhukoven.com\n#Tested to work with Dynamo 1.3.0+\nimport clr\nclr.AddReference(\"RevitNodes\")\nimport Revit\n\n# Import DocumentManager and TransactionManager\nclr.AddReference(\"RevitServices\")\nimport RevitServices\nfrom RevitServices.Persistence import DocumentManager\nfrom RevitServices.Transactions import TransactionManager\n# Import RevitAPI\nclr.AddReference(\"RevitAPI\")\nimport Autodesk\nfrom Autodesk.Revit.DB import *\n\ndoc = DocumentManager.Instance.CurrentDBDocument\nrooms = UnwrapElement(IN[0])\n\nTransactionManager.Instance.EnsureInTransaction(doc)\n\nif isinstance(rooms, list):\n\tunplaceRooms = rooms.Unplace()\nelse:\n\tunplaceRooms = []\n\tfor i in rooms:\n\t\tunplaceRooms.append(i.Unplace())\nTransactionManager.Instance.TransactionTaskDone()\n\nOUT = rooms\n",
+      "VariableInputPorts": true,
+      "Id": "0f7f5256730f4b4d82e74401bb83f522",
+      "Inputs": [
+        {
+          "Id": "2c1f016d691b4443ae8a75da26add141",
+          "Name": "IN[0]",
+          "Description": "Input #0",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "3c7bed0883b54f99be252cc85c26244a",
+          "Name": "OUT",
+          "Description": "Result of the python script",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Runs an embedded IronPython script."
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
+      "NodeType": "CodeBlockNode",
+      "Code": "DSCore.List.Flatten([item]);",
+      "Id": "fd2a396490f640a39088636c936bbcc3",
+      "Inputs": [
+        {
+          "Id": "8b9b0f8c29e4448dad83107451ab1666",
+          "Name": "item",
+          "Description": "item",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "a43d1686a11044d8bd3b87ce237d5ae2",
+          "Name": "",
+          "Description": "Value of expression at line 1",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Allows for DesignScript code to be authored directly"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Symbol, DynamoCore",
+      "NodeType": "InputNode",
+      "Parameter": {
+        "Name": "room",
+        "TypeName": "var",
+        "TypeRank": -1,
+        "DefaultValue": null,
+        "Description": ""
+      },
+      "Id": "e50f312ef4cf4234b518371fbe15aced",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "9f38688bbd344af997f1ac4404d08787",
+          "Name": "",
+          "Description": "Symbol",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "A function parameter, use with custom nodes.\r\n\r\nYou can specify the type and default value for parameter. E.g.,\r\n\r\ninput : var[]..[]\r\nvalue : bool = false"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Output, DynamoCore",
+      "NodeType": "OutputNode",
+      "ElementResolver": null,
+      "Symbol": "room",
+      "Id": "675cf47d74b240f68362c3367b21f2d7",
+      "Inputs": [
+        {
+          "Id": "7f34512d04cc4f9883550c9dd08a4062",
+          "Name": "",
+          "Description": "",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [],
+      "Replication": "Disabled",
+      "Description": "A function output, use with custom nodes"
+    }
+  ],
+  "Connectors": [
+    {
+      "Start": "3c7bed0883b54f99be252cc85c26244a",
+      "End": "7f34512d04cc4f9883550c9dd08a4062",
+      "Id": "ada62504a3874d08b8eb619f60191f12"
+    },
+    {
+      "Start": "a43d1686a11044d8bd3b87ce237d5ae2",
+      "End": "2c1f016d691b4443ae8a75da26add141",
+      "Id": "01435f0de715451b80a14052e0724de1"
+    },
+    {
+      "Start": "9f38688bbd344af997f1ac4404d08787",
+      "End": "8b9b0f8c29e4448dad83107451ab1666",
+      "Id": "fc93e7656deb490db3d568523856565e"
+    }
+  ],
+  "Dependencies": [],
+  "NodeLibraryDependencies": [],
+  "Bindings": [],
+  "View": {
+    "Dynamo": {
+      "ScaleFactor": 1.0,
+      "HasRunWithoutCrash": false,
+      "IsVisibleInDynamoLibrary": true,
+      "Version": "2.3.0.5885",
+      "RunType": "Manual",
+      "RunPeriod": "1000"
+    },
+    "Camera": {
+      "Name": "Background Preview",
+      "EyeX": -17.0,
+      "EyeY": 24.0,
+      "EyeZ": 50.0,
+      "LookX": 12.0,
+      "LookY": -13.0,
+      "LookZ": -58.0,
+      "UpX": 0.0,
+      "UpY": 1.0,
+      "UpZ": 0.0
+    },
+    "NodeViews": [
+      {
+        "ShowGeometry": true,
+        "Name": "Python Script",
+        "Id": "0f7f5256730f4b4d82e74401bb83f522",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 469.191783203112,
+        "Y": 0.0
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "Code Block",
+        "Id": "fd2a396490f640a39088636c936bbcc3",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 149.34504183533363,
+        "Y": 0.031214416191691186
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "Input",
+        "Id": "e50f312ef4cf4234b518371fbe15aced",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 68.209277103003643,
+        "Y": -3.6978289308872263
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "Output",
+        "Id": "675cf47d74b240f68362c3367b21f2d7",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 612.550694187711,
+        "Y": 0.0
+      }
+    ],
+    "Annotations": [],
+    "X": -73.8370924611828,
+    "Y": 303.068677301916,
+    "Zoom": 1.1047642563030273
+  }
+}

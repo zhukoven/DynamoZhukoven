@@ -1,4 +1,4 @@
-<Workspace Version="1.3.2.2480" X="-108.444662865359" Y="316.261958600405" zoom="1.37758335255867" ScaleFactor="1" Name="OS.CurrentUserInfo" Description="Get current user logged in info: username, appdata path and desktop path. Desktop path works also for the Microsoft Windows roaming profiles and localized OS versions." ID="b39eaed7-64b3-42e2-b008-ce734eed9074" Category="Zhukoven.System">
+<Workspace Version="1.3.2.2480" X="-108.444662865359" Y="316.261958600405" zoom="1.37758335255867" ScaleFactor="1" Name="OS.CurrentUserInfo" Description="Get current user logged in info: username, appdata path and desktop path. Desktop path works also for the Microsoft Windows roaming profiles and localized OS versions." ID="b39eaed7-64b3-42e2-b008-ce734eed9074" Category="Zhukoven">
   <NamespaceResolutionMap>
     <ClassMap partialName="System.DateTime" resolvedName="System.DateTime" assemblyName="" />
     <ClassMap partialName="System.DateTime.Now" resolvedName="System.DateTime" assemblyName="" />

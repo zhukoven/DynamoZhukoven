@@ -1,4 +1,4 @@
-<Workspace Version="1.3.0.875" X="557.09259534068" Y="303.323947726721" zoom="0.875276436862203" ScaleFactor="1" Name="Railing.CalculateBalusterProfile" Description="*NOTE* Processes only one railing instance at a time. Don't feed it with multiple elements!&#xD;&#xA;This node calculates baluster widths." ID="5bb1bc1b-f0ec-47f5-8a3e-da538e5f8f6a" Category="Zhukoven.Revit.Railings">
+<Workspace Version="1.3.0.875" X="557.09259534068" Y="303.323947726721" zoom="0.875276436862203" ScaleFactor="1" Name="Railing.CalculateBalusterProfile" Description="*NOTE* Processes only one railing instance at a time. Don't feed it with multiple elements!&#xD;&#xA;This node calculates baluster widths." ID="5bb1bc1b-f0ec-47f5-8a3e-da538e5f8f6a" Category="Zhukoven.Revit">
   <NamespaceResolutionMap>
     <ClassMap partialName="Math.PI" resolvedName="DSCore.Math" assemblyName="DSCoreNodes.dll" />
   </NamespaceResolutionMap>

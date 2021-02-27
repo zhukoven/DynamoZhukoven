@@ -1,4 +1,4 @@
-<Workspace Version="1.3.3.4111" X="247.22123125" Y="222.2057125" zoom="1.33823125" ScaleFactor="1" Name="Math.MultiplyAllValuesInList" Description="This node simply multiplies all values in the given list." ID="5737ceeb-cc6e-40c8-93ba-331cdd8d68b9" Category="Zhukoven.Math">
+<Workspace Version="1.3.3.4111" X="247.22123125" Y="222.2057125" zoom="1.33823125" ScaleFactor="1" Name="Math.MultiplyAllValuesInList" Description="This node simply multiplies all values in the given list." ID="5737ceeb-cc6e-40c8-93ba-331cdd8d68b9" Category="Zhukoven.DynamoCore">
   <NamespaceResolutionMap />
   <Elements>
     <PythonNodeModels.PythonNode guid="7a6a6a90-a4bd-4825-a194-14ee221ac399" type="PythonNodeModels.PythonNode" nickname="Python Script" x="250" y="0" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false" inputcount="1">

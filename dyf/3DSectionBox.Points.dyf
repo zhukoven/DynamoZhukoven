@@ -1,7 +1,7 @@
 {
   "Uuid": "f15a6524-f11a-41fb-a3c8-de9ee11090b5",
   "IsCustomNode": true,
-  "Category": "Zhukoven.Revit.BoundingBoxes",
+  "Category": "Zhukoven.Revit",
   "Description": "Extract section boxes from desired 3D views, and convert them into Dynamo Min & Max points. Use these points with \"BoundingBox.ByCorners\" OOTB node to get the bounding box element.",
   "Name": "3DSectionBox.Points",
   "ElementResolver": {
@@ -45,7 +45,7 @@
       "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Symbol, DynamoCore",
       "NodeType": "InputNode",
       "Parameter": {
-        "Name": "",
+        "Name": "view3D",
         "TypeName": "var",
         "TypeRank": -1,
         "DefaultValue": null,
@@ -391,8 +391,8 @@
       }
     ],
     "Annotations": [],
-    "X": 222.36468308218141,
-    "Y": 262.87531114083879,
-    "Zoom": 0.49013830647478079
+    "X": 294.0584683492819,
+    "Y": 269.5416105371836,
+    "Zoom": 0.94352195079336543
   }
 }

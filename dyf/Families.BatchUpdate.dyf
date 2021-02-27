@@ -1,4 +1,4 @@
-<Workspace Version="1.3.2.2480" X="151.889363112018" Y="324.420278579377" zoom="0.97676875" ScaleFactor="1" Name="Families.BatchUpdate" Description="Input directory path to upgrade all the *.rfa families inside this folder to your currently opened Revit version. Don't forget to backup these families before using the node." ID="dc6bb207-5dff-4efb-960d-d39b125154e2" Category="Zhukoven.Revit.Families">
+<Workspace Version="1.3.2.2480" X="151.889363112018" Y="324.420278579377" zoom="0.97676875" ScaleFactor="1" Name="Families.BatchUpdate" Description="Input directory path to upgrade all the *.rfa families inside this folder to your currently opened Revit version. Don't forget to backup these families before using the node." ID="dc6bb207-5dff-4efb-960d-d39b125154e2" Category="Zhukoven.Revit">
   <NamespaceResolutionMap />
   <Elements>
     <CoreNodeModels.Input.BoolSelector guid="08f22bae-7e86-4a99-ab9e-f93995579419" type="CoreNodeModels.Input.BoolSelector" nickname="Boolean" x="809.303146711965" y="90.6800037011797" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" IsFrozen="false" isPinned="false">

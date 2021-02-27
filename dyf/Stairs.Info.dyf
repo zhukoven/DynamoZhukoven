@@ -1,95 +1,575 @@
-<Workspace Version="1.3.2.2480" X="179.367711047846" Y="232.855265682232" zoom="0.847618571998227" ScaleFactor="1" Name="Stairs.Info" Description="This node returns some basic data from the input stair element(s): risers' and treads' height and number, stories, level, etc. " ID="62ad40c3-305b-49a1-bdcb-c2963dd60bd1" Category="Zhukoven.Revit.Stairs">
-  <NamespaceResolutionMap />
-  <Elements>
-    <Dynamo.Graph.Nodes.CodeBlockNodeModel guid="c70fbd79-5f1b-4ed3-89aa-45f50a00859c" type="Dynamo.Graph.Nodes.CodeBlockNodeModel" nickname="Code Block" x="250" y="4.15566276135655" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false" CodeText="Flatten({item});" ShouldFocus="false">
-      <PortInfo index="0" default="False" />
-    </Dynamo.Graph.Nodes.CodeBlockNodeModel>
-    <PythonNodeModels.PythonNode guid="790e77a5-f52c-472e-88ac-2166fa6a74ed" type="PythonNodeModels.PythonNode" nickname="Python Script" x="471.266167153772" y="0" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false" inputcount="1">
-      <PortInfo index="0" default="False" />
-      <Script>#Tested to work with Dynamo 1.3.0 + 
-#Author © Konstantin Zhukoven @ https:\\zhukoven.com
-import clr
-clr.AddReference('RevitAPI')
-from Autodesk.Revit.DB import *
-
-clr.AddReference("RevitNodes")
-import Revit
-clr.ImportExtensions(Revit.Elements)
-
-clr.AddReference("RevitServices")
-import RevitServices
-from RevitServices.Persistence import DocumentManager
-doc = DocumentManager.Instance.CurrentDBDocument
-
-stair = UnwrapElement(IN[0])
-for i in stair:
-	actualRH = i.ActualRiserHeight
-	actualRN = i.ActualRisersNumber
-	desiredRN = i.DesiredRisersNumber
-	actualTD = i.ActualTreadDepth
-	actualTN = i.ActualTreadsNumber
-	stories = i.NumberOfStories
-	height = i.Height
-	component = i.IsByComponent(doc, i.Id)
-#Output
-OUT = actualRH, actualRN, desiredRN, actualTD, actualTN, stories, height, component</Script>
-    </PythonNodeModels.PythonNode>
-    <Dynamo.Graph.Nodes.CustomNodes.Symbol guid="fdadd164-e491-4140-9839-7a5b87e779fb" type="Dynamo.Graph.Nodes.CustomNodes.Symbol" nickname="Input" x="-16.4396101197009" y="0" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" IsFrozen="false" isPinned="false">
-      <Symbol value="//Input stair(s) element(s)&#xD;&#xA;Stair" />
-    </Dynamo.Graph.Nodes.CustomNodes.Symbol>
-    <Dynamo.Graph.Nodes.CustomNodes.Output guid="2eb992b7-ac0a-4ece-9939-c264eea8572f" type="Dynamo.Graph.Nodes.CustomNodes.Output" nickname="Output" x="783.283808507988" y="-13.6523295947639" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false">
-      <PortInfo index="0" default="False" />
-      <Symbol value="//The actual height of the stairs risers in the stairs&#xD;&#xA;ActualRiserHeight" />
-    </Dynamo.Graph.Nodes.CustomNodes.Output>
-    <Dynamo.Graph.Nodes.CodeBlockNodeModel guid="27db3440-8cc5-4c2a-83c1-a6dbae02efa8" type="Dynamo.Graph.Nodes.CodeBlockNodeModel" nickname="Code Block" x="613.252744994559" y="3.37331926003074" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false" CodeText="seq[0];&#xA;seq[1];&#xA;seq[2];&#xA;seq[3];&#xA;seq[4];&#xA;seq[5];&#xA;seq[6];&#xA;seq[7];" ShouldFocus="false">
-      <PortInfo index="0" default="False" />
-    </Dynamo.Graph.Nodes.CodeBlockNodeModel>
-    <Dynamo.Graph.Nodes.CustomNodes.Output guid="6db123cd-27f5-44e6-9376-1bc02e0a4f63" type="Dynamo.Graph.Nodes.CustomNodes.Output" nickname="Output" x="783.461504931655" y="55.7338790134157" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false">
-      <PortInfo index="0" default="False" />
-      <Symbol value="//The total number of actually created risers in model&#xD;&#xA;ActualRisersNumber" />
-    </Dynamo.Graph.Nodes.CustomNodes.Output>
-    <Dynamo.Graph.Nodes.CustomNodes.Output guid="015aa203-966f-47b2-882c-564da4526e49" type="Dynamo.Graph.Nodes.CustomNodes.Output" nickname="Output" x="782.678858999545" y="131.650534428103" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false">
-      <PortInfo index="0" default="False" />
-      <Symbol value="//The number of risers is calculated based on the height between levels&#xD;&#xA;DesiredRisersNumber" />
-    </Dynamo.Graph.Nodes.CustomNodes.Output>
-    <Dynamo.Graph.Nodes.CustomNodes.Output guid="d53a22f2-60cc-4c7a-9070-d9c101b3e31b" type="Dynamo.Graph.Nodes.CustomNodes.Output" nickname="Output" x="783.461504931655" y="207.567189842791" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false">
-      <PortInfo index="0" default="False" />
-      <Symbol value="//The actual depth of the stairs treads in the stairs, actual tread depth is equal to minimum tread depth by default&#xD;&#xA;ActualTreadDepth" />
-    </Dynamo.Graph.Nodes.CustomNodes.Output>
-    <Dynamo.Graph.Nodes.CustomNodes.Output guid="a5aa2a48-b337-4297-ac59-8eaf47a5fb49" type="Dynamo.Graph.Nodes.CustomNodes.Output" nickname="Output" x="783.461504931655" y="302.267347628123" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false">
-      <PortInfo index="0" default="False" />
-      <Symbol value="//The number of treads actually created in the stairs&#xD;&#xA;ActualTreadsNumber" />
-    </Dynamo.Graph.Nodes.CustomNodes.Output>
-    <Dynamo.Graph.Nodes.CustomNodes.Output guid="b66e15d3-b36e-4e2b-931e-fcdd386eec7b" type="Dynamo.Graph.Nodes.CustomNodes.Output" nickname="Output" x="783.461504931655" y="374.539509315026" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false">
-      <PortInfo index="0" default="False" />
-      <Symbol value="//The number of stories of a multi-story stair, or 1 for a single-story stair&#xD;&#xA;NumberOfStories" />
-    </Dynamo.Graph.Nodes.CustomNodes.Output>
-    <Dynamo.Graph.Nodes.CustomNodes.Output guid="204ecfed-60c2-4c8c-91bb-c6f15192f841" type="Dynamo.Graph.Nodes.CustomNodes.Output" nickname="Output" x="784.388071107128" y="453.297634230241" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false">
-      <PortInfo index="0" default="False" />
-      <Symbol value="//The height of the stair between the base and top levels&#xD;&#xA;StairHeight" />
-    </Dynamo.Graph.Nodes.CustomNodes.Output>
-    <Dynamo.Graph.Nodes.CustomNodes.Output guid="27fbe109-455f-4ab6-86cf-7994ea0d078e" type="Dynamo.Graph.Nodes.CustomNodes.Output" nickname="Output" x="783.461504931655" y="531.129192969982" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false">
-      <PortInfo index="0" default="False" />
-      <Symbol value="//Indicates if the stairs is created by stairs components(runs, landings and supports)&#xD;&#xA;IsByComponent" />
-    </Dynamo.Graph.Nodes.CustomNodes.Output>
-  </Elements>
-  <Connectors>
-    <Dynamo.Graph.Connectors.ConnectorModel start="c70fbd79-5f1b-4ed3-89aa-45f50a00859c" start_index="0" end="790e77a5-f52c-472e-88ac-2166fa6a74ed" end_index="0" portType="0" />
-    <Dynamo.Graph.Connectors.ConnectorModel start="790e77a5-f52c-472e-88ac-2166fa6a74ed" start_index="0" end="27db3440-8cc5-4c2a-83c1-a6dbae02efa8" end_index="0" portType="0" />
-    <Dynamo.Graph.Connectors.ConnectorModel start="fdadd164-e491-4140-9839-7a5b87e779fb" start_index="0" end="c70fbd79-5f1b-4ed3-89aa-45f50a00859c" end_index="0" portType="0" />
-    <Dynamo.Graph.Connectors.ConnectorModel start="27db3440-8cc5-4c2a-83c1-a6dbae02efa8" start_index="0" end="2eb992b7-ac0a-4ece-9939-c264eea8572f" end_index="0" portType="0" />
-    <Dynamo.Graph.Connectors.ConnectorModel start="27db3440-8cc5-4c2a-83c1-a6dbae02efa8" start_index="1" end="6db123cd-27f5-44e6-9376-1bc02e0a4f63" end_index="0" portType="0" />
-    <Dynamo.Graph.Connectors.ConnectorModel start="27db3440-8cc5-4c2a-83c1-a6dbae02efa8" start_index="2" end="015aa203-966f-47b2-882c-564da4526e49" end_index="0" portType="0" />
-    <Dynamo.Graph.Connectors.ConnectorModel start="27db3440-8cc5-4c2a-83c1-a6dbae02efa8" start_index="3" end="d53a22f2-60cc-4c7a-9070-d9c101b3e31b" end_index="0" portType="0" />
-    <Dynamo.Graph.Connectors.ConnectorModel start="27db3440-8cc5-4c2a-83c1-a6dbae02efa8" start_index="4" end="a5aa2a48-b337-4297-ac59-8eaf47a5fb49" end_index="0" portType="0" />
-    <Dynamo.Graph.Connectors.ConnectorModel start="27db3440-8cc5-4c2a-83c1-a6dbae02efa8" start_index="5" end="b66e15d3-b36e-4e2b-931e-fcdd386eec7b" end_index="0" portType="0" />
-    <Dynamo.Graph.Connectors.ConnectorModel start="27db3440-8cc5-4c2a-83c1-a6dbae02efa8" start_index="6" end="204ecfed-60c2-4c8c-91bb-c6f15192f841" end_index="0" portType="0" />
-    <Dynamo.Graph.Connectors.ConnectorModel start="27db3440-8cc5-4c2a-83c1-a6dbae02efa8" start_index="7" end="27fbe109-455f-4ab6-86cf-7994ea0d078e" end_index="0" portType="0" />
-  </Connectors>
-  <Notes />
-  <Annotations />
-  <Presets />
-  <Cameras>
-    <Camera Name="Фоновый просмотр" eyeX="-17" eyeY="24" eyeZ="50" lookX="12" lookY="-13" lookZ="-58" upX="0" upY="1" upZ="0" />
-  </Cameras>
-</Workspace>
+{
+  "Uuid": "62ad40c3-305b-49a1-bdcb-c2963dd60bd1",
+  "IsCustomNode": true,
+  "Category": "Zhukoven.Revit",
+  "Description": "This node returns some basic data from the input stair element(s): risers' and treads' height and number, stories, level, etc. ",
+  "Name": "Stairs.Info",
+  "ElementResolver": {
+    "ResolutionMap": {
+      "DSCore.List": {
+        "Key": "DSCore.List",
+        "Value": "DSCoreNodes.dll"
+      }
+    }
+  },
+  "Inputs": [],
+  "Outputs": [],
+  "Nodes": [
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
+      "NodeType": "CodeBlockNode",
+      "Code": "DSCore.List.Flatten([item]);",
+      "Id": "c70fbd795f1b4ed389aa45f50a00859c",
+      "Inputs": [
+        {
+          "Id": "c6885d62edf54944a24b69ff4a844096",
+          "Name": "item",
+          "Description": "item",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "b0d00d6c1491458485341a9a129b1ff5",
+          "Name": "",
+          "Description": "Value of expression at line 1",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Allows for DesignScript code to be authored directly"
+    },
+    {
+      "ConcreteType": "PythonNodeModels.PythonNode, PythonNodeModels",
+      "NodeType": "PythonScriptNode",
+      "Code": "#Tested to work with Dynamo 1.3.0 + \r\n#Author © Konstantin Zhukoven @ https:\\\\zhukoven.com\r\nimport clr\r\nclr.AddReference('RevitAPI')\r\nfrom Autodesk.Revit.DB import *\r\n\r\nclr.AddReference(\"RevitNodes\")\r\nimport Revit\r\nclr.ImportExtensions(Revit.Elements)\r\n\r\nclr.AddReference(\"RevitServices\")\r\nimport RevitServices\r\nfrom RevitServices.Persistence import DocumentManager\r\ndoc = DocumentManager.Instance.CurrentDBDocument\r\n\r\nstair = UnwrapElement(IN[0])\r\nfor i in stair:\r\n\tactualRH = i.ActualRiserHeight\r\n\tactualRN = i.ActualRisersNumber\r\n\tdesiredRN = i.DesiredRisersNumber\r\n\tactualTD = i.ActualTreadDepth\r\n\tactualTN = i.ActualTreadsNumber\r\n\tstories = i.NumberOfStories\r\n\theight = i.Height\r\n\tcomponent = i.IsByComponent(doc, i.Id)\r\n#Output\r\nOUT = actualRH, actualRN, desiredRN, actualTD, actualTN, stories, height, component",
+      "VariableInputPorts": true,
+      "Id": "790e77a5f52c472e88ac2166fa6a74ed",
+      "Inputs": [
+        {
+          "Id": "57f653229d0f4feab9afc6c68bad30bc",
+          "Name": "IN[0]",
+          "Description": "Input #0",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "b96849e24eeb410393b71ee3a3192680",
+          "Name": "OUT",
+          "Description": "Result of the python script",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Runs an embedded IronPython script."
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Symbol, DynamoCore",
+      "NodeType": "InputNode",
+      "Parameter": {
+        "Name": "Stair",
+        "TypeName": "var",
+        "TypeRank": -1,
+        "DefaultValue": null,
+        "Description": "Input stair(s) element(s)"
+      },
+      "Id": "fdadd164e491414098397a5b87e779fb",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "acf10c366ed74c0790566f3da3d60d61",
+          "Name": "",
+          "Description": "Symbol",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "A function parameter, use with custom nodes.\r\n\r\nYou can specify the type and default value for parameter. E.g.,\r\n\r\ninput : var[]..[]\r\nvalue : bool = false"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Output, DynamoCore",
+      "NodeType": "OutputNode",
+      "ElementResolver": null,
+      "Symbol": "//The actual height of the stairs risers in the stairs\r\nActualRiserHeight",
+      "Id": "2eb992b7ac0a4ece9939c264eea8572f",
+      "Inputs": [
+        {
+          "Id": "6c13c272f1f34ebf8b851f3edb4b50c2",
+          "Name": "",
+          "Description": "",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [],
+      "Replication": "Disabled",
+      "Description": "A function output, use with custom nodes"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
+      "NodeType": "CodeBlockNode",
+      "Code": "seq[0];\nseq[1];\nseq[2];\nseq[3];\nseq[4];\nseq[5];\nseq[6];\nseq[7];",
+      "Id": "27db34408cc54c2a83c1a6dbae02efa8",
+      "Inputs": [
+        {
+          "Id": "a4b82f53f47e44f0af69bcde3e7e6b2c",
+          "Name": "seq",
+          "Description": "seq",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "8a66c229bca3400289a94e32cd98c329",
+          "Name": "",
+          "Description": "Value of expression at line 1",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "3ab4a0da249c4e4098e9db4477f8bf26",
+          "Name": "",
+          "Description": "Value of expression at line 2",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "a5a2660386c94d71bde46793e794e46e",
+          "Name": "",
+          "Description": "Value of expression at line 3",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "d90a60a759df45ffa174c0e7a8377257",
+          "Name": "",
+          "Description": "Value of expression at line 4",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "d5fd97f1664d4c36977349f52984cec7",
+          "Name": "",
+          "Description": "Value of expression at line 5",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "771d5fdf711f4efb9beaa1d98cfe37cc",
+          "Name": "",
+          "Description": "Value of expression at line 6",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "e5b33e4532394609a2f663a7e70b3cdb",
+          "Name": "",
+          "Description": "Value of expression at line 7",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "409bfeae969246c0ac33ad00cdc37bd7",
+          "Name": "",
+          "Description": "Value of expression at line 8",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Allows for DesignScript code to be authored directly"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Output, DynamoCore",
+      "NodeType": "OutputNode",
+      "ElementResolver": null,
+      "Symbol": "//The total number of actually created risers in model\r\nActualRisersNumber",
+      "Id": "6db123cd27f544e693761bc02e0a4f63",
+      "Inputs": [
+        {
+          "Id": "0dc74226a71e47c58e8751c511ceacb0",
+          "Name": "",
+          "Description": "",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [],
+      "Replication": "Disabled",
+      "Description": "A function output, use with custom nodes"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Output, DynamoCore",
+      "NodeType": "OutputNode",
+      "ElementResolver": null,
+      "Symbol": "//The number of risers is calculated based on the height between levels\r\nDesiredRisersNumber",
+      "Id": "015aa203966f47b2882c564da4526e49",
+      "Inputs": [
+        {
+          "Id": "ef2c96c380fb466b8d689a163928f2d5",
+          "Name": "",
+          "Description": "",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [],
+      "Replication": "Disabled",
+      "Description": "A function output, use with custom nodes"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Output, DynamoCore",
+      "NodeType": "OutputNode",
+      "ElementResolver": null,
+      "Symbol": "//The actual depth of the stairs treads in the stairs, actual tread depth is equal to minimum tread depth by default\r\nActualTreadDepth",
+      "Id": "d53a22f260cc4c7a9070d9c101b3e31b",
+      "Inputs": [
+        {
+          "Id": "1064e800bc8b4a62aa9ef3c836fe9f13",
+          "Name": "",
+          "Description": "",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [],
+      "Replication": "Disabled",
+      "Description": "A function output, use with custom nodes"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Output, DynamoCore",
+      "NodeType": "OutputNode",
+      "ElementResolver": null,
+      "Symbol": "//The number of treads actually created in the stairs\r\nActualTreadsNumber",
+      "Id": "a5aa2a48b3374297ac598eaf47a5fb49",
+      "Inputs": [
+        {
+          "Id": "c219d318b14941878a6998ff78ee2144",
+          "Name": "",
+          "Description": "",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [],
+      "Replication": "Disabled",
+      "Description": "A function output, use with custom nodes"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Output, DynamoCore",
+      "NodeType": "OutputNode",
+      "ElementResolver": null,
+      "Symbol": "//The number of stories of a multi-story stair, or 1 for a single-story stair\r\nNumberOfStories",
+      "Id": "b66e15d3b36e4e2b931efcdd386eec7b",
+      "Inputs": [
+        {
+          "Id": "925c2018bd3f4a8a9fb19e8e6d8697ac",
+          "Name": "",
+          "Description": "",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [],
+      "Replication": "Disabled",
+      "Description": "A function output, use with custom nodes"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Output, DynamoCore",
+      "NodeType": "OutputNode",
+      "ElementResolver": null,
+      "Symbol": "//The height of the stair between the base and top levels\r\nStairHeight",
+      "Id": "204ecfed60c24c8c91bbc6f15192f841",
+      "Inputs": [
+        {
+          "Id": "dfc129a57ea14dcaa616c40a8a8ad5b7",
+          "Name": "",
+          "Description": "",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [],
+      "Replication": "Disabled",
+      "Description": "A function output, use with custom nodes"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Output, DynamoCore",
+      "NodeType": "OutputNode",
+      "ElementResolver": null,
+      "Symbol": "//Indicates if the stairs is created by stairs components(runs, landings and supports)\r\nIsByComponent",
+      "Id": "27fbe109455f4ab686cf7994ea0d078e",
+      "Inputs": [
+        {
+          "Id": "77ad0e85be7d4383b63626b2ae1502a0",
+          "Name": "",
+          "Description": "",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [],
+      "Replication": "Disabled",
+      "Description": "A function output, use with custom nodes"
+    }
+  ],
+  "Connectors": [
+    {
+      "Start": "b0d00d6c1491458485341a9a129b1ff5",
+      "End": "57f653229d0f4feab9afc6c68bad30bc",
+      "Id": "40b60ebe3f044298a527f5f359eaf5e9"
+    },
+    {
+      "Start": "b96849e24eeb410393b71ee3a3192680",
+      "End": "a4b82f53f47e44f0af69bcde3e7e6b2c",
+      "Id": "6f6eb6bbdfa0416e9fc5a01f22f79830"
+    },
+    {
+      "Start": "acf10c366ed74c0790566f3da3d60d61",
+      "End": "c6885d62edf54944a24b69ff4a844096",
+      "Id": "b39a4d55462e4a078d25b4d7cfa01f78"
+    },
+    {
+      "Start": "8a66c229bca3400289a94e32cd98c329",
+      "End": "6c13c272f1f34ebf8b851f3edb4b50c2",
+      "Id": "e76ad98eb8ec4dc38fb7e4de52e3078f"
+    },
+    {
+      "Start": "3ab4a0da249c4e4098e9db4477f8bf26",
+      "End": "0dc74226a71e47c58e8751c511ceacb0",
+      "Id": "14eacd2fdc8c493bb3b9c8f2504e0777"
+    },
+    {
+      "Start": "a5a2660386c94d71bde46793e794e46e",
+      "End": "ef2c96c380fb466b8d689a163928f2d5",
+      "Id": "95d57eeb7b5d46d0b2779ba8c3c283c6"
+    },
+    {
+      "Start": "d90a60a759df45ffa174c0e7a8377257",
+      "End": "1064e800bc8b4a62aa9ef3c836fe9f13",
+      "Id": "8e7ced6f69ed42d1ab44b167fc27c239"
+    },
+    {
+      "Start": "d5fd97f1664d4c36977349f52984cec7",
+      "End": "c219d318b14941878a6998ff78ee2144",
+      "Id": "5e971bdf7e1946efad33876aa472141a"
+    },
+    {
+      "Start": "771d5fdf711f4efb9beaa1d98cfe37cc",
+      "End": "925c2018bd3f4a8a9fb19e8e6d8697ac",
+      "Id": "e6e818f7f79a4d879fa1f5b21314e2ce"
+    },
+    {
+      "Start": "e5b33e4532394609a2f663a7e70b3cdb",
+      "End": "dfc129a57ea14dcaa616c40a8a8ad5b7",
+      "Id": "79fbc02ea9c44e6e8cca7d2315b696a7"
+    },
+    {
+      "Start": "409bfeae969246c0ac33ad00cdc37bd7",
+      "End": "77ad0e85be7d4383b63626b2ae1502a0",
+      "Id": "efbd7f9f415c4b449085802286f797c8"
+    }
+  ],
+  "Dependencies": [],
+  "NodeLibraryDependencies": [],
+  "Bindings": [],
+  "View": {
+    "Dynamo": {
+      "ScaleFactor": 1.0,
+      "HasRunWithoutCrash": false,
+      "IsVisibleInDynamoLibrary": true,
+      "Version": "2.3.0.5885",
+      "RunType": "Manual",
+      "RunPeriod": "1000"
+    },
+    "Camera": {
+      "Name": "Background Preview",
+      "EyeX": -17.0,
+      "EyeY": 24.0,
+      "EyeZ": 50.0,
+      "LookX": 12.0,
+      "LookY": -13.0,
+      "LookZ": -58.0,
+      "UpX": 0.0,
+      "UpY": 1.0,
+      "UpZ": 0.0
+    },
+    "NodeViews": [
+      {
+        "ShowGeometry": true,
+        "Name": "Code Block",
+        "Id": "c70fbd795f1b4ed389aa45f50a00859c",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 137.68533023578073,
+        "Y": 1.3242004983929938
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "Python Script",
+        "Id": "790e77a5f52c472e88ac2166fa6a74ed",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 471.266167153772,
+        "Y": 0.0
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "Input",
+        "Id": "fdadd164e491414098397a5b87e779fb",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": -128.75427988392016,
+        "Y": -2.8314622629635551
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "Output",
+        "Id": "2eb992b7ac0a4ece9939c264eea8572f",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 783.283808507988,
+        "Y": -13.6523295947639
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "Code Block",
+        "Id": "27db34408cc54c2a83c1a6dbae02efa8",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 613.252744994559,
+        "Y": 3.37331926003074
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "Output",
+        "Id": "6db123cd27f544e693761bc02e0a4f63",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 783.461504931655,
+        "Y": 55.7338790134157
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "Output",
+        "Id": "015aa203966f47b2882c564da4526e49",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 782.678858999545,
+        "Y": 131.650534428103
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "Output",
+        "Id": "d53a22f260cc4c7a9070d9c101b3e31b",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 783.461504931655,
+        "Y": 207.567189842791
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "Output",
+        "Id": "a5aa2a48b3374297ac598eaf47a5fb49",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 783.461504931655,
+        "Y": 302.267347628123
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "Output",
+        "Id": "b66e15d3b36e4e2b931efcdd386eec7b",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 783.461504931655,
+        "Y": 374.539509315026
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "Output",
+        "Id": "204ecfed60c24c8c91bbc6f15192f841",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 784.388071107128,
+        "Y": 453.297634230241
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "Output",
+        "Id": "27fbe109455f4ab686cf7994ea0d078e",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 783.461504931655,
+        "Y": 531.129192969982
+      }
+    ],
+    "Annotations": [],
+    "X": 179.367711047846,
+    "Y": 232.855265682232,
+    "Zoom": 0.847618571998227
+  }
+}

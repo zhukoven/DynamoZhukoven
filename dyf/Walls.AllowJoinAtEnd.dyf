@@ -1,4 +1,4 @@
-<Workspace Version="1.3.2.2480" X="442.620907667215" Y="303.523736166585" zoom="1.24844365397223" ScaleFactor="1" Name="Walls.AllowJoinAtEnd" Description="Allows the wall's end to join to other walls. If that end is near other walls it will become joined as a result." ID="ac4e7c11-111c-462c-98b9-d559969fd03a" Category="Zhukoven.Revit.Walls">
+<Workspace Version="1.3.2.2480" X="442.620907667215" Y="303.523736166585" zoom="1.24844365397223" ScaleFactor="1" Name="Walls.AllowJoinAtEnd" Description="Allows the wall's end to join to other walls. If that end is near other walls it will become joined as a result." ID="ac4e7c11-111c-462c-98b9-d559969fd03a" Category="Zhukoven.Revit">
   <NamespaceResolutionMap />
   <Elements>
     <PythonNodeModels.PythonNode guid="3a1a2934-d5a0-4be9-9e6f-06aa6fbd35f3" type="PythonNodeModels.PythonNode" nickname="Python Script" x="263.76524221443" y="-3.82367839289719" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false" inputcount="3">

@@ -1,64 +1,215 @@
-<Workspace Version="1.3.0.875" X="216.445247374898" Y="354.633273204273" zoom="1.51051845643135" ScaleFactor="1" Name="FamilyInstance.ByPointEachRun" Description="Place family instance by point each time you hit the 'Run' button without deleting previously placed ones. Don't use this node in 'Auto' mode!" ID="b103f90e-0dea-4bfb-8e74-4129c61fc057" Category="Zhukoven.Revit.Elements">
-  <NamespaceResolutionMap />
-  <Elements>
-    <PythonNodeModels.PythonNode guid="a4f0950f-b875-4658-8341-bba929978e30" type="PythonNodeModels.PythonNode" nickname="Python Script" x="167.246956190581" y="-3.3101217523768" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false" inputcount="2">
-      <PortInfo index="0" default="False" />
-      <PortInfo index="1" default="False" />
-      <Script>#Based on Bakery node 'Family instance by point in transaction'
-import clr
-clr.AddReference('RevitAPI')
-from Autodesk.Revit.DB import *
-
-clr.AddReference("RevitNodes")
-import Revit
-clr.ImportExtensions(Revit.Elements)
-clr.ImportExtensions(Revit.GeometryConversion)
-
-clr.AddReference("RevitServices")
-import RevitServices
-from RevitServices.Persistence import DocumentManager
-from RevitServices.Transactions import TransactionManager
-from Autodesk.Revit.DB.Structure import *
-
-doc = DocumentManager.Instance.CurrentDBDocument
-famtype = UnwrapElement(IN[0])
-points = UnwrapElement(IN[1])
-
-elementlist = list()
-
-ST = StructuralType.NonStructural
-
-TransactionManager.Instance.EnsureInTransaction(doc)
-# Make sure the familysymbol is active
-if famtype.IsActive == False:
-	famtype.Activate()
-	doc.Regenerate()
-for point in points:
-	newobj = doc.Create.NewFamilyInstance(point.ToXyz(),famtype,ST)
-	elementlist.append(newobj)
-TransactionManager.Instance.TransactionTaskDone()
-OUT = elementlist</Script>
-    </PythonNodeModels.PythonNode>
-    <Dynamo.Graph.Nodes.CustomNodes.Output guid="b82756f1-b02e-47a5-bbab-4f601c965552" type="Dynamo.Graph.Nodes.CustomNodes.Output" nickname="Output" x="310.910394611045" y="-3.97214610285209" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false">
-      <PortInfo index="0" default="False" />
-      <Symbol value="FamilyInstance" />
-    </Dynamo.Graph.Nodes.CustomNodes.Output>
-    <Dynamo.Graph.Nodes.CustomNodes.Symbol guid="1063e413-cae6-4174-9977-99ea603ee464" type="Dynamo.Graph.Nodes.CustomNodes.Symbol" nickname="Input" x="-69.8005552593384" y="-3.72441671520599" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" IsFrozen="false" isPinned="false">
-      <Symbol value="FamilyType" />
-    </Dynamo.Graph.Nodes.CustomNodes.Symbol>
-    <Dynamo.Graph.Nodes.CustomNodes.Symbol guid="527a99dd-a16a-4382-8dd7-acb9a5bd991c" type="Dynamo.Graph.Nodes.CustomNodes.Symbol" nickname="Input" x="-71.5100445964745" y="67.5253856150376" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" IsFrozen="false" isPinned="false">
-      <Symbol value="Points" />
-    </Dynamo.Graph.Nodes.CustomNodes.Symbol>
-  </Elements>
-  <Connectors>
-    <Dynamo.Graph.Connectors.ConnectorModel start="a4f0950f-b875-4658-8341-bba929978e30" start_index="0" end="b82756f1-b02e-47a5-bbab-4f601c965552" end_index="0" portType="0" />
-    <Dynamo.Graph.Connectors.ConnectorModel start="1063e413-cae6-4174-9977-99ea603ee464" start_index="0" end="a4f0950f-b875-4658-8341-bba929978e30" end_index="0" portType="0" />
-    <Dynamo.Graph.Connectors.ConnectorModel start="527a99dd-a16a-4382-8dd7-acb9a5bd991c" start_index="0" end="a4f0950f-b875-4658-8341-bba929978e30" end_index="1" portType="0" />
-  </Connectors>
-  <Notes />
-  <Annotations />
-  <Presets />
-  <Cameras>
-    <Camera Name="Фоновый просмотр" eyeX="-17" eyeY="24" eyeZ="50" lookX="12" lookY="-13" lookZ="-58" upX="0" upY="1" upZ="0" />
-  </Cameras>
-</Workspace>
+{
+  "Uuid": "b103f90e-0dea-4bfb-8e74-4129c61fc057",
+  "IsCustomNode": true,
+  "Category": "Zhukoven.Revit",
+  "Description": "Place family instance by point each time you hit the 'Run' button without deleting previously placed ones. Don't use this node in 'Auto' mode!",
+  "Name": "FamilyInstance.ByPointEachRun",
+  "ElementResolver": {
+    "ResolutionMap": {}
+  },
+  "Inputs": [],
+  "Outputs": [],
+  "Nodes": [
+    {
+      "ConcreteType": "PythonNodeModels.PythonNode, PythonNodeModels",
+      "NodeType": "PythonScriptNode",
+      "Code": "#Based on Bakery node 'Family instance by point in transaction'\nimport clr\nclr.AddReference('RevitAPI')\nfrom Autodesk.Revit.DB import *\n\nclr.AddReference(\"RevitNodes\")\nimport Revit\nclr.ImportExtensions(Revit.Elements)\nclr.ImportExtensions(Revit.GeometryConversion)\n\nclr.AddReference(\"RevitServices\")\nimport RevitServices\nfrom RevitServices.Persistence import DocumentManager\nfrom RevitServices.Transactions import TransactionManager\nfrom Autodesk.Revit.DB.Structure import *\n\ndoc = DocumentManager.Instance.CurrentDBDocument\nfamtype = UnwrapElement(IN[0])\npoints = UnwrapElement(IN[1])\n\nelementlist = list()\n\nST = StructuralType.NonStructural\n\nTransactionManager.Instance.EnsureInTransaction(doc)\n# Make sure the familysymbol is active\nif famtype.IsActive == False:\n\tfamtype.Activate()\n\tdoc.Regenerate()\nfor point in points:\n\tnewobj = doc.Create.NewFamilyInstance(point.ToXyz(),famtype,ST)\n\telementlist.append(newobj)\nTransactionManager.Instance.TransactionTaskDone()\nOUT = elementlist",
+      "VariableInputPorts": true,
+      "Id": "a4f0950fb87546588341bba929978e30",
+      "Inputs": [
+        {
+          "Id": "3476ba99ff1e4d389d5ead7e1d2dccae",
+          "Name": "IN[0]",
+          "Description": "Input #0",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "f5f5bf601f7e460ba61f3a877366a7a1",
+          "Name": "IN[1]",
+          "Description": "Input #1",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "ed329f5b320c4cf4bd21f8bb86d88626",
+          "Name": "OUT",
+          "Description": "Result of the python script",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Runs an embedded IronPython script."
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Output, DynamoCore",
+      "NodeType": "OutputNode",
+      "ElementResolver": null,
+      "Symbol": "FamilyInstance",
+      "Id": "b82756f1b02e47a5bbab4f601c965552",
+      "Inputs": [
+        {
+          "Id": "c146888cc1144dd7a94ab2d1fbc4ba17",
+          "Name": "",
+          "Description": "",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [],
+      "Replication": "Disabled",
+      "Description": "A function output, use with custom nodes"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Symbol, DynamoCore",
+      "NodeType": "InputNode",
+      "Parameter": {
+        "Name": "familyType",
+        "TypeName": "var",
+        "TypeRank": -1,
+        "DefaultValue": null,
+        "Description": ""
+      },
+      "Id": "1063e413cae64174997799ea603ee464",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "e7e0d5cfecae486585a867f8414e3874",
+          "Name": "",
+          "Description": "Symbol",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "A function parameter, use with custom nodes.\r\n\r\nYou can specify the type and default value for parameter. E.g.,\r\n\r\ninput : var[]..[]\r\nvalue : bool = false"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Symbol, DynamoCore",
+      "NodeType": "InputNode",
+      "Parameter": {
+        "Name": "points",
+        "TypeName": "var",
+        "TypeRank": -1,
+        "DefaultValue": null,
+        "Description": ""
+      },
+      "Id": "527a99dda16a43828dd7acb9a5bd991c",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "cac4229b8aa14faa915b2fcdb1e6ad3f",
+          "Name": "",
+          "Description": "Symbol",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "A function parameter, use with custom nodes.\r\n\r\nYou can specify the type and default value for parameter. E.g.,\r\n\r\ninput : var[]..[]\r\nvalue : bool = false"
+    }
+  ],
+  "Connectors": [
+    {
+      "Start": "ed329f5b320c4cf4bd21f8bb86d88626",
+      "End": "c146888cc1144dd7a94ab2d1fbc4ba17",
+      "Id": "f58cbada1c25463b98219498e411a2e2"
+    },
+    {
+      "Start": "e7e0d5cfecae486585a867f8414e3874",
+      "End": "3476ba99ff1e4d389d5ead7e1d2dccae",
+      "Id": "3c94f644a44c46248b290e21981958fb"
+    },
+    {
+      "Start": "cac4229b8aa14faa915b2fcdb1e6ad3f",
+      "End": "f5f5bf601f7e460ba61f3a877366a7a1",
+      "Id": "9e13f971a916415eb97347e040ccadb5"
+    }
+  ],
+  "Dependencies": [],
+  "NodeLibraryDependencies": [],
+  "Bindings": [],
+  "View": {
+    "Dynamo": {
+      "ScaleFactor": 1.0,
+      "HasRunWithoutCrash": false,
+      "IsVisibleInDynamoLibrary": true,
+      "Version": "2.3.0.5885",
+      "RunType": "Manual",
+      "RunPeriod": "1000"
+    },
+    "Camera": {
+      "Name": "Background Preview",
+      "EyeX": -17.0,
+      "EyeY": 24.0,
+      "EyeZ": 50.0,
+      "LookX": 12.0,
+      "LookY": -13.0,
+      "LookZ": -58.0,
+      "UpX": 0.0,
+      "UpY": 1.0,
+      "UpZ": 0.0
+    },
+    "NodeViews": [
+      {
+        "ShowGeometry": true,
+        "Name": "Python Script",
+        "Id": "a4f0950fb87546588341bba929978e30",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 167.246956190581,
+        "Y": -3.3101217523768
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "Output",
+        "Id": "b82756f1b02e47a5bbab4f601c965552",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 310.910394611045,
+        "Y": -3.97214610285209
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "Input",
+        "Id": "1063e413cae64174997799ea603ee464",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": -69.8005552593384,
+        "Y": -3.72441671520599
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "Input",
+        "Id": "527a99dda16a43828dd7acb9a5bd991c",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": -71.5100445964745,
+        "Y": 67.5253856150376
+      }
+    ],
+    "Annotations": [],
+    "X": 184.53768334521317,
+    "Y": 339.2091742889549,
+    "Zoom": 0.83780161710767309
+  }
+}

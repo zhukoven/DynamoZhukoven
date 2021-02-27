@@ -1,44 +1,215 @@
-<Workspace Version="1.3.3.4111" X="292.3825" Y="218" zoom="1.1575" ScaleFactor="1" Name="Workset.Id" Description="Get Ids from the input workset elements." ID="e31b35bb-beb4-48c7-8436-fb1463e18fa7" Category="Zhukoven.Revit.Worksharing">
-  <NamespaceResolutionMap />
-  <Elements>
-    <PythonNodeModels.PythonNode guid="8700917c-93ff-4067-9830-4b43c9e31606" type="PythonNodeModels.PythonNode" nickname="Python Script" x="475.672235071024" y="0" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false" inputcount="1">
-      <PortInfo index="0" default="False" />
-      <Script>#Author Konstantin Zhukoven @ https://zhukoven.com
-#Tested to work with Dynamo 1.3.3+
-import clr
-# Import RevitAPI
-clr.AddReference("RevitAPI")
-import Autodesk
-from Autodesk.Revit.DB import *
-
-worksets = IN[0]
-worksetInt = []
-
-for i in worksets:
-	worksetInt.append(i.Id.IntegerValue)
-
-OUT =  worksetInt</Script>
-    </PythonNodeModels.PythonNode>
-    <Dynamo.Graph.Nodes.CodeBlockNodeModel guid="17aff93e-c793-4fb1-8ead-0cd229123f29" type="Dynamo.Graph.Nodes.CodeBlockNodeModel" nickname="Code Block" x="250" y="2.62836990216658" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false" CodeText="Flatten({item});" ShouldFocus="false">
-      <PortInfo index="0" default="False" />
-    </Dynamo.Graph.Nodes.CodeBlockNodeModel>
-    <Dynamo.Graph.Nodes.CustomNodes.Symbol guid="688efc4c-97ca-4ad7-9f10-86e1b7968643" type="Dynamo.Graph.Nodes.CustomNodes.Symbol" nickname="Input" x="-13.8228941684665" y="-1.72786177105831" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" IsFrozen="false" isPinned="false">
-      <Symbol value="//Input Workset element(s)&#xD;&#xA;workset" />
-    </Dynamo.Graph.Nodes.CustomNodes.Symbol>
-    <Dynamo.Graph.Nodes.CustomNodes.Output guid="56ba0e94-d9ca-4c9f-82ea-3571b1e188cb" type="Dynamo.Graph.Nodes.CustomNodes.Output" nickname="Output" x="618.516727511628" y="0" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false">
-      <PortInfo index="0" default="False" />
-      <Symbol value="worksetId" />
-    </Dynamo.Graph.Nodes.CustomNodes.Output>
-  </Elements>
-  <Connectors>
-    <Dynamo.Graph.Connectors.ConnectorModel start="8700917c-93ff-4067-9830-4b43c9e31606" start_index="0" end="56ba0e94-d9ca-4c9f-82ea-3571b1e188cb" end_index="0" portType="0" />
-    <Dynamo.Graph.Connectors.ConnectorModel start="17aff93e-c793-4fb1-8ead-0cd229123f29" start_index="0" end="8700917c-93ff-4067-9830-4b43c9e31606" end_index="0" portType="0" />
-    <Dynamo.Graph.Connectors.ConnectorModel start="688efc4c-97ca-4ad7-9f10-86e1b7968643" start_index="0" end="17aff93e-c793-4fb1-8ead-0cd229123f29" end_index="0" portType="0" />
-  </Connectors>
-  <Notes />
-  <Annotations />
-  <Presets />
-  <Cameras>
-    <Camera Name="Фоновый просмотр" eyeX="-17" eyeY="24" eyeZ="50" lookX="12" lookY="-13" lookZ="-58" upX="0" upY="1" upZ="0" />
-  </Cameras>
-</Workspace>
+{
+  "Uuid": "e31b35bb-beb4-48c7-8436-fb1463e18fa7",
+  "IsCustomNode": true,
+  "Category": "Zhukoven.Revit",
+  "Description": "Get Ids from the input workset elements.",
+  "Name": "Workset.Id",
+  "ElementResolver": {
+    "ResolutionMap": {
+      "DSCore.List": {
+        "Key": "DSCore.List",
+        "Value": "DSCoreNodes.dll"
+      }
+    }
+  },
+  "Inputs": [],
+  "Outputs": [],
+  "Nodes": [
+    {
+      "ConcreteType": "PythonNodeModels.PythonNode, PythonNodeModels",
+      "NodeType": "PythonScriptNode",
+      "Code": "#Author Konstantin Zhukoven @ https://zhukoven.com\r\n#Tested to work with Dynamo 1.3.3+\r\nimport clr\r\n# Import RevitAPI\r\nclr.AddReference(\"RevitAPI\")\r\nimport Autodesk\r\nfrom Autodesk.Revit.DB import *\r\n\r\nworksets = IN[0]\r\nworksetInt = []\r\n\r\nfor i in worksets:\r\n\tworksetInt.append(i.Id.IntegerValue)\r\n\r\nOUT =  worksetInt",
+      "VariableInputPorts": true,
+      "Id": "8700917c93ff406798304b43c9e31606",
+      "Inputs": [
+        {
+          "Id": "721ac8d4f5884fcda0325e75b0964255",
+          "Name": "IN[0]",
+          "Description": "Input #0",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "89fb74a5259a4bdcb06762cd8badd911",
+          "Name": "OUT",
+          "Description": "Result of the python script",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Runs an embedded IronPython script."
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
+      "NodeType": "CodeBlockNode",
+      "Code": "DSCore.List.Flatten([item]);",
+      "Id": "17aff93ec7934fb18ead0cd229123f29",
+      "Inputs": [
+        {
+          "Id": "9ab5c7ec6d154e62acf5cc8e3068d5aa",
+          "Name": "item",
+          "Description": "item",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "ca3a8c76b9e74434b4a507f8cc195b8a",
+          "Name": "",
+          "Description": "Value of expression at line 1",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Allows for DesignScript code to be authored directly"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Symbol, DynamoCore",
+      "NodeType": "InputNode",
+      "Parameter": {
+        "Name": "workset",
+        "TypeName": "var",
+        "TypeRank": -1,
+        "DefaultValue": null,
+        "Description": "Input Workset element(s)"
+      },
+      "Id": "688efc4c97ca4ad79f1086e1b7968643",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "430e9ad9305f45c5b0a75b5ea31beea5",
+          "Name": "",
+          "Description": "Symbol",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "A function parameter, use with custom nodes.\r\n\r\nYou can specify the type and default value for parameter. E.g.,\r\n\r\ninput : var[]..[]\r\nvalue : bool = false"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Output, DynamoCore",
+      "NodeType": "OutputNode",
+      "ElementResolver": null,
+      "Symbol": "worksetId",
+      "Id": "56ba0e94d9ca4c9f82ea3571b1e188cb",
+      "Inputs": [
+        {
+          "Id": "9fd5f524f0a8445eb04831954977aec6",
+          "Name": "",
+          "Description": "",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [],
+      "Replication": "Disabled",
+      "Description": "A function output, use with custom nodes"
+    }
+  ],
+  "Connectors": [
+    {
+      "Start": "89fb74a5259a4bdcb06762cd8badd911",
+      "End": "9fd5f524f0a8445eb04831954977aec6",
+      "Id": "abe1c96b27064184870f23e57855f1c8"
+    },
+    {
+      "Start": "ca3a8c76b9e74434b4a507f8cc195b8a",
+      "End": "721ac8d4f5884fcda0325e75b0964255",
+      "Id": "31b34a7643ed43158f220be292385209"
+    },
+    {
+      "Start": "430e9ad9305f45c5b0a75b5ea31beea5",
+      "End": "9ab5c7ec6d154e62acf5cc8e3068d5aa",
+      "Id": "922f66e79b954c088477efb9bb306be8"
+    }
+  ],
+  "Dependencies": [],
+  "NodeLibraryDependencies": [],
+  "Bindings": [],
+  "View": {
+    "Dynamo": {
+      "ScaleFactor": 1.0,
+      "HasRunWithoutCrash": false,
+      "IsVisibleInDynamoLibrary": true,
+      "Version": "2.3.0.5885",
+      "RunType": "Manual",
+      "RunPeriod": "1000"
+    },
+    "Camera": {
+      "Name": "Background Preview",
+      "EyeX": -17.0,
+      "EyeY": 24.0,
+      "EyeZ": 50.0,
+      "LookX": 12.0,
+      "LookY": -13.0,
+      "LookZ": -58.0,
+      "UpX": 0.0,
+      "UpY": 1.0,
+      "UpZ": 0.0
+    },
+    "NodeViews": [
+      {
+        "ShowGeometry": true,
+        "Name": "Python Script",
+        "Id": "8700917c93ff406798304b43c9e31606",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 578.12921222893874,
+        "Y": -2.6612201859197739
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "Code Block",
+        "Id": "17aff93ec7934fb18ead0cd229123f29",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 250.0,
+        "Y": 2.62836990216658
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "Input",
+        "Id": "688efc4c97ca4ad79f1086e1b7968643",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": -13.8228941684665,
+        "Y": -1.72786177105831
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "Output",
+        "Id": "56ba0e94d9ca4c9f82ea3571b1e188cb",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 720.97370466954271,
+        "Y": -2.6612201859197739
+      }
+    ],
+    "Annotations": [],
+    "X": 99.5868789758272,
+    "Y": 245.80935092607214,
+    "Zoom": 0.60122796620338836
+  }
+}

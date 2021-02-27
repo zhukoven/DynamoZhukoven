@@ -1,59 +1,223 @@
-<Workspace Version="1.3.4.6666" X="278.8" Y="190.1175" zoom="1.1575" ScaleFactor="1" Name="Sheet.Viewports" Description="Query viewports from the input sheet(s)." ID="b3663e08-33c6-40d0-85b3-c82f5a374d59" Category="Zhukoven.Revit.Views">
-  <NamespaceResolutionMap>
-    <ClassMap partialName="DSCore.String.Join" resolvedName="DSCore.String" assemblyName="DSCoreNodes.dll" />
-    <ClassMap partialName="DSCore.String" resolvedName="DSCore.String" assemblyName="DSCoreNodes.dll" />
-  </NamespaceResolutionMap>
-  <Elements>
-    <PythonNodeModels.PythonNode guid="2273787d-d452-4463-ad24-c8ce3f58644b" type="PythonNodeModels.PythonNode" nickname="Python Script" x="462.53502372851" y="0" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false" inputcount="1">
-      <PortInfo index="0" default="False" />
-      <Script>#Author Konstantin Zhukoven @ https://zhukoven.com
-#Tested to work with Dynamo 1.3.3+
-import clr
-clr.AddReference("RevitAPI")
-import Autodesk
-from Autodesk.Revit.DB import *
-
-clr.AddReference("RevitNodes")
-import Revit
-clr.ImportExtensions(Revit.GeometryConversion)
-clr.ImportExtensions(Revit.Elements)
-
-clr.AddReference("RevitServices")
-import RevitServices
-from RevitServices.Persistence import DocumentManager
-doc = DocumentManager.Instance.CurrentDBDocument
-
-sheets = UnwrapElement(IN[0])
-
-viewports = []
-for v in sheets:
-	viewportIds = v.GetAllViewports()
-	for i in viewportIds:
-		elt = doc.GetElement(i)
-		viewports.append(elt)
-OUT = viewports
-</Script>
-    </PythonNodeModels.PythonNode>
-    <Dynamo.Graph.Nodes.CodeBlockNodeModel guid="ea382c5f-79d4-45b3-bd6f-53d4680c020b" type="Dynamo.Graph.Nodes.CodeBlockNodeModel" nickname="Code Block" x="250" y="3.9463722774401" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false" CodeText="Flatten({item});" ShouldFocus="false">
-      <PortInfo index="0" default="False" />
-    </Dynamo.Graph.Nodes.CodeBlockNodeModel>
-    <Dynamo.Graph.Nodes.CustomNodes.Symbol guid="29203ded-a5a3-4621-94bc-67dd55167781" type="Dynamo.Graph.Nodes.CustomNodes.Symbol" nickname="Input" x="0" y="0" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" IsFrozen="false" isPinned="false">
-      <Symbol value="sheet(s)" />
-    </Dynamo.Graph.Nodes.CustomNodes.Symbol>
-    <Dynamo.Graph.Nodes.CustomNodes.Output guid="bb105a3b-d503-4ee5-b503-e19a9653e519" type="Dynamo.Graph.Nodes.CustomNodes.Output" nickname="Output" x="661.53502372851" y="0" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false">
-      <PortInfo index="0" default="False" />
-      <Symbol value="viewports" />
-    </Dynamo.Graph.Nodes.CustomNodes.Output>
-  </Elements>
-  <Connectors>
-    <Dynamo.Graph.Connectors.ConnectorModel start="2273787d-d452-4463-ad24-c8ce3f58644b" start_index="0" end="bb105a3b-d503-4ee5-b503-e19a9653e519" end_index="0" portType="0" />
-    <Dynamo.Graph.Connectors.ConnectorModel start="ea382c5f-79d4-45b3-bd6f-53d4680c020b" start_index="0" end="2273787d-d452-4463-ad24-c8ce3f58644b" end_index="0" portType="0" />
-    <Dynamo.Graph.Connectors.ConnectorModel start="29203ded-a5a3-4621-94bc-67dd55167781" start_index="0" end="ea382c5f-79d4-45b3-bd6f-53d4680c020b" end_index="0" portType="0" />
-  </Connectors>
-  <Notes />
-  <Annotations />
-  <Presets />
-  <Cameras>
-    <Camera Name="Фоновый просмотр" eyeX="-17" eyeY="24" eyeZ="50" lookX="12" lookY="-13" lookZ="-58" upX="0" upY="1" upZ="0" />
-  </Cameras>
-</Workspace>
+{
+  "Uuid": "b3663e08-33c6-40d0-85b3-c82f5a374d59",
+  "IsCustomNode": true,
+  "Category": "Zhukoven.Revit",
+  "Description": "Query viewports from the input sheet(s).",
+  "Name": "Sheet.Viewports",
+  "ElementResolver": {
+    "ResolutionMap": {
+      "DSCore.String.Join": {
+        "Key": "DSCore.String",
+        "Value": "DSCoreNodes.dll"
+      },
+      "DSCore.String": {
+        "Key": "DSCore.String",
+        "Value": "DSCoreNodes.dll"
+      },
+      "DSCore.List": {
+        "Key": "DSCore.List",
+        "Value": "DSCoreNodes.dll"
+      }
+    }
+  },
+  "Inputs": [],
+  "Outputs": [],
+  "Nodes": [
+    {
+      "ConcreteType": "PythonNodeModels.PythonNode, PythonNodeModels",
+      "NodeType": "PythonScriptNode",
+      "Code": "#Author Konstantin Zhukoven @ https://zhukoven.com\r\n#Tested to work with Dynamo 1.3.3+\r\nimport clr\r\nclr.AddReference(\"RevitAPI\")\r\nimport Autodesk\r\nfrom Autodesk.Revit.DB import *\r\n\r\nclr.AddReference(\"RevitNodes\")\r\nimport Revit\r\nclr.ImportExtensions(Revit.GeometryConversion)\r\nclr.ImportExtensions(Revit.Elements)\r\n\r\nclr.AddReference(\"RevitServices\")\r\nimport RevitServices\r\nfrom RevitServices.Persistence import DocumentManager\r\ndoc = DocumentManager.Instance.CurrentDBDocument\r\n\r\nsheets = UnwrapElement(IN[0])\r\n\r\nviewports = []\r\nfor v in sheets:\r\n\tviewportIds = v.GetAllViewports()\r\n\tfor i in viewportIds:\r\n\t\telt = doc.GetElement(i)\r\n\t\tviewports.append(elt)\r\nOUT = viewports\r\n",
+      "VariableInputPorts": true,
+      "Id": "2273787dd4524463ad24c8ce3f58644b",
+      "Inputs": [
+        {
+          "Id": "91699ae2ccb54372b292a4c6c4a70c0e",
+          "Name": "IN[0]",
+          "Description": "Input #0",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "1d347353c41943b7827b3d1ac7159ec5",
+          "Name": "OUT",
+          "Description": "Result of the python script",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Runs an embedded IronPython script."
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
+      "NodeType": "CodeBlockNode",
+      "Code": "DSCore.List.Flatten([item]);",
+      "Id": "ea382c5f79d445b3bd6f53d4680c020b",
+      "Inputs": [
+        {
+          "Id": "25e118887a86427498cb8810f16f9c8f",
+          "Name": "item",
+          "Description": "item",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "024ae6799f364a75846b98343e792129",
+          "Name": "",
+          "Description": "Value of expression at line 1",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Allows for DesignScript code to be authored directly"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Symbol, DynamoCore",
+      "NodeType": "InputNode",
+      "Parameter": {
+        "Name": "sheet",
+        "TypeName": "var",
+        "TypeRank": -1,
+        "DefaultValue": null,
+        "Description": ""
+      },
+      "Id": "29203deda5a3462194bc67dd55167781",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "16147c4df4a14b6cbb48d60cab43efb6",
+          "Name": "",
+          "Description": "Symbol",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "A function parameter, use with custom nodes.\r\n\r\nYou can specify the type and default value for parameter. E.g.,\r\n\r\ninput : var[]..[]\r\nvalue : bool = false"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Output, DynamoCore",
+      "NodeType": "OutputNode",
+      "ElementResolver": null,
+      "Symbol": "viewports",
+      "Id": "bb105a3bd5034ee5b503e19a9653e519",
+      "Inputs": [
+        {
+          "Id": "592312f1b5ac4247bbac20b83ecbbd58",
+          "Name": "",
+          "Description": "",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [],
+      "Replication": "Disabled",
+      "Description": "A function output, use with custom nodes"
+    }
+  ],
+  "Connectors": [
+    {
+      "Start": "1d347353c41943b7827b3d1ac7159ec5",
+      "End": "592312f1b5ac4247bbac20b83ecbbd58",
+      "Id": "fa8b711e3877493c9d37953a706b756c"
+    },
+    {
+      "Start": "024ae6799f364a75846b98343e792129",
+      "End": "91699ae2ccb54372b292a4c6c4a70c0e",
+      "Id": "515f543e320643ca8f80a557b59b4718"
+    },
+    {
+      "Start": "16147c4df4a14b6cbb48d60cab43efb6",
+      "End": "25e118887a86427498cb8810f16f9c8f",
+      "Id": "f8d1ec3ceebc473397c3bc5cba8f62b1"
+    }
+  ],
+  "Dependencies": [],
+  "NodeLibraryDependencies": [],
+  "Bindings": [],
+  "View": {
+    "Dynamo": {
+      "ScaleFactor": 1.0,
+      "HasRunWithoutCrash": false,
+      "IsVisibleInDynamoLibrary": true,
+      "Version": "2.3.0.5885",
+      "RunType": "Manual",
+      "RunPeriod": "1000"
+    },
+    "Camera": {
+      "Name": "Background Preview",
+      "EyeX": -17.0,
+      "EyeY": 24.0,
+      "EyeZ": 50.0,
+      "LookX": 12.0,
+      "LookY": -13.0,
+      "LookZ": -58.0,
+      "UpX": 0.0,
+      "UpY": 1.0,
+      "UpZ": 0.0
+    },
+    "NodeViews": [
+      {
+        "ShowGeometry": true,
+        "Name": "Python Script",
+        "Id": "2273787dd4524463ad24c8ce3f58644b",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 462.53502372851,
+        "Y": 0.0
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "Code Block",
+        "Id": "ea382c5f79d445b3bd6f53d4680c020b",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 127.50858336091585,
+        "Y": 3.9463722774400996
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "Input",
+        "Id": "29203deda5a3462194bc67dd55167781",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 0.0,
+        "Y": 0.0
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "Output",
+        "Id": "bb105a3bd5034ee5b503e19a9653e519",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 661.53502372851,
+        "Y": 0.0
+      }
+    ],
+    "Annotations": [],
+    "X": 229.77122148251198,
+    "Y": 246.31515922762929,
+    "Zoom": 0.54173669184971562
+  }
+}

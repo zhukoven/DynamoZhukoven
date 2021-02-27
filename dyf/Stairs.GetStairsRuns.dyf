@@ -1,51 +1,215 @@
-<Workspace Version="1.3.2.2480" X="77.1179590897021" Y="230.655882439221" zoom="1.51051845643135" ScaleFactor="1" Name="Stairs.GetStairsRuns" Description="This node returns all the stairs run components in the stairs." ID="d0ad7fcd-1db6-4f6a-8d9b-a10adbf8a700" Category="Zhukoven.Revit.Stairs">
-  <NamespaceResolutionMap />
-  <Elements>
-    <Dynamo.Graph.Nodes.CodeBlockNodeModel guid="480c70ba-5147-4194-ae01-000f9954c007" type="Dynamo.Graph.Nodes.CodeBlockNodeModel" nickname="Code Block" x="250" y="4.38347696601818" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false" CodeText="Flatten({item});" ShouldFocus="false">
-      <PortInfo index="0" default="False" />
-    </Dynamo.Graph.Nodes.CodeBlockNodeModel>
-    <Dynamo.Graph.Nodes.CustomNodes.Symbol guid="a4a8ed6a-e6e5-462d-a4f8-24ed331a0efc" type="Dynamo.Graph.Nodes.CustomNodes.Symbol" nickname="Input" x="-22.6446292504538" y="0" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" IsFrozen="false" isPinned="false">
-      <Symbol value="//Input stair(s) element(s)&#xD;&#xA;Stair" />
-    </Dynamo.Graph.Nodes.CustomNodes.Symbol>
-    <Dynamo.Graph.Nodes.CustomNodes.Output guid="0da92f6d-8a5d-4b5b-8c71-84845878f663" type="Dynamo.Graph.Nodes.CustomNodes.Output" nickname="Output" x="611.223018412649" y="0" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false">
-      <PortInfo index="0" default="False" />
-      <Symbol value="StairsRuns" />
-    </Dynamo.Graph.Nodes.CustomNodes.Output>
-    <PythonNodeModels.PythonNode guid="2e218b30-2db9-4df1-a535-709a6d5ec93d" type="PythonNodeModels.PythonNode" nickname="Python Script" x="471.266167153772" y="0.227814204661598" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false" inputcount="1">
-      <PortInfo index="0" default="False" />
-      <Script>#Tested to work with Dynamo 1.3.0 + 
-#Author © Konstantin Zhukoven @ https:\\zhukoven.com
-import clr
-clr.AddReference('RevitAPI')
-from Autodesk.Revit.DB import *
-
-clr.AddReference("RevitNodes")
-import Revit
-clr.ImportExtensions(Revit.Elements)
-
-clr.AddReference("RevitServices")
-import RevitServices
-from RevitServices.Persistence import DocumentManager
-doc = DocumentManager.Instance.CurrentDBDocument
-
-stair = UnwrapElement(IN[0])
-for i in stair:
-	runs = i.GetStairsRuns()
-	for i in runs:
-		elt = doc.GetElement(i)
-#Output
-OUT = elt</Script>
-    </PythonNodeModels.PythonNode>
-  </Elements>
-  <Connectors>
-    <Dynamo.Graph.Connectors.ConnectorModel start="480c70ba-5147-4194-ae01-000f9954c007" start_index="0" end="2e218b30-2db9-4df1-a535-709a6d5ec93d" end_index="0" portType="0" />
-    <Dynamo.Graph.Connectors.ConnectorModel start="a4a8ed6a-e6e5-462d-a4f8-24ed331a0efc" start_index="0" end="480c70ba-5147-4194-ae01-000f9954c007" end_index="0" portType="0" />
-    <Dynamo.Graph.Connectors.ConnectorModel start="2e218b30-2db9-4df1-a535-709a6d5ec93d" start_index="0" end="0da92f6d-8a5d-4b5b-8c71-84845878f663" end_index="0" portType="0" />
-  </Connectors>
-  <Notes />
-  <Annotations />
-  <Presets />
-  <Cameras>
-    <Camera Name="Фоновый просмотр" eyeX="-17" eyeY="24" eyeZ="50" lookX="12" lookY="-13" lookZ="-58" upX="0" upY="1" upZ="0" />
-  </Cameras>
-</Workspace>
+{
+  "Uuid": "d0ad7fcd-1db6-4f6a-8d9b-a10adbf8a700",
+  "IsCustomNode": true,
+  "Category": "Zhukoven.Revit",
+  "Description": "This node returns all the stairs run components in the stairs.",
+  "Name": "Stairs.GetStairsRuns",
+  "ElementResolver": {
+    "ResolutionMap": {
+      "DSCore.List": {
+        "Key": "DSCore.List",
+        "Value": "DSCoreNodes.dll"
+      }
+    }
+  },
+  "Inputs": [],
+  "Outputs": [],
+  "Nodes": [
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
+      "NodeType": "CodeBlockNode",
+      "Code": "DSCore.List.Flatten([item]);",
+      "Id": "480c70ba51474194ae01000f9954c007",
+      "Inputs": [
+        {
+          "Id": "243aa06184564d75aed7cb8dab7eccbd",
+          "Name": "item",
+          "Description": "item",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "a7709d2d73894adc99629c13e365bfff",
+          "Name": "",
+          "Description": "Value of expression at line 1",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Allows for DesignScript code to be authored directly"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Symbol, DynamoCore",
+      "NodeType": "InputNode",
+      "Parameter": {
+        "Name": "Stair",
+        "TypeName": "var",
+        "TypeRank": -1,
+        "DefaultValue": null,
+        "Description": "Input stair(s) element(s)"
+      },
+      "Id": "a4a8ed6ae6e5462da4f824ed331a0efc",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "28453e4cc08141b0b834cdf37eb2d6fd",
+          "Name": "",
+          "Description": "Symbol",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "A function parameter, use with custom nodes.\r\n\r\nYou can specify the type and default value for parameter. E.g.,\r\n\r\ninput : var[]..[]\r\nvalue : bool = false"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Output, DynamoCore",
+      "NodeType": "OutputNode",
+      "ElementResolver": null,
+      "Symbol": "StairsRuns",
+      "Id": "0da92f6d8a5d4b5b8c7184845878f663",
+      "Inputs": [
+        {
+          "Id": "56d9ab4f95894fa0bf8a4077bd5173b4",
+          "Name": "",
+          "Description": "",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [],
+      "Replication": "Disabled",
+      "Description": "A function output, use with custom nodes"
+    },
+    {
+      "ConcreteType": "PythonNodeModels.PythonNode, PythonNodeModels",
+      "NodeType": "PythonScriptNode",
+      "Code": "#Tested to work with Dynamo 1.3.0 + \r\n#Author © Konstantin Zhukoven @ https:\\\\zhukoven.com\r\nimport clr\r\nclr.AddReference('RevitAPI')\r\nfrom Autodesk.Revit.DB import *\r\n\r\nclr.AddReference(\"RevitNodes\")\r\nimport Revit\r\nclr.ImportExtensions(Revit.Elements)\r\n\r\nclr.AddReference(\"RevitServices\")\r\nimport RevitServices\r\nfrom RevitServices.Persistence import DocumentManager\r\ndoc = DocumentManager.Instance.CurrentDBDocument\r\n\r\nstair = UnwrapElement(IN[0])\r\nfor i in stair:\r\n\truns = i.GetStairsRuns()\r\n\tfor i in runs:\r\n\t\telt = doc.GetElement(i)\r\n#Output\r\nOUT = elt",
+      "VariableInputPorts": true,
+      "Id": "2e218b302db94df1a535709a6d5ec93d",
+      "Inputs": [
+        {
+          "Id": "a17bfd41339a400498ca4f4f824b3f62",
+          "Name": "IN[0]",
+          "Description": "Input #0",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "6e6e255ad083488a99fc161b8b2f2577",
+          "Name": "OUT",
+          "Description": "Result of the python script",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Runs an embedded IronPython script."
+    }
+  ],
+  "Connectors": [
+    {
+      "Start": "a7709d2d73894adc99629c13e365bfff",
+      "End": "a17bfd41339a400498ca4f4f824b3f62",
+      "Id": "849645d4ec6442bdb19ecc1b92f30751"
+    },
+    {
+      "Start": "28453e4cc08141b0b834cdf37eb2d6fd",
+      "End": "243aa06184564d75aed7cb8dab7eccbd",
+      "Id": "9fc103cddd564b46b45197d1c87b7e05"
+    },
+    {
+      "Start": "6e6e255ad083488a99fc161b8b2f2577",
+      "End": "56d9ab4f95894fa0bf8a4077bd5173b4",
+      "Id": "a318c13458e245ec85bb185481a84cdd"
+    }
+  ],
+  "Dependencies": [],
+  "NodeLibraryDependencies": [],
+  "Bindings": [],
+  "View": {
+    "Dynamo": {
+      "ScaleFactor": 1.0,
+      "HasRunWithoutCrash": false,
+      "IsVisibleInDynamoLibrary": true,
+      "Version": "2.3.0.5885",
+      "RunType": "Manual",
+      "RunPeriod": "1000"
+    },
+    "Camera": {
+      "Name": "Background Preview",
+      "EyeX": -17.0,
+      "EyeY": 24.0,
+      "EyeZ": 50.0,
+      "LookX": 12.0,
+      "LookY": -13.0,
+      "LookZ": -58.0,
+      "UpX": 0.0,
+      "UpY": 1.0,
+      "UpZ": 0.0
+    },
+    "NodeViews": [
+      {
+        "ShowGeometry": true,
+        "Name": "Code Block",
+        "Id": "480c70ba51474194ae01000f9954c007",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 250.0,
+        "Y": 4.38347696601818
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "Input",
+        "Id": "a4a8ed6ae6e5462da4f824ed331a0efc",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": -22.6446292504538,
+        "Y": 0.0
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "Output",
+        "Id": "0da92f6d8a5d4b5b8c7184845878f663",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 714.90376807328425,
+        "Y": 1.1781903370525697
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "Python Script",
+        "Id": "2e218b302db94df1a535709a6d5ec93d",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 574.94691681440725,
+        "Y": 1.406004541714168
+      }
+    ],
+    "Annotations": [],
+    "X": 121.86214111817458,
+    "Y": 300.09576478899407,
+    "Zoom": 0.67900743610005887
+  }
+}

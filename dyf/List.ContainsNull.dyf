@@ -1,4 +1,4 @@
-<Workspace Version="1.3.2.2480" X="106" Y="115" zoom="1" ScaleFactor="1" Name="List.ContainsNull" Description="Check if the input list contains null items" ID="ec88db3f-8158-461f-816d-c67eb1afeff6" Category="Zhukoven.ListLogic">
+<Workspace Version="1.3.2.2480" X="106" Y="115" zoom="1" ScaleFactor="1" Name="List.ContainsNull" Description="Check if the input list contains null items" ID="ec88db3f-8158-461f-816d-c67eb1afeff6" Category="Zhukoven.DynamoCore">
   <NamespaceResolutionMap />
   <Elements>
     <Dynamo.Graph.Nodes.ZeroTouch.DSFunction guid="6f1ddf63-1e08-476d-91b4-5e93f130dbff" type="Dynamo.Graph.Nodes.ZeroTouch.DSFunction" nickname="List.ContainsItem" x="345.773918968705" y="0" isVisible="true" isUpstreamVisible="true" lacing="Shortest" isSelectedInput="False" IsFrozen="false" isPinned="false" assembly="DSCoreNodes.dll" function="DSCore.List.ContainsItem@var[]..[],var">
